@@ -3,14 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
-from matplotlib import patches
+from matplotlib import patches 
+from matplotlib.patches import Wedge
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import plotly.graph_objs as go
 import plotly.io as pio
-
 from flask_cors import CORS
 
 
@@ -27,36 +27,38 @@ def generate_random_string(length):
     return ''.join(random.choices(letters_and_digits, k=length))
 
 def projectType():
-    df_sheet_name_projectType = pd.read_excel('Mockup_Dashboard_2024-05-30.xlsx', sheet_name='Home page metrics')
-    barchartType = df_sheet_name_projectType['Bar chart project type']
+    df_sheet_name_projectType = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Project Types')
+    barchartType = df_sheet_name_projectType['Bar chart type']
     ProjectTypeCount = df_sheet_name_projectType['Count']
 
 # Create the donut plot
     fig, ax = plt.subplots()
     size = 0.3
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
 
-# Pie chart, where the slices will be ordered and plotted counter-clockwise:
-    labels = barchartType
-    sizes = ProjectTypeCount
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']  # Define your own colors if necessary
+    # Outer ring
+    wedges, texts, autotexts = ax.pie(ProjectTypeCount, radius=1, labels=barchartType, colors=colors, autopct='',
+                                      wedgeprops=dict(width=size, edgecolor='w'))
 
-# Outer ring
-    wedges, texts, autotexts = ax.pie(sizes, radius=1, labels=labels, colors=colors, autopct='%1.1f%%',
-                                 wedgeprops=dict(width=size, edgecolor='w'))
+    # Add data count labels inside the slices
+    for i, wedge in enumerate(wedges):
+        ang = (wedge.theta2 - wedge.theta1)/2. + wedge.theta1
+        y = np.sin(np.deg2rad(ang))
+        x = np.cos(np.deg2rad(ang))
+        ax.text(x * 0.85, y * 0.85, f'{ProjectTypeCount[i]}', ha='center', va='center',
+                color='white' if colors[i] in ['#1f77b4', '#d62728', '#9467bd'] else 'black',
+                weight='bold')
 
-# Add data count labels
-    for i, a in enumerate(autotexts):
-        a.set_text(f'{sizes[i]}')
+    # Inner ring
+    total = sum(ProjectTypeCount)
+    ax.pie([total], radius=1-size, labels=[total], labeldistance=-0,
+           wedgeprops=dict(width=size, edgecolor='w'), colors=['white'], textprops=dict(color='black', weight='bold'))
 
-# Inner ring
-    ax.pie([sum(sizes)], radius=1-size, labels=[sum(sizes)], labeldistance=0.35,
-       wedgeprops=dict(width=size, edgecolor='w'))
-
-# Draw center circle for a donut chart
-    centre_circle = plt.Circle((0,0),0.70,fc='white')
+    # Draw center circle for a donut chart
+    centre_circle = plt.Circle((0,0),0.30,fc='white')
     fig.gca().add_artist(centre_circle)
 
-# Equal aspect ratio ensures that pie is drawn as a circle.
+    # Equal aspect ratio ensures that pie is drawn as a circle.
     ax.axis('equal')  
 
     plt.title('Project Type', pad=20)
@@ -64,8 +66,11 @@ def projectType():
     #plt.show()
 ##########################################################
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
 def funnelChart():
-    df_sheet_name_funnel = pd.read_excel("Mockup_Dashboard_2024-05-30.xlsx", sheet_name='Funnel')
+    df_sheet_name_funnel = pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Funnel')
     funnel_data = df_sheet_name_funnel['Conversions']
     project_status_label = df_sheet_name_funnel['Project Status']
 
@@ -75,67 +80,102 @@ def funnelChart():
 
     fig, ax = plt.subplots()
 
-# Creating the bars
+    # Creating the bars centered to look like a funnel
     for i in range(len(sizes)):
-        ax.barh(y=i, width=sizes[i], color=colors[i], edgecolor='black', height=0.8)
-    
-        ax.text(sizes[i] / 2, i, sizes[i], ha='center', va='center', color='black', fontsize=12)
+        left = (max(sizes) - sizes[i]) / 2
+        ax.barh(y=i, width=sizes[i], left=left, color=colors[i], edgecolor='black', height=0.8)
+        ax.text(max(sizes) / 2, i, sizes[i], ha='center', va='center', color='black', fontsize=12)
 
-# Setting the y-axis labels
+    # Setting the y-axis labels
     ax.set_yticks(range(len(sizes)))
     ax.set_yticklabels(labels)
 
-# Invert y-axis to have the funnel shape
+    # Invert y-axis to have the funnel shape
     ax.invert_yaxis()
 
-# Removing spines and ticks for better aesthetics
+    # Removing spines and ticks for better aesthetics
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
     ax.spines['bottom'].set_visible(False)
     ax.xaxis.set_ticks_position('none')
     ax.yaxis.set_ticks_position('none')
+    ax.xaxis.set_visible(False)
 
-# Adding a title
+    # Adding a title
     plt.title('Funnel Chart')
     plt.savefig("static/funnel.jpg")
-# Show the plot
-    #plt.show()
+    # plt.show()
 
 ##################################################################
 def financial_activity():
-    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_2024-05-30.xlsx', sheet_name='Accruals')
-    acc_projetid = df_sheet_name5['Projects']
-    acc_cashout = round(df_sheet_name5['C/LT']*100,2)
-    acc_accrual = round(df_sheet_name5['AtD / LT']*100,2)
-    data = sorted(zip(acc_projetid, acc_accrual, acc_cashout))
-
-# Unpack sorted data
-    projects, accrual, cashout = zip(*data)
-
-# Plotting
+    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Financials Data')
+    acc_projectid = df_sheet_name5['Project ID']
+    lt_budget = df_sheet_name5['LT_Budget']
+    acc_cashout = df_sheet_name5['Cash Out']
+    acc_accrual = df_sheet_name5['Accrual to Date']
+    
+    # Combine data into a list of tuples and filter out cases where accrual to date is 0
+    data = list(zip(acc_projectid, lt_budget, acc_accrual, acc_cashout))
+    data = [entry for entry in data if entry[2] > 0]
+    data = sorted(data, key=lambda x: abs(x[2] - x[3]), reverse=True)
+    
+    # Select the top 5 highest deltas
+    top_5_highest = data[:5]
+    
+    # Select the top 5 lowest deltas
+    top_5_lowest = sorted(data, key=lambda x: abs(x[2] - x[3]))[:5]
+    
+    # Unpack all data for plotting all projects
+    acc_projectid, lt_budget_all, acc_accrual, acc_cashout = zip(*data)
+    
+    # Determine the maximum budget for setting the bar lengths
+    max_budget = max(lt_budget_all)
+    
+    # Plotting for top 5 highest deltas
     fig, ax = plt.subplots(figsize=(12, 8))
-
-# Plot each bar as 100% (i.e., full length)
-
-    for i, (proj, acc, cash) in enumerate(data):
-        ax.barh(i, 100, color='lightgray')
+    for i, (proj, budget, acc, cash) in enumerate(top_5_highest):
+        ax.barh(i, max_budget, color='lightgray')
         ax.barh(i, cash, color='pink')
         ax.plot([acc, acc], [i - 0.4, i + 0.4], color='black', linewidth=3)
-        ax.text(acc + 1, i, f'{acc:.2f}%', va='center', ha='left', fontsize=10, color='black')
-    #ax.text(cash + 1, i, f'{cash:.2f}%', va='center', ha='left', fontsize=10, color='blue')
-
-
-# Adding labels and title
-    ax.set_yticks(np.arange(len(data)))
-    ax.set_yticklabels(projects)
-    ax.set_xlabel('Percentage')
-    ax.set_title('Top 5 Accrual-Cashout Deltas')
+        ax.text(acc + 1, i, f'${acc:,.2f}', va='center', ha='left', fontsize=10, color='black')
+    ax.set_yticks(np.arange(len(top_5_highest)))
+    ax.set_yticklabels([proj for proj, _, _, _ in top_5_highest])
+    ax.set_xlabel('Amount ($)')
+    ax.set_title('Top 5 Highest Cashout-Accrual Deltas')
     ax.invert_yaxis()
+    plt.savefig("static/cashout_vs_accrual_top5_highest.jpg")
+    
+    # Plotting for top 5 lowest deltas
+    fig, ax = plt.subplots(figsize=(12, 8))
+    for i, (proj, budget, acc, cash) in enumerate(top_5_lowest):
+        ax.barh(i, max_budget, color='lightgray')
+        ax.barh(i, cash, color='pink')
+        ax.plot([acc, acc], [i - 0.4, i + 0.4], color='black', linewidth=3)
+        ax.text(acc + 1, i, f'${acc:,.2f}', va='center', ha='left', fontsize=10, color='black')
+    ax.set_yticks(np.arange(len(top_5_lowest)))
+    ax.set_yticklabels([proj for proj, _, _, _ in top_5_lowest])
+    ax.set_xlabel('Amount ($)')
+    ax.set_title('Top 5 Lowest Cashout-Accrual Deltas')
+    ax.invert_yaxis()
+    plt.savefig("static/cashout_vs_accrual_top5_lowest.jpg")
+    
+    # Plotting for all projects sorted by deltas
+    fig, ax = plt.subplots(figsize=(12, 16))
+    for i, (proj, budget, acc, cash) in enumerate(data):
+        ax.barh(i, max_budget, color='lightgray')
+        ax.barh(i, cash, color='pink')
+        ax.plot([acc, acc], [i - 0.4, i + 0.4], color='black', linewidth=3)
+        ax.text(acc + 1, i, f'${acc:,.2f}', va='center', ha='left', fontsize=10, color='black')
+    ax.set_yticks(np.arange(len(data)))
+    ax.set_yticklabels([proj for proj, _, _, _ in data])
+    ax.set_xlabel('Amount ($)')
+    ax.set_title('All Projects Cashout-Accrual Deltas')
+    ax.invert_yaxis()
+    plt.savefig("static/cashout_vs_accrual_all.jpg")
+    # plt.show()
 
-# Displaying the chart
-    plt.savefig("static/cashout_vs_accrual.jpg")
-    #plt.show()
+
 
 #####################################################
 def piechart_calc_num(num):
@@ -209,6 +249,57 @@ def budget_cashout_accrual_chart(projectid,totalbd,accrualbd,cashoutbd,lastdate)
     # plt.show()
 
 ####################################################
+def gauge_chart():
+    # Data
+    df_budget_sheet = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Gauges')
+    budget_total_value = round(df_budget_sheet['Total Budget'].sum(), 2)
+    budget_current_value = round(df_budget_sheet['Current Spend'].sum(), 2)
+    status_current = round(df_budget_sheet['Current Status'].sum() / df_budget_sheet['Total Status'].sum() * 100, 2)
+    status_total = 100
+
+    def gauge(current_value, total_value, colors=['#e15759', '#fecd57', '#55a868']):
+        if total_value != 0:
+            arrow = current_value / total_value
+        else:
+            arrow = 0.5
+        
+        # Draw the sectors
+        fig, ax = plt.subplots()
+        ang_range = np.linspace(0, np.pi, len(colors) + 1)  # Angles for sectors
+        radius = 2
+        for i, (angle, color) in enumerate(zip(ang_range[:-1], colors)):
+            ax.add_patch(Wedge((0., 0.), radius, np.degrees(angle), np.degrees(ang_range[i+1]), facecolor=color, edgecolor='white'))
+
+        # Draw the arrow
+        arrow_angle = np.degrees((1 - arrow) * np.pi)  # Adjust arrow to point correctly
+        dx = np.cos(arrow_angle * np.pi / 180) * radius
+        dy = np.sin(arrow_angle * np.pi / 180) * radius
+        ax.arrow(0, 0, dx, dy, width=0.1, head_width=0.3, head_length=0.3, fc='k', ec='k')
+
+        # Annotate the min, max, and current value
+        ax.text(-radius, -radius * 0.2, '$0', ha='center', va='center', fontsize=12)
+        ax.text(radius, -radius * 0.2, f'${total_value:,}', ha='center', va='center', fontsize=12)
+        ax.text(np.cos((1 - arrow) * np.pi) * (radius + 0.4), np.sin((1 - arrow) * np.pi) * (radius + 0.4), f'${current_value:,}', ha='center', va='center', fontsize=12)
+
+        def first_word_up_to_underscore(input_string):
+            underscore_index = input_string.find('_')
+            if underscore_index != -1:
+                return input_string[:underscore_index]
+            else:
+                return input_string
+
+        name = first_word_up_to_underscore('current_value')
+        ax.xaxis.set_visible(False)
+        ax.yaxis.set_visible(False)
+        plt.savefig('static/' + name + '.png')
+        # plt.show()
+
+    gauge(budget_current_value, budget_total_value)
+    gauge(status_current, status_total)
+
+
+####################################################
+
 def get_project_data(project_id):
     filtered_unique = df_unique[df_unique['Project ID'] == project_id]
     if filtered_unique.empty:
@@ -239,26 +330,30 @@ def get_project_data(project_id):
 def index():
     projectType()
     funnelChart()
-    file_path="Mockup_Dashboard_2024-05-30.xlsx"
-    df_sheet2= pd.read_excel(file_path, sheet_name='Pivot Tables')
-    completed = df_sheet2.iloc[1, 1]
-    delayed = df_sheet2.iloc[2, 1]
-    ongoing = df_sheet2.iloc[3, 1]
+    financial_activity()
+    gauge_chart()
 
-    feedbacka = df_sheet2.iloc[2, 18]
-    feedbackb = df_sheet2.iloc[3, 18]
-    feedbackc = round(df_sheet2.iloc[4, 18],3)
-
-
-    df_sheet= pd.read_excel("Mockup_Dashboard_2024-05-30.xlsx", sheet_name='Data')
-    accrual_amount = df_sheet['Accrual Amount'].sum()
-    cashout = round(df_sheet['Used Budget'].sum(),2) # usebudget
-    totalbudget = df_sheet['Budget'].sum()
-
-    hoursused = df_sheet['Hours Used'].sum()
-    estimatedHours = df_sheet['Hours Estimated (Project Total)'].sum()
+    file_path="Mockup_Dashboard_cleandata.xlsx"
+    df_sheet2= pd.read_excel(file_path, sheet_name='Project Data')
+    completed = round(df_sheet2.iloc[1, 14],0)
+    to_do = round(df_sheet2.iloc[2,14],0)
     
-    return render_template('index.html',totalbudget=totalbudget,cashout=cashout,accrual=accrual_amount,completed=completed,delayed=delayed,ongoing=ongoing,hoursused=hoursused,estimatedHours=estimatedHours,a=feedbacka,b=feedbackb,c=feedbackc)
+    df_feedback=pd.read_excel(file_path, sheet_name='Feedback')
+    feedbacka = round(df_feedback.iloc[1, 10],2)
+    feedbackb = round(df_feedback.iloc[2, 10],2)
+    feedbackc = round(df_feedback.iloc[3, 10],2)
+
+
+    df_sheet= pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Financials Data')
+    accrual_amount = round(df_sheet['Accrual to Date'].sum(),2)
+    cashout = round(df_sheet['Cash Out'].sum(),2) # usebudget
+    totalbudget = round(df_sheet['LT_Budget'].sum(), 2)
+    
+    df_hours_sheet= pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Project Data')
+    hoursused = df_hours_sheet['Hours Used'].sum()
+    estimatedHours = df_hours_sheet['Hours Estimated'].sum()
+    
+    return render_template('index.html',totalbudget=totalbudget,cashout=cashout,accrual=accrual_amount,completed=completed,to_do=to_do,hoursused=hoursused,estimatedHours=estimatedHours,a=feedbacka,b=feedbackb,c=feedbackc)
 
 @app.route('/financial')
 def financial():
@@ -266,8 +361,8 @@ def financial():
     return render_template('finance.html')
 
 @app.route('/project')
-def project_actibity():
-    df_sheet= pd.read_excel("Mockup_Dashboard_2024-05-30.xlsx", sheet_name='Data')
+def project_activity():
+    df_sheet= pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Project Data')
 
     projectid=df_sheet['Project ID'].unique()
     unique_list = []
@@ -282,51 +377,54 @@ def process():
     mdata = request.args.get('data')
 
     # Load the Excel file
-    file_path = "Mockup_Dashboard_2024-05-30.xlsx"
+    file_path = "Mockup_Dashboard_cleandata.xlsx"
 
     # Load the 'Project Status' sheet and filter the data
-    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Status')
-    range1 = df_sheet_name2.iloc[12:34, 0:2]
-    range1.columns = ['Project ID', 'Status']
+    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Data')
+    range1 = df_sheet_name2[['Project ID', 'Status']]
     filtered_data = range1[range1['Project ID'] == mdata]
 
     # Load the 'ProjectData Test' sheet and filter the data
-    df_sheet_name3 = pd.read_excel(file_path, sheet_name='ProjectData Test')
-    filtered_data2 = df_sheet_name3[df_sheet_name3['Projects'] == mdata]
+    df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
+    filtered_data2 = df_sheet_name3[df_sheet_name3['Project ID'] == mdata]
 
-    if filtered_data.empty or filtered_data2.empty:
+    df_sheet_name4 = pd.read_excel(file_path, sheet_name='Financials Data')
+    filtered_data3 = df_sheet_name4[df_sheet_name4['Project ID'] == mdata]
+
+    if filtered_data.empty or filtered_data2.empty or filtered_data3.empty:
         return jsonify({'result': 'No data found for the given Project ID'})
 
-    projects = filtered_data2['Projects'].values[0]
+    projects = filtered_data2['Project ID'].values[0]
     overall = filtered_data2['OVERALL'].values[0]
     bin_data = filtered_data2['Bin'].values[0]
-    total = filtered_data2['Total Possible'].values[0]
-    q1 = piechart_calc_num(pd.to_numeric(filtered_data2['Q1'], errors='coerce').fillna(total).values[0])
-    q2 = piechart_calc_num(pd.to_numeric(filtered_data2['Q2'], errors='coerce').fillna(total).values[0])
-    q3 = piechart_calc_num(pd.to_numeric(filtered_data2['Q3'], errors='coerce').fillna(total).values[0])
-    q4 = piechart_calc_num(pd.to_numeric(filtered_data2['Q4'], errors='coerce').fillna(total).values[0])
+    total = filtered_data3['Total Possible'].values[0]
+    q1 = piechart_calc_num(pd.to_numeric(filtered_data3['Q1'], errors='coerce').fillna(total).values[0])
+    q2 = piechart_calc_num(pd.to_numeric(filtered_data3['Q2'], errors='coerce').fillna(total).values[0])
+    q3 = piechart_calc_num(pd.to_numeric(filtered_data3['Q3'], errors='coerce').fillna(total).values[0])
+    q4 = piechart_calc_num(pd.to_numeric(filtered_data3['Q4'], errors='coerce').fillna(total).values[0])
     status = filtered_data['Status'].values[0]
     data={projects:[q1,q2,q3,q4]}
     piechartname = pichart_create(data)
     # Concatenate the results into a single string
     # Load the Excel sheet
 ###############################################
-    df_sheet_name = pd.read_excel(file_path, sheet_name='Data')
+    df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')
 
 # Remove duplicates based on 'Project ID' and 'Project Type'
-    df_unique = df_sheet_name.drop_duplicates(subset=['Project ID', 'Project Type'])
+    df_unique = df_sheet_name.drop_duplicates(subset=['Project ID'])
 
 # Calculate the sum of 'Accrual amount' for each 'Project ID'
-    accrual_amount = df_sheet_name.groupby('Project ID')['Accrual Amount'].sum().reset_index()
-    accrual_amount.columns = ['Project ID', 'Accrual Amount']
+    accrual_amount = df_sheet_name.groupby('Project ID')['Accrual to Date'].sum().reset_index()
+    accrual_amount.columns = ['Project ID', 'Accrual to Date']
 
 # Calculate the sum of 'Used Budget' for each 'Project ID'
-    result_budget = df_sheet_name.groupby('Project ID')['Used Budget'].sum().reset_index()
-    result_budget.columns = ['Project ID', 'Used Budget']
+    result_budget = df_sheet_name.groupby('Project ID')['Cash Out'].sum().reset_index()
+    result_budget.columns = ['Project ID', 'Cash Out']
 
 # Calculate the sum of 'DateDiff' for each 'Project ID'
-    result_schedule = df_sheet_name.groupby('Project ID')['DateDiff'].sum().reset_index()
-    result_schedule.columns = ['Project ID', 'DateDiff']
+    df_dateDiff = pd.read_excel(file_path, sheet_name='DateDiffs')
+    result_schedule = df_dateDiff.groupby('Project ID')['Days from Today'].sum().reset_index()
+    result_schedule.columns = ['Project ID', 'Days from Today']
     project_id = mdata
     filtered_unique = df_unique[df_unique['Project ID'] == project_id]
     if filtered_unique.empty:
@@ -334,10 +432,10 @@ def process():
     
     proj_id = filtered_unique.iloc[0]['Project ID']
     #proj_type = filtered_unique.iloc[0]['Project Type']
-    total_budget = filtered_unique.iloc[0]['Budget']
-    accrual_amount_budget = accrual_amount[accrual_amount['Project ID'] == proj_id]['Accrual Amount'].values[0]
-    use_budget = result_budget[result_budget['Project ID'] == proj_id]['Used Budget'].values[0]
-    total_datediff = result_schedule[result_schedule['Project ID'] == proj_id]['DateDiff'].values[0]
+    total_budget = filtered_unique.iloc[0]['LT_Budget']
+    accrual_amount_budget = accrual_amount[accrual_amount['Project ID'] == proj_id]['Accrual to Date'].values[0]
+    use_budget = result_budget[result_budget['Project ID'] == proj_id]['Cash Out'].values[0]
+    total_datediff = result_schedule[result_schedule['Project ID'] == proj_id]['Days from Today'].values[0]
     avg_budget = round((use_budget / total_budget), 2)
     #print(avg_budget)
     casg_acc_barchart = budget_cashout_accrual_chart(proj_id,total_budget,accrual_amount_budget,use_budget,total_datediff)
@@ -365,10 +463,10 @@ def data():
     #     'age': 30,
     #     'city': 'New York'
     # }
-    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_2024-05-30.xlsx', sheet_name='Accruals')
+    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Financials Data')
     acc_projetid = df_sheet_name5['Projects']
-    acc_cashout = round(df_sheet_name5['C/LT']*100,2)
-    acc_accrual = round(df_sheet_name5['AtD / LT']*100,2)
+    acc_cashout = round(df_sheet_name5['Cash Out'],2)
+    acc_accrual = round(df_sheet_name5['Accrual to Date'],2)
     totlbudget = df_sheet_name5['LT_cost']
     data = sorted(zip(acc_projetid, acc_accrual, acc_cashout,totlbudget))
 
