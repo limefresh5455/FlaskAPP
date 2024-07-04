@@ -291,11 +291,13 @@ def gauge_chart():
         name = first_word_up_to_underscore('current_value')
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
-        plt.savefig('static/' + name + '.png')
+        plt.savefig('static/guageCHART.png')
+        #plt.savefig('static/' + name + '.png')
         # plt.show()
 
     gauge(budget_current_value, budget_total_value)
     gauge(status_current, status_total)
+
 
 
 ####################################################
@@ -455,6 +457,21 @@ def process():
     # res=f"{res}"
     return jsonify({'result': res})
 ##################################################
+
+###############################
+@app.route('/portfolio')
+def portfolio():
+    
+    #temp_dict2 Project 01': 'Not Started',
+    # project_dict [[0.5, 0.5], [0.25, 0.75], [0.5, 0.5], [0.25, 0.75]]
+    #combined_dict  [0.98, 12, 2, 3] 
+    #budget_dict  {'totalbudget': 100000, 'Accrual Amount': 124911, 'Used Budget': 97618.0, 'Days Difference': 167}  
+    #risk_dict [27.0, 9.0, 12.0],
+
+    return render_template('portfolio.html')
+
+
+#####################################################
 @app.route('/testdata', methods=['GET'])
 def data():
     # Example JSON data
@@ -476,9 +493,7 @@ def data():
     res = {"a": projects,"b":accrual,"c":cashout,"d":total_budget}
     return jsonify(res)
 
-@app.route('/test')
-def testdata():
-    return render_template('portfolio.html')
+
 
 data = {
     "message": "Hello from Flask!"
