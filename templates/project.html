@@ -62,6 +62,71 @@
 
 }
 #piechartid{height: 180px;}
+           .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: gray;
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .circle.quarter {
+            background: conic-gradient(gray 0% 25%, white 25% 100%);
+        }
+
+        .circle.half {
+            background: conic-gradient(gray 0% 50%, white 50% 100%);
+        }
+
+        .circle.three-quarters {
+            background: conic-gradient(gray 0% 75%, white 25% 100%);
+        }
+
+        .circle.full {
+            background: gray;
+        }
+        -----------------------------
+     .icon-cell {
+            display: table-cell;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .icon {
+            font-size: 24px;
+        }
+        .yellowcircle {
+            color: yellow;
+        }
+        .graycircle {
+            color: gray;
+        }
+        .check {
+            color: green;
+        }
+        .cross {
+            color: red;
+        }
+        ------------------------------
+    .bar-container {
+            width: 100px;
+            height: 20px;
+            background-color: #e0e0e0;
+            position: relative;
+        }
+        .bar {
+            height: 100%;
+            background-color: #76c7c0;
+            position: absolute;
+        }
+        --------------------------
+        .chart {
+    display: flex;
+    flex-direction: column;
+}
     </style>
   </head>
   <body class="with-welcome-text">
@@ -84,85 +149,33 @@
                 <span class="menu-title">CC Home</span>
                <!-- <i class="menu-arrow"></i> -->
               </a>
-<!--               <div class="collapse" id="ui-basic">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-                </ul>
-              </div> -->
+
             </li>
             <li class="nav-item">
-              <a class="nav-link">
+              <a class="nav-link" href="/portfolio">
                 <i class="menu-icon mdi mdi-card-text-outline"></i>
                 <span class="menu-title">Portfolio Overview</span>
-                <!-- <i class="menu-arrow"></i> -->
+           
               </a>
-  <!--             <div class="collapse" id="form-elements">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
-                </ul>
-              </div> -->
+ 
             </li>
             <li class="nav-item" >
                <a class="nav-link"  href="/financial"> 
                 <i class="menu-icon mdi mdi-chart-line"></i>
                 <span class="menu-title">Financial Forecast</span>
-                <!-- <i class="menu-arrow"></i> -->
+               
               </a>
-<!--               <div class="collapse" id="charts">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                </ul>
-              </div> -->
+
             </li>
             <li class="nav-item active" >
               <a class="nav-link" href="/project" >
                 <i class="menu-icon mdi mdi-table"></i>
                 <span class="menu-title">Project Activity</span>
-            <!-- <i class="menu-arrow"></i> -->
+    
               </a>
-<!--               <div class="collapse" id="tables">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
-                </ul>
-              </div> -->
+
             </li>
 
-<!--             <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                <i class="menu-icon mdi mdi-layers-outline"></i>
-                <span class="menu-title">Icons</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="icons">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/icons/font-awesome.html">Font Awesome</a></li>
-                </ul>
-              </div>
-            </li> -->
-  <!--           <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <i class="menu-icon mdi mdi-account-circle-outline"></i>
-                <span class="menu-title">User Pages</span>
-                <i class="menu-arrow"></i>
-              </a>
-              <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                </ul>
-              </div>
-            </li> -->
-<!--             <li class="nav-item">
-              <a class="nav-link" href="docs/documentation.html">
-                <i class="menu-icon mdi mdi-file-document"></i>
-                <span class="menu-title">Documentation</span>
-              </a>
-            </li> -->
           </ul>
         </nav>
         <!-- partial -->
@@ -171,29 +184,6 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="home-tab">
-               <!--   <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <ul class="nav nav-tabs" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active ps-0" id="home-tab" data-bs-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#audiences" role="tab" aria-selected="false">Audiences</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#demographics" role="tab" aria-selected="false">Demographics</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link border-0" id="more-tab" data-bs-toggle="tab" href="#more" role="tab" aria-selected="false">More</a>
-                      </li>
-                    </ul>
-                    <div>
-                      <div class="btn-wrapper">
-                        <a href="#" class="btn btn-otline-dark align-items-center"><i class="icon-share"></i> Share</a>
-                        <a href="#" class="btn btn-otline-dark"><i class="icon-printer"></i> Print</a>
-                        <a href="#" class="btn btn-primary text-white me-0"><i class="icon-download"></i> Export</a>
-                      </div>
-                    </div>
-                  </div> -->
                   <div class="tab-content tab-content-basic">
                     <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
                       <div class="row">
@@ -224,21 +214,82 @@
                                   </div>
                                   <!-- <div class="chartjs-wrapper mt-4"> -->
                                        <p>Result: <span id="result"></span></p>
-                                       <div id="jsondata"></div> 
+                                       <div id="jsondata">
+                                            <table class="table table-bordered">
+                                              <tr>
+                                                <td>Project ID</td>
+                                                <td id="projectid"></td>
+                                              </tr>
+                                              <tr>
+                                                <td>Project Description</td>
+                                                <td></td>
+                                              </tr>
+                                              <tr>
+                                                <td>Project status</td>
+                                                <td id="status"></td>
+                                              </tr>
+                                              <tr>
+                                                <td>Milestone overview</td>
+                                                <td>
+                                                <span id="milestone1"></span>
+
+                                                <span id="milestone2"></span>
+
+                                                <span id="milestone3"></span>
+
+                                                <span id="milestone4"></span>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                                <td>PM Defined Status</td>
+                                                <td>
+                                                  <span id='overall'></span>
+                                                  <span id='scope'></span>
+                                                  <span id='schedule'></span>
+                                                  <span id='budget'></span>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td>Budget</td>
+                                                <td>
+                                                  <span id="budgetbar"></span>
+                                                  <span id="cashoutbar"></span>
+                                                  <span id="accrualbar"></span>
+                                                   </td>
+                                              </tr>
+                                              <tr>
+                                                <td>Risk Analysis</td>
+                                                <td>
+                                                  <span id="peace"></span>
+                                                  <span id="execution"></span>
+                                                  <span id="resource"></span>
+                                                </td>
+                                              </tr>
+
+                                            </table>
+                                       </div> 
                                           <div class="icon-container">
                                             <!-- overall -->
-                                            <div class="icon1"></div>
+                                            <div class="icon1">
+
+                                            </div>
                                             
                                                <!-- scope -->
                                             
-                                            <div class="icon2"></div>
+                                            <div class="icon2">
+
+                                            </div>
                                         
                                              <!-- budget -->
                                             
-                                          <div class="icon3"></div>
+                                          <div class="icon3">
+
+                                          </div>
                                             
                                              <!-- schdule -->
-                                          <div class="icon4"></div>
+                                          <div class="icon4">
+
+                                          </div>
                                           </div> 
                                     <!-- <canvas id="performanceLine" width=""></canvas> -->
                                   <!-- </div> -->
@@ -291,80 +342,166 @@
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
     <!-- End custom js for this page-->
     <script type="text/javascript">
-    function seticon(overall,scope,schedule,avgbudget)
-    {   
-     
-      var iconElement1 = document.querySelectorAll('.icon1');
-      var iconElement2 = document.querySelectorAll('.icon2');
-      var iconElement3 = document.querySelectorAll('.icon3');
-      var iconElement4 = document.querySelectorAll('.icon4');
-      iconElement1.className = 'icon'; // Reset classes
-      iconElement1.textContent = ''; // Reset content
+    var  status_colors = {
+    'Not Started': 'gray',
+    'In Progress': 'green',
+    'On Hold': 'purple',
+    'At Risk': 'orange',
+    'Completed': 'aqua',
+    'Overdue': 'red',
+    'Cancelled': 'yellow'
+}
 
-            iconElement2.className = 'icon'; // Reset classes
-      iconElement2.textContent = ''; // Reset content
+function milestone(q1,q2,q3,q4){
+    if(q1 ==1){
+      let temp1 = "<div class='circle quarter'></div>"
+        $("#milestone1").html(temp1);  }
+    else if(q1 ==2){
+          let temp1 = "<div class='circle half'></div>"
+        $("#milestone1").html(temp1);}
+    else if(q1 ==3){
+        let temp1 = "<div class='circle three-quarters'></div>"
+        $("#milestone1").html(temp1);
+      }
+    else if(q1 ==4){
+      let temp1 = "<div class='circle full'></div>"
+        $("#milestone1").html(temp1);  }
+    else {$("#milestone1").text(q1);}
 
-            iconElement3.className = 'icon'; // Reset classes
-      iconElement3.textContent = ''; // Reset content
+    ////////////////////////////////////////////////
+    if(q2 ==1){
+      let temp2 = "<div class='circle quarter'></div>"
+        $("#milestone2").html(temp2);  }
+    else if(q2 ==2){
+          let temp2 = "<div class='circle half'></div>"
+        $("#milestone2").html(temp2);}
+    else if(q2 ==3){
+        let temp2 = "<div class='circle three-quarters'></div>"
+        $("#milestone2").html(temp2);
+      }
+    else if(q2 ==4){
+      let temp2 = "<div class='circle full'></div>"
+        $("#milestone2").html(temp2);  }
+    else {$("#milestone2").text(q2);}
 
-            iconElement4.className = 'icon'; // Reset classes
-      iconElement4.textContent = ''; // Reset content
-      //overall
-      if(overall == 4){
-        iconElement1[0].classList.add('right');
-        iconElement1[0].textContent = '✔'; // Check mark symbol
-        }else if(overall == 3){
-          iconElement1[0].classList.add('disabled2');
-          iconElement1[0].textContent = '🟡'; // Disabled symbol
+        ////////////////////////////////////////////////
 
-        }else if(overall <= 2){
-          iconElement1[0].classList.add('wrong');
-          iconElement1[0].textContent = '✘'; // Cross mark symbol
-        }else{ iconElement1[0].classList.add('disabled');
-            iconElement1[0].textContent = '⚫'; // Disabled symbol
-        }
-     //scope 
-      if(scope == 1){
-        iconElement2[0].classList.add('right');
-        iconElement2[0].textContent = '✔'; // Check mark symbol
-        }else if(scope == 2){iconElement2[0].classList.add('disabled2');
-            iconElement2[0].textContent = '🟡'; // Disabled symbol
-        }else if(scope == 3){
-          iconElement2[0].classList.add('wrong');
-          iconElement2[0].textContent = '✘'; // Cross mark symbol
-        }else{ iconElement2[0].classList.add('disabled');
-            iconElement2[0].textContent = '⚫'; // Disabled symbol
-        } 
+    if(q3 ==1){
+      let temp3 = "<div class='circle quarter'></div>"
+        $("#milestone3").html(temp3);  }
+    else if(q3 ==2){
+          let temp3 = "<div class='circle half'></div>"
+        $("#milestone3").html(temp3);}
+    else if(q3 ==3){
+        let temp3 = "<div class='circle three-quarters'></div>"
+        $("#milestone3").html(temp3);
+      }
+    else if(q3 ==4){
+      let temp3 = "<div class='circle full'></div>"
+        $("#milestone3").html(temp3);  }
+    else {$("#milestone3").text(q3);}
 
-     //avg budget
-      if((avgbudget) > 0.75){
-        iconElement3[0].classList.add('right');
-        iconElement3[0].textContent[0] = '✔'; // Check mark symbol
-        }else if((avgbudget) > 2){ iconElement3[0].classList.add('disabled2');
-            iconElement3[0].textContent = '🟡'; // Disabled symbol
-        }else if((avgbudget) <=0.5){iconElement3[0].classList.add('wrong');
-            iconElement3[0].textContent = '✘'; // Cross mark symbol
-        }else{
-          iconElement3[0].classList.add('disabled');
-          iconElement3[0].textContent = '⚫'; // Disabled symbol
-        }
+        ////////////////////////////////////////////////
 
-     //schedule  
-      if(schedule > 5){
-        iconElement4[0].classList.add('right');
-        iconElement4[0].textContent = '✔'; // Check mark symbol
-        }else if(schedule <= 5){iconElement4[0].classList.add('disabled2');
-            iconElement4[0].textContent = '🟡'; // Disabled symbol
-        }else if(schedule < 0){iconElement4[0].classList.add('wrong');
-            iconElement4[0].textContent = '✘'; // Cross mark symbol
-        }else{
-          iconElement4[0].classList.add('disabled');
-          iconElement4[0].textContent = '⚫'; // Disabled symbol
-        } 
+    if(q4 ==1){
+      let temp4 = "<div class='circle quarter'></div>"
+        $("#milestone4").html(temp4);  }
+    else if(q4 ==2){
+          let temp4 = "<div class='circle half'></div>"
+        $("#milestone4").html(temp4);}
+    else if(q4 ==3){
+        let temp4 = "<div class='circle three-quarters'></div>"
+        $("#milestone4").html(temp4);
+      }
+    else if(q4 ==4){
+      let temp4 = "<div class='circle full'></div>"
+        $("#milestone4").html(temp4);  }
+    else {$("#milestone4").text(q4);}
+}
 
 
-    }
+function pmstatus(overall,scope,schedule,budget){
+  if(overall == 4){ let temp1 = "<span class='icon check'>&#x2713;</span>"
+    $("#overall").html(temp1);
+  }else if(overall == 3){
+    let temp1 = "<span class='icon yellowcircle'>&#x25CF;</span>"
+    $("#overall").html(temp1);
+  }
+  else if(overall == 2){
+    let temp1 = "<span class='icon cross'>&#x2717;</span>"
+    $("#overall").html(temp1);
+  }
+  else if(overall == 1){
+    let temp1 = "<span class='icon graycircle'>&#x25CF;</span>"
+    $("#overall").html(temp1);
+  }
+  //////////////////////////////
+  if(scope == 1){
+    let temp2 = "<span class='icon check'>&#x2713;</span>"
+    $("#scope").html(temp2);
+  }else if(scope == 2){
+    let temp2 = "<span class='icon yellowcircle'>&#x25CF;</span>"
+      $("#scope").html(temp2);
+  }else
+  if(scope == 3){
+    let temp2 = "<span class='icon cross'>&#x2717;</span>"
+    $("#scope").html(temp2);
+  }else
+  if(scope == 4){
+    let temp2 = "<span class='icon graycircle'>&#x25CF;</span>"
+    $("#scope").html(temp2);
+  }
+  ////////////////////////////////
+    if(schedule > 5){
+      let temp3 = "<span class='icon check'>&#x2713;</span>"
+    $("#schedule").html(temp3);
+  }else if(schedule <= 5){
+    let temp3 = "<span class='icon yellowcircle'>&#x25CF;</span>"
+    $("#schedule").html(temp3);
+  }
+  else if(schedule < 0){
+    let temp3 = "<span class='icon cross'>&#x2717;</span>"
+    $("#schedule").html(temp3);
+  }
+  else {
+    let temp3 = "<span class='icon graycircle'>&#x25CF;</span>"
+    $("#schedule").html(temp3);
+  }
+  //////////////////////////////////
+    if(budget > 0.75){
+      let temp4="<span class='icon check'>&#x2713;</span>"
+    $("#budget").html(temp4);
+  }else
+  if(budget > 0.5){
+  let temp4="<span class='icon yellowcircle'>&#x25CF;</span>"
+    $("#budget").html(temp4);
+  }else
+  if(budget <= 0.5){
+  let temp4="<span class='icon cross'>&#x2717;</span>"
+    $("#budget").html(temp4);
+  }
+  else{
+  let temp4="<span class='icon graycircle'>&#x25CF;</span>"
+    $("#budget").html(temp4);
+  }
 
+}
+
+
+
+         
+        
+
+function budgetbarchart(bud,cashout,accrual){
+let temp1 = "<div class='bar-cell3' data-budget='"+bud+"' data-totaltbudget='2000000'></div>";
+$("#budgetbar").html(temp1);
+
+let temp2 = "<div class='bar-cell' data-budget='"+bud+"' data-cashout='"+cashout+"'></div>";
+$("#cashoutbar").html(temp2);
+
+let temp3 = "<div class='bar-cell2' data-budget='"+bud+"'  data-accrual='"+accrual+"'></div>";
+$("#accrualbar").html(temp3);
+}
      function sendData2() {
             var data = $('#mySelect').val();
             console.log(data)
@@ -373,32 +510,109 @@
                 type: 'GET',
                 data: { data: data },
                 success: function(response) {
-                  $('.icon1').css('display', 'block');
-                  $('.icon2').css('display', 'block');
-                  $('.icon3').css('display', 'block');
-                  $('.icon4').css('display', 'block');
-  
                   console.log(response.result)
-                    //const iconElements = document.querySelectorAll('.icon');
-                    let overall = response.result.overall;
-                    let scope = response.result.scope;
-                    let schedule = response.result.schedule;
-                    let avg_budget = response.result.avg_budget;
-                    let accrual_amount = response.result.accrual_amount;
-                    console.log(accrual_amount);
-                    var result = '<p>Project ID: ' + response.result.Projectid + '</p>';
-                    result += '<p>Status: ' + response.result.status + '</p>';
-                    result += "<p><img id='piechartid' src=static/"+response.result.img +"/></p>";
-                    result += "<p><img id='piechartid' src=static/"+response.result.img2 +"/></p>"
-                    $('#result').html(result);
-                    seticon(overall,scope,schedule,parseFloat(avg_budget))
+                    $("#projectid").text(data );
+                    $("#status").text(response.result.Status);
+                   var q1= response.result.Q1;
+                   var q2= response.result.Q2;
+                   var q3= response.result.Q3;
+                   var q4= response.result.Q4;
+                   milestone(q1,q2,q3,q4);
+
+                  var Overall= response.result.Overall;
+                  var Scope= response.result.Scope;
+                  var Schedule= response.result.Schedule;
+                  var Budget= response.result.Budget;
+                  pmstatus(Overall,Scope,Schedule,Budget);
+
+                  var ltbudget = response.result.LT_Budget;
+                  var cashout = response.result.LT_Budget_Cashout;
+                  var accrual = response.result.LT_Budget_Accrual;
+                  //budgetbarchart(ltbudget,cashout,accrual)
+                      $("#budgetbar").text(ltbudget);    
+                      $("#cashoutbar").text(cashout);    
+                      $("#accrualbar").text(accrual);    
+
+                  var peace = response.result.Pace; 
+                  var execution = response.result.Execution;
+                  var Resources = response.result.Resources;
+                      $("#peace").text(peace);    
+                      $("#execution").text(execution);    
+                      $("#resource").text(Resources); 
+
+
+
+                    
+
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
         }
-    
+    /////////////////////////////////////////////////////////
+              document.addEventListener('DOMContentLoaded', function () {
+            const barCells = document.querySelectorAll('.bar-cell');
+
+            barCells.forEach(cell => {
+                const budget = parseInt(cell.getAttribute('data-budget'));
+                const cashout = parseInt(cell.getAttribute('data-cashout'));
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+                
+                const cashoutBar = document.createElement('div');
+                cashoutBar.className = 'bar';
+                cashoutBar.style.width = `${(cashout / budget) * 100}%`;
+                cashoutBar.style.backgroundColor = 'green';
+
+                barContainer.appendChild(cashoutBar);
+
+                cell.appendChild(barContainer);
+            });
+        });
+        //-----------------------------------------------------------
+         document.addEventListener('DOMContentLoaded', function () {
+            const barCells2 = document.querySelectorAll('.bar-cell2');
+
+            barCells2.forEach(cell => {
+                const budget = parseInt(cell.getAttribute('data-budget'));
+                const accrual = parseInt(cell.getAttribute('data-accrual'));
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+
+                const accrualBar = document.createElement('div');
+                accrualBar.className = 'bar';
+                accrualBar.style.width = `${( accrual / budget) * 100}%`;
+                accrualBar.style.backgroundColor = 'blue';
+
+                barContainer.appendChild(accrualBar);
+
+                cell.appendChild(barContainer);
+            });
+        });
+         //-------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', function () {
+            const barCells3 = document.querySelectorAll('.bar-cell3');
+
+            barCells3.forEach(cell => {
+                const budget = parseInt(cell.getAttribute('data-budget'));
+                const totalbudget = parseInt(cell.getAttribute('data-totaltbudget'));
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+
+                const accrualBar = document.createElement('div');
+                accrualBar.className = 'bar';
+                accrualBar.style.width = `${( budget / totalbudget) * 100}%`;
+                accrualBar.style.backgroundColor = 'green';
+
+                barContainer.appendChild(accrualBar);
+
+                cell.appendChild(barContainer);
+            });
+        });
     </script>
   </body>
 </html>
