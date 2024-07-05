@@ -198,9 +198,13 @@
         <th>Accrual</th>       
         <th>Date Diff</th>
 
-        <th>Peace</th>
+        <th>Pace</th>
         <th>Execute</th>
         <th>Resource</th>
+
+        <!--Issues headers-->
+        <th>[#]</th>
+        <th>[P]</th>
       </tr>
     </thead>
     <tbody>
@@ -274,9 +278,9 @@
     {% endif %}
 
     <!--Schedule  -->
-    {% if data['Schedule'] > 5 %}<td><span class="icon check">&#x2713;</span></td>
+    {% if data['Schedule'] < 0 %}<td><span class="icon cross">&#x2717;</span></td>
     {% elif data['Schedule'] <= 5 %}<td><span class="icon yellowcircle">&#x25CF;</span></td>
-    {% elif data['Schedule'] < 0 %}<td><span class="icon cross">&#x2717;</span></td>
+    {% elif data['Schedule'] > 5 %}<td><span class="icon check">&#x2713;</span></td>
     {% else %}<td><span class="icon graycircle">&#x25CF;</span></td>
     {% endif %}
 
@@ -287,6 +291,17 @@
     {% else %}<td><span class="icon graycircle">&#x25CF;</span></td>
     {% endif %}
 
+    <!--Issues # WIP-->
+    
+    <!--Issues-->
+    {% if data['Issues'] == 'L' %}<td style="color: green;">L &#x2198;</td>
+    {% elif data['Issues'] == 'M' %}<td style="color: orange;">M &#x2192;</td>
+    {% elif data['Issues'] == 'H' %}<td style="color: red;">H &#x2197;</td>
+    {% elif data['Issues'] == 'Critical' %}<td style="color: black;">Critical &#x2191;</td>
+    {% else %}<td>{{ data['Issues'] }}</td>
+    {% endif %}
+
+    
         <!--End -->
 
         
@@ -301,7 +316,7 @@
         <!-- <td>{{ data['LT_Budget_Accrual'] }}</td> -->
         <td>{{ data['DateDiff'] }}</td>
 
-        <!-- Peace chart -->
+        <!-- Pace chart -->
         {% if data['Pace'] <= 0 %}<td>
             <div class="chart column">
                <div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div>

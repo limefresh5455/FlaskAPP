@@ -257,7 +257,7 @@ def gauge_chart():
     status_current = round(df_budget_sheet['Current Status'].sum() / df_budget_sheet['Total Status'].sum() * 100, 2)
     status_total = 100
 
-    def gauge(current_value, total_value, colors=['#e15759', '#fecd57', '#55a868']):
+    def gauge(current_value, total_value, word, colors=['#e15759', '#fecd57', '#55a868']):
         if total_value != 0:
             arrow = current_value / total_value
         else:
@@ -278,25 +278,22 @@ def gauge_chart():
 
         # Annotate the min, max, and current value
         ax.text(-radius, -radius * 0.2, '$0', ha='center', va='center', fontsize=12)
-        ax.text(radius, -radius * 0.2, f'${total_value:,}', ha='center', va='center', fontsize=12)
+        if "Budget" in word:
+            ax.text(radius, -radius * 0.2, f'${total_value:,}', ha='center', va='center', fontsize=12)
+        else:
+            ax.text(radius, -radius * 0.2, f'{total_value:,}%', ha='center', va='center', fontsize=12)
         ax.text(np.cos((1 - arrow) * np.pi) * (radius + 0.4), np.sin((1 - arrow) * np.pi) * (radius + 0.4), f'${current_value:,}', ha='center', va='center', fontsize=12)
 
-        def first_word_up_to_underscore(input_string):
-            underscore_index = input_string.find('_')
-            if underscore_index != -1:
-                return input_string[:underscore_index]
-            else:
-                return input_string
-
-        name = first_word_up_to_underscore('current_value')
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
-        plt.savefig('static/guageCHART.png')
-        #plt.savefig('static/' + name + '.png')
+        #ax.set_title(word)
+        plt.axis('off')
+        #plt.savefig('static/guageCHART.png')
+        plt.savefig('static/' + word + '.png')
         # plt.show()
 
-    gauge(budget_current_value, budget_total_value)
-    gauge(status_current, status_total)
+    gauge(budget_current_value, budget_total_value, 'Budget Spent')
+    gauge(status_current, status_total, 'PM Overall Status')
 
 
 
@@ -362,7 +359,18 @@ def index():
 @app.route('/financial')
 def financial():
     financial_activity()
-    return render_template('finance.html')
+    file_path="Mockup_Dashboard_cleandatav2.xlsx"
+    df_sheet2= pd.read_excel(file_path, sheet_name='Project Data')
+    completed = round(df_sheet2.iloc[1, 14],0)
+    to_do = round(df_sheet2.iloc[2,14],0)
+
+
+    df_sheet= pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Financials Data')
+    accrual_amount = round(df_sheet['Accrual to Date'].sum(),2)
+    cashout = round(df_sheet['Cash Out'].sum(),2) # usebudget
+    totalbudget = round(df_sheet['LT_Budget'].sum(), 2)
+
+    return render_template('finance.html', totalbudget=totalbudget, cashout=cashout, accrual=accrual_amount, completed=completed, to_do=to_do)
 
 @app.route('/project')
 def project_activity():
@@ -380,7 +388,7 @@ def project_activity():
 def process():
     mdata = request.args.get('data')
 
-    project_dict = main_all_data();
+    project_dict = main_all_data()
     if mdata in project_dict:
         value = project_dict[mdata]
     else:
@@ -404,6 +412,7 @@ def main_all_data():
     df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')
     df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
     df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Status')
+    df_sheet_name5 = pd.read_excel(file_path, sheet_name='Issues')
 
     project_dict = {}
 # Process data from 'Total Risk' sheet
@@ -439,6 +448,7 @@ def main_all_data():
             'Schedule': row['Schedule'],
             'Budget': row['Budget']
         })
+    print(f"After PM Defined Status: {project_id} -> {project_dict[project_id]}")
 
 # Process final status data
     for index, row in df_sheet_name2.iterrows():
@@ -448,6 +458,17 @@ def main_all_data():
         project_dict[project_id].update({
         'Status': row['Project Status']
     })
+    
+#Process Issues Data
+    for index, row in df_sheet_name5.iterrows():
+        project_id=row['Project ID']
+        if project_id not in project_dict:
+            project_dict[project_id] = {}
+        project_dict[project_id].update({
+            'Issues Count': row['Sum of Count'],
+            'Issues': row['Lookup']
+        })
+    
     return project_dict
 ###############################
 @app.route('/portfolio')
@@ -466,7 +487,7 @@ def data():
     #     'city': 'New York'
     # }
     df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
-    acc_projetid = df_sheet_name5['Projects']
+    acc_projetid = df_sheet_name5['Project ID']
     acc_cashout = round(df_sheet_name5['Cash Out'],2)
     acc_accrual = round(df_sheet_name5['Accrual to Date'],2)
     totlbudget = df_sheet_name5['LT_Budget']
