@@ -27,7 +27,7 @@ def generate_random_string(length):
     return ''.join(random.choices(letters_and_digits, k=length))
 
 def projectType():
-    df_sheet_name_projectType = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Project Types')
+    df_sheet_name_projectType = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Project Types')
     barchartType = df_sheet_name_projectType['Bar chart type']
     ProjectTypeCount = df_sheet_name_projectType['Count']
 
@@ -70,7 +70,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def funnelChart():
-    df_sheet_name_funnel = pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Funnel')
+    df_sheet_name_funnel = pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Funnel')
     funnel_data = df_sheet_name_funnel['Conversions']
     project_status_label = df_sheet_name_funnel['Project Status']
 
@@ -109,7 +109,7 @@ def funnelChart():
 
 ##################################################################
 def financial_activity():
-    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Financials Data')
+    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
     acc_projectid = df_sheet_name5['Project ID']
     lt_budget = df_sheet_name5['LT_Budget']
     acc_cashout = df_sheet_name5['Cash Out']
@@ -251,7 +251,7 @@ def budget_cashout_accrual_chart(projectid,totalbd,accrualbd,cashoutbd,lastdate)
 ####################################################
 def gauge_chart():
     # Data
-    df_budget_sheet = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Gauges')
+    df_budget_sheet = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Gauges')
     budget_total_value = round(df_budget_sheet['Total Budget'].sum(), 2)
     budget_current_value = round(df_budget_sheet['Current Spend'].sum(), 2)
     status_current = round(df_budget_sheet['Current Status'].sum() / df_budget_sheet['Total Status'].sum() * 100, 2)
@@ -302,29 +302,31 @@ def gauge_chart():
 
 ####################################################
 
-def get_project_data(project_id):
-    filtered_unique = df_unique[df_unique['Project ID'] == project_id]
-    if filtered_unique.empty:
-        return f"No data found for Project ID {project_id}"
-    
-    proj_id = filtered_unique.iloc[0]['Project ID']
-    proj_type = filtered_unique.iloc[0]['Project Type']
-    total_budget = filtered_unique.iloc[0]['Budget']
-    use_budget = result_budget[result_budget['Project ID'] == proj_id]['Used Budget'].values[0]
-    total_datediff = result_schedule[result_schedule['Project ID'] == proj_id]['DateDiff'].values[0]
-    avg_budget = round((use_budget / total_budget), 2)
-    
-    # Placeholder for overall_bin_dict data (replace with actual data)
-    overall_bin_dict = {
-        "Project 01": ["Bin1", "Bin2", "Bin3", "Bin4", "Bin5", "Bin6"],
-        "Project 02": ["BinA", "BinB", "BinC", "BinD", "BinE", "BinF"],
-        # Add other projects as needed
-    }
-    
-    z = overall_bin_dict.get(proj_id, ["N/A"] * 6)
-    combined_data = [avg_budget, total_datediff] + z
+## IS THIS CODE STILL BEING USED?
 
-    return combined_data
+# def get_project_data(project_id):
+#     filtered_unique = df_unique[df_unique['Project ID'] == project_id]
+#     if filtered_unique.empty:
+#         return f"No data found for Project ID {project_id}"
+    
+#     proj_id = filtered_unique.iloc[0]['Project ID']
+#     proj_type = filtered_unique.iloc[0]['Project Type']
+#     total_budget = filtered_unique.iloc[0]['Budget']
+#     use_budget = result_budget[result_budget['Project ID'] == proj_id]['Used Budget'].values[0]
+#     total_datediff = result_schedule[result_schedule['Project ID'] == proj_id]['DateDiff'].values[0]
+#     avg_budget = round((use_budget / total_budget), 2)
+    
+#     # Placeholder for overall_bin_dict data (replace with actual data)
+#     overall_bin_dict = {
+#         "Project 01": ["Bin1", "Bin2", "Bin3", "Bin4", "Bin5", "Bin6"],
+#         "Project 02": ["BinA", "BinB", "BinC", "BinD", "BinE", "BinF"],
+#         # Add other projects as needed
+#     }
+    
+#     z = overall_bin_dict.get(proj_id, ["N/A"] * 6)
+#     combined_data = [avg_budget, total_datediff] + z
+
+#     return combined_data
 
 
 ###################################
@@ -335,7 +337,7 @@ def index():
     financial_activity()
     gauge_chart()
 
-    file_path="Mockup_Dashboard_cleandata.xlsx"
+    file_path="Mockup_Dashboard_cleandatav2.xlsx"
     df_sheet2= pd.read_excel(file_path, sheet_name='Project Data')
     completed = round(df_sheet2.iloc[1, 14],0)
     to_do = round(df_sheet2.iloc[2,14],0)
@@ -346,12 +348,12 @@ def index():
     feedbackc = round(df_feedback.iloc[3, 10],2)
 
 
-    df_sheet= pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Financials Data')
+    df_sheet= pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Financials Data')
     accrual_amount = round(df_sheet['Accrual to Date'].sum(),2)
     cashout = round(df_sheet['Cash Out'].sum(),2) # usebudget
     totalbudget = round(df_sheet['LT_Budget'].sum(), 2)
     
-    df_hours_sheet= pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Project Data')
+    df_hours_sheet= pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Project Data')
     hoursused = df_hours_sheet['Hours Used'].sum()
     estimatedHours = df_hours_sheet['Hours Estimated'].sum()
     
@@ -364,7 +366,7 @@ def financial():
 
 @app.route('/project')
 def project_activity():
-    df_sheet= pd.read_excel("Mockup_Dashboard_cleandata.xlsx", sheet_name='Project Data')
+    df_sheet= pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Project Data')
 
     projectid=df_sheet['Project ID'].unique()
     unique_list = []
@@ -378,97 +380,80 @@ def project_activity():
 def process():
     mdata = request.args.get('data')
 
-    # Load the Excel file
-    file_path = "Mockup_Dashboard_cleandata.xlsx"
+    project_dict = main_all_data();
+    if mdata in project_dict:
+        value = project_dict[mdata]
+    else:
+        print("Key not found")
 
-    # Load the 'Project Status' sheet and filter the data
-    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Data')
-    range1 = df_sheet_name2[['Project ID', 'Status']]
-    filtered_data = range1[range1['Project ID'] == mdata]
-
-    # Load the 'ProjectData Test' sheet and filter the data
-    df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
-    filtered_data2 = df_sheet_name3[df_sheet_name3['Project ID'] == mdata]
-
-    df_sheet_name4 = pd.read_excel(file_path, sheet_name='Financials Data')
-    filtered_data3 = df_sheet_name4[df_sheet_name4['Project ID'] == mdata]
-
-    if filtered_data.empty or filtered_data2.empty or filtered_data3.empty:
-        return jsonify({'result': 'No data found for the given Project ID'})
-
-    projects = filtered_data2['Project ID'].values[0]
-    overall = filtered_data2['OVERALL'].values[0]
-    bin_data = filtered_data2['Bin'].values[0]
-    total = filtered_data3['Total Possible'].values[0]
-    q1 = piechart_calc_num(pd.to_numeric(filtered_data3['Q1'], errors='coerce').fillna(total).values[0])
-    q2 = piechart_calc_num(pd.to_numeric(filtered_data3['Q2'], errors='coerce').fillna(total).values[0])
-    q3 = piechart_calc_num(pd.to_numeric(filtered_data3['Q3'], errors='coerce').fillna(total).values[0])
-    q4 = piechart_calc_num(pd.to_numeric(filtered_data3['Q4'], errors='coerce').fillna(total).values[0])
-    status = filtered_data['Status'].values[0]
-    data={projects:[q1,q2,q3,q4]}
-    piechartname = pichart_create(data)
-    # Concatenate the results into a single string
-    # Load the Excel sheet
-###############################################
-    df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')
-
-# Remove duplicates based on 'Project ID' and 'Project Type'
-    df_unique = df_sheet_name.drop_duplicates(subset=['Project ID'])
-
-# Calculate the sum of 'Accrual amount' for each 'Project ID'
-    accrual_amount = df_sheet_name.groupby('Project ID')['Accrual to Date'].sum().reset_index()
-    accrual_amount.columns = ['Project ID', 'Accrual to Date']
-
-# Calculate the sum of 'Used Budget' for each 'Project ID'
-    result_budget = df_sheet_name.groupby('Project ID')['Cash Out'].sum().reset_index()
-    result_budget.columns = ['Project ID', 'Cash Out']
-
-# Calculate the sum of 'DateDiff' for each 'Project ID'
-    df_dateDiff = pd.read_excel(file_path, sheet_name='DateDiffs')
-    result_schedule = df_dateDiff.groupby('Project ID')['Days from Today'].sum().reset_index()
-    result_schedule.columns = ['Project ID', 'Days from Today']
-    project_id = mdata
-    filtered_unique = df_unique[df_unique['Project ID'] == project_id]
-    if filtered_unique.empty:
-        return f"No data found for Project ID {project_id}"
-    
-    proj_id = filtered_unique.iloc[0]['Project ID']
-    #proj_type = filtered_unique.iloc[0]['Project Type']
-    total_budget = filtered_unique.iloc[0]['LT_Budget']
-    accrual_amount_budget = accrual_amount[accrual_amount['Project ID'] == proj_id]['Accrual to Date'].values[0]
-    use_budget = result_budget[result_budget['Project ID'] == proj_id]['Cash Out'].values[0]
-    total_datediff = result_schedule[result_schedule['Project ID'] == proj_id]['Days from Today'].values[0]
-    avg_budget = round((use_budget / total_budget), 2)
-    #print(avg_budget)
-    casg_acc_barchart = budget_cashout_accrual_chart(proj_id,total_budget,accrual_amount_budget,use_budget,total_datediff)
-################################################
-    
-    res = {'Projectid':proj_id,
-    'status':status,
-    'img':piechartname+".png",
-    'img2':casg_acc_barchart+".png",
-    'overall':int(overall),
-    'scope':int(bin_data),
-    'schedule':int(total_datediff),
-    'avg_budget':str(avg_budget),
-    'accrual_amount':int(accrual_amount_budget)
-    }
-    # print(res)
-    # res=f"{res}"
-    return jsonify({'result': res})
+    return jsonify({'result': value})
 ##################################################
+def determine_final_status(status_list):
+    if 'Done' in status_list:
+        return 'Done'
+    elif 'Started' in status_list:
+        return 'Started'
+    else:
+        return 'Not Started'
+################################
+def main_all_data():
+    file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
 
+# Read the data from each sheet
+    df_sheet_name4 = pd.read_excel(file_path, sheet_name='Total Risk')
+    df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')
+    df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
+    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Status')
+
+    project_dict = {}
+# Process data from 'Total Risk' sheet
+    for index, row in df_sheet_name4.iterrows():
+        project_id = row['Project ID']
+        project_dict[project_id] = {
+            'Pace': row['Pace'],
+            'Execution': row['Execution'],
+            'Resources': row['Resources']
+        }
+    # Process data from 'Financials Data' sheet
+    for index, row in df_sheet_name.iterrows():
+        project_id = row['Project ID']
+        if project_id not in project_dict:
+            project_dict[project_id] = {}
+        project_dict[project_id].update({
+            'LT_Budget': row['LT_Budget'],
+            'LT_Budget_Cashout': row['LT_Budget - Cashout'],
+            'LT_Budget_Accrual': row['Cashout - Accrual'],
+            'DateDiff': row['Accrual #'],
+            'Q1':row['Q1'],'Q2':(row['Q2']-row['Q1']),
+            'Q3':(row['Q3']-row['Q2']),'Q4':(row['Q4']-row['Q3'])
+        })
+
+# Process data from 'PM Defined Status' sheet
+    for index, row in df_sheet_name3.iterrows():
+        project_id = row['Project ID']
+        if project_id not in project_dict:
+            project_dict[project_id] = {}
+        project_dict[project_id].update({
+            'Overall': row['OVERALL'],
+            'Scope': row['Scope'],
+            'Schedule': row['Schedule'],
+            'Budget': row['Budget']
+        })
+
+# Process final status data
+    for index, row in df_sheet_name2.iterrows():
+        project_id = row['Project ID']
+        if project_id not in project_dict:
+            project_dict[project_id] = {}
+        project_dict[project_id].update({
+        'Status': row['Project Status']
+    })
+    return project_dict
 ###############################
 @app.route('/portfolio')
 def portfolio():
-    
-    #temp_dict2 Project 01': 'Not Started',
-    # project_dict [[0.5, 0.5], [0.25, 0.75], [0.5, 0.5], [0.25, 0.75]]
-    #combined_dict  [0.98, 12, 2, 3] 
-    #budget_dict  {'totalbudget': 100000, 'Accrual Amount': 124911, 'Used Budget': 97618.0, 'Days Difference': 167}  
-    #risk_dict [27.0, 9.0, 12.0],
-
-    return render_template('portfolio.html')
+    project_dict = main_all_data()
+    return render_template('portfolio.html',data=project_dict)
 
 
 #####################################################
@@ -480,8 +465,8 @@ def data():
     #     'age': 30,
     #     'city': 'New York'
     # }
-    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Financials Data')
-    acc_projetid = df_sheet_name5['Project ID']
+    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
+    acc_projetid = df_sheet_name5['Projects']
     acc_cashout = round(df_sheet_name5['Cash Out'],2)
     acc_accrual = round(df_sheet_name5['Accrual to Date'],2)
     totlbudget = df_sheet_name5['LT_Budget']
