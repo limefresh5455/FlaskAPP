@@ -481,10 +481,10 @@ def data():
     #     'city': 'New York'
     # }
     df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandata.xlsx', sheet_name='Financials Data')
-    acc_projetid = df_sheet_name5['Projects']
+    acc_projetid = df_sheet_name5['Project ID']
     acc_cashout = round(df_sheet_name5['Cash Out'],2)
     acc_accrual = round(df_sheet_name5['Accrual to Date'],2)
-    totlbudget = df_sheet_name5['LT_cost']
+    totlbudget = df_sheet_name5['LT_Budget']
     data = sorted(zip(acc_projetid, acc_accrual, acc_cashout,totlbudget))
 
 # Unpack sorted data
