@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>bpx-ai</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/feather/feather.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/ti-icons/css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/typicons/typicons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/simple-line-icons/css/simple-line-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/css/vendor.bundle.base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/js/select.dataTables.min.css') }}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}" />
+    <style type="text/css">
+           .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: gray;
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .circle.quarter {
+            background: conic-gradient(black 0% 25%, white 25% 100%);
+        }
+
+        .circle.half {
+            background: conic-gradient(black 0% 50%, white 50% 100%);
+        }
+
+        .circle.three-quarters {
+            background: conic-gradient(black 0% 75%, white 25% 100%);
+        }
+
+        .circle.full {
+            background: black;
+        }
+----------------------------------------
+         .icon-cell {
+            display: table-cell;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .icon {
+            font-size: 24px;
+        }
+        .yellowcircle {
+            color: yellow;
+        }
+        .graycircle {
+            color: gray;
+        }
+        .check {
+            color: green;
+        }
+        .cross {
+            color: red;
+        }
+         .bar-container {
+            width: 100px;
+            height: 20px;
+            background-color: #e0e0e0;
+            position: relative;
+        }
+        .bar {
+            height: 100%;
+            background-color: #76c7c0;
+            position: absolute;
+        }
+        --------------------------
+        .chart {
+    display: flex;
+    flex-direction: column;
+}
+
+.column {
+    display: flex;
+    margin: 5px 0;
+}
+
+.box {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    margin: 0 2px;
+}
+
+.red {
+    background-color: red;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.green {
+    background-color: green;
+}
+    </style>
+  </head>
+  <body class="with-welcome-text">
+    <div class="container-scroller">
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper" style="padding-top:20px;">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index">
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item nav-category"></li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">CC Home</span>
+               <!-- <i class="menu-arrow"></i> -->
+              </a>
+
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link"  href="/portfolio">   
+                <i class="menu-icon mdi mdi-card-text-outline"></i>
+                <span class="menu-title">Portfolio Overview</span>
+                <!-- <i class="menu-arrow"></i> -->
+              </a>
+
+            </li>
+            <li class="nav-item" >
+               <a class="nav-link"  href="/financial"> 
+                <i class="menu-icon mdi mdi-chart-line"></i>
+                <span class="menu-title">Financial Forecast</span>
+                <!-- <i class="menu-arrow"></i> -->
+              </a>
+
+            </li>
+            <li class="nav-item" >
+              <a class="nav-link"  href="/project">
+                <i class="menu-icon mdi mdi-table"></i>
+                <span class="menu-title">Project Activity</span>
+            <!-- <i class="menu-arrow"></i> -->
+              </a>
+
+            </li>
+
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="home-tab">
+                      <div class="row">
+                        <div class="col-lg-12 d-flex flex-column">
+                          <div class="row flex-grow">
+                            <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                              <div class="card card-rounded">
+                                <div class="card-body" style="overflow:auto;">
+                                      <table class="table table-bordered">
+    <thead>
+      <tr>
+        <!-- Table header with 15 columns -->
+        <th>#</th>
+        <th>Projectid</th>
+        <th>Status </th>
+
+        <th>Q1</th>
+        <th>Q2</th>
+        <th>Q3</th>
+        <th>Q4</th>
+
+        <th>Overall</th>
+        <th>Scope</th>
+        <th>Schedule</th>
+        <th>Budget</th>
+
+        <th>Budget</th>
+        <th>Cashout</th>
+        <th>Accrual</th>       
+        <th>Date Diff</th>
+
+        <th>Pace</th>
+        <th>Execute</th>
+        <th>Resource</th>
+
+        <!--Issues headers-->
+        <th>[#]</th>
+        <th>[P]</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 10 rows of table data -->
+      <!-- Row 1 -->
+      {% set i = 0 %}
+      {% set status_colors = {
+    'Not Started': 'gray',
+    'In Progress': 'green',
+    'On Hold': 'purple',
+    'At Risk': 'orange',
+    'Completed': 'aqua',
+    'Overdue': 'red',
+    'Cancelled': 'yellow'
+} %}
+{% set pie_chart = {
+    '1': 'circle quarter',
+    '2': 'circle half',
+    '3': 'circle three-quarters',
+    '4': 'circle full',
+} %}
+      {% for project_id, data in data.items(): %}
+        <tr>
+        <td>{{ i+1 }}</td>
+        <td>{{ project_id }}</td>
+        <!--STATUS -->
+        <td style="color: {{ status_colors[data['Status']] }};">{{ data['Status'] }}</td>
+        <!--END -->     
+        <!--Milestone -->
+        {% if data['Q1'] == 1 %}<td><div class="circle quarter"></div></td> 
+        {% elif data['Q1'] == 2 %}<td><div class="circle half"></div></td>
+        {% elif data['Q1'] == 3 %}<td><div class="circle three-quarters"></div></td>
+        {% elif data['Q1'] == 4 %}<td><div class="circle full"></div></td>
+        {% else %}<td><div>data['Q1']</div></td>
+        {% endif %}
+
+        {% if data['Q2'] == 1 %}<td><div class="circle quarter"></div></td> 
+        {% elif data['Q2'] == 2 %}<td><div class="circle half"></div></td>
+        {% elif data['Q2'] == 3 %}<td><div class="circle three-quarters"></div></td>
+        {% elif data['Q2'] == 4 %}<td><div class="circle full"></div></td>
+        {% else %}<td><div>{{ data['Q2'] }}</div></td>
+        {% endif %}
+
+        {% if data['Q3'] == 1 %}<td><div class="circle quarter"></div></td> 
+        {% elif data['Q3'] == 2 %}<td><div class="circle half"></div></td>
+        {% elif data['Q3'] == 3 %}<td><div class="circle three-quarters"></div></td>
+        {% elif data['Q3'] == 4 %}<td><div class="circle full"></div></td>
+        {% else %}<td><div>{{ data['Q3'] }}</div></td>
+        {% endif %}
+
+        {% if data['Q4'] == 1 %}<td><div class="circle quarter"></div></td> 
+        {% elif data['Q4'] == 2 %}<td><div class="circle half"></div></td>
+        {% elif data['Q4'] == 3 %}<td><div class="circle three-quarters"></div></td>
+        {% elif data['Q4'] == 4 %}<td><div class="circle full"></div></td>
+        {% else %}<td><div>{{ data['Q4'] }}</div></td>
+        {% endif %}
+        <!--End -->
+
+    <!--overall  -->
+    {% if data['Overall'] == 4 %}<td><span class="icon check">&#x2713;</span></td>
+    {% elif data['Overall'] == 3 %}<td><span class="icon yellowcircle">&#x25CF;</span></td>
+    {% elif data['Overall'] == 2 %}<td><span class="icon cross">&#x2717;</span></td>
+    {% elif data['Overall'] == 1 %}<td><span class="icon graycircle">&#x25CF;</span></td>
+    {% endif %}
+
+    <!--Scope -->
+    {% if data['Scope'] == 1 %}<td><span class="icon check">&#x2713;</span></td>
+    {% elif data['Scope'] == 2 %}<td><span class="icon yellowcircle">&#x25CF;</span></td>
+    {% elif data['Scope'] == 3 %}<td><span class="icon cross">&#x2717;</span></td>
+    {% elif data['Scope'] == 4 %}<td><span class="icon graycircle">&#x25CF;</span></td>
+    {% endif %}
+
+    <!--Schedule  -->
+    {% if data['Schedule'] < 0 %}<td><span class="icon cross">&#x2717;</span></td>
+    {% elif data['Schedule'] <= 5 %}<td><span class="icon yellowcircle">&#x25CF;</span></td>
+    {% elif data['Schedule'] > 5 %}<td><span class="icon check">&#x2713;</span></td>
+    {% else %}<td><span class="icon graycircle">&#x25CF;</span></td>
+    {% endif %}
+
+    <!--Budget  -->
+    {% if data['Budget'] > 0.75 %}<td><span class="icon check">&#x2713;</span></td>
+    {% elif data['Budget'] > 0.5 %}<td><span class="icon yellowcircle">&#x25CF;</span></td>
+    {% elif data['Budget'] <= 0.5 %}<td><span class="icon cross">&#x2717;</span></td>
+    {% else %}<td><span class="icon graycircle">&#x25CF;</span></td>
+    {% endif %}
+
+
+
+    
+        <!--End -->
+
+        
+         <td class="bar-cell3" data-budget="{{ data['LT_Budget'] }}" data-totaltbudget="2000000"></td>
+
+         <td class="bar-cell" data-budget="{{ data['LT_Budget'] }}" data-cashout="{{ data['LT_Budget_Cashout'] }}"></td>
+
+        <td class="bar-cell2" data-budget="{{ data['LT_Budget'] }}"  data-accrual="{{ data['LT_Budget_Accrual'] }}"></td>
+
+        <!-- <td>{{ data['LT_Budget'] }}</td> -->
+        <!-- <td>{{ data['LT_Budget_Cashout'] }}</td> -->
+        <!-- <td>{{ data['LT_Budget_Accrual'] }}</td> -->
+        <td>{{ data['DateDiff'] }}</td>
+
+        <!-- Pace chart -->
+        {% if data['Pace'] <= 0 %}<td>
+            <div class="chart column">
+               <div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div>
+           </div></td>
+
+        {% elif data['Pace'] <= 10 %}<td>
+            <div class="chart column">
+            <div class="box green"></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div></div></td>
+        {% elif data['Pace'] <= 20 %}<td>
+            <div class="chart column">
+             <div class="box orange"></div> <div class="box orange"></div> <div class="box "></div> <div class="box "></div> <div class="box "></div>
+        </div></td>
+        {% elif data['Pace'] <= 30 %}<td>
+            <div class="chart column">
+             <div class="box orange"></div> <div class="box orange"></div> <div class="box orange"></div> <div class="box "></div> <div class="box "></div>
+        </div></td>
+        {% elif data['Pace'] <= 40 %}<td>
+            <div class="chart column">
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box"></div>
+        </div></td>
+
+        {% else %}
+        <td><div class="chart column">
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+        </div></td>
+        {% endif %}
+        
+        {% if data['Execution'] <= 0 %}<td>
+        <div class="chart column">
+        <div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div>
+        </div></td>
+
+        {% elif data['Execution'] <= 10 %}<td>
+        <div class="chart column">
+        <div class="box green"></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div></div></td>
+
+        {% elif data['Execution'] <= 20 %}<td>
+        <div class="chart column">
+        <div class="box orange"></div> <div class="box orange"></div> <div class="box "></div> <div class="box "></div> <div class="box "></div>
+        </div></td>
+
+        {% elif data['Execution'] <= 30 %}<td>
+        <div class="chart column">
+        <div class="box orange"></div> <div class="box orange"></div> <div class="box orange"></div> <div class="box "></div> <div class="box "></div>
+        </div></td>
+
+        {% elif data['Execution'] <= 40 %}<td>
+        <div class="chart column">
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box"></div>
+        </div></td>
+
+
+        {% else %}
+        <td><div class="chart column">
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+        </div></td>
+        {% endif %}
+
+
+        {% if data['Resources'] <= 0 %}<td>
+        <div class="chart column">
+        <div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div>
+        </div></td>
+
+        {% elif data['Resources'] <= 10 %}<td>
+        <div class="chart column">
+        <div class="box green"></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div><div class="box "></div></div></td>
+
+        {% elif data['Resources'] <= 20 %}<td>
+        <div class="chart column">
+        <div class="box orange"></div> <div class="box orange"></div> <div class="box "></div> <div class="box "></div> <div class="box "></div>
+        </div></td>
+
+        {% elif data['Resources'] <= 30 %}<td>
+        <div class="chart column">
+        <div class="box orange"></div> <div class="box orange"></div> <div class="box orange"></div> <div class="box "></div> <div class="box "></div>
+        </div></td>
+
+        {% elif data['Resources'] <= 40 %}<td>
+        <div class="chart column">
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box red"></div>
+        <div class="box"></div>
+        </div></td>
+
+
+        {% else  %}
+        <td><div class="chart column">
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+            <div class="box red"></div>
+        </div></td>
+        {% endif %}
+    <!--Issues # WIP-->
+    
+    <!--Issues-->
+    <td>{{ data['IssuesCount']|int }}</td>
+    {% if data['Issues'] == 'L' %}<td style="color: green;font-weight: bold;">L &#x2198;</td>
+    {% elif data['Issues'] == 'M' %}<td style="color: orange;font-weight: bold;">M &#x2192;</td>
+    {% elif data['Issues'] == 'H' %}<td style="color: red;font-weight: bold;">H &#x2197;</td>
+    {% elif data['Issues'] == 'Critical' %}<td style="color: black;font-weight: bold;">Critical &#x2191;</td>
+    {% else %}<td>{{ data['Issues'] }}</td>
+    {% endif %}
+
+    
+      </tr>
+      {% endfor %}
+       
+    </tbody>
+  </table>
+                                  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{{ url_for('static', filename='assets/vendors/js/vendor.bundle.base.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="{{ url_for('static', filename='assets/vendors/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/vendors/progressbar.js/progressbar.min.js') }}"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{{ url_for('static', filename='assets/js/off-canvas.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/template.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/settings.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/todolist.js') }}"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="{{ url_for('static', filename='assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='assets/js/dashboard.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const barCells = document.querySelectorAll('.bar-cell');
+
+            barCells.forEach(cell => {
+                const budget = parseInt(cell.getAttribute('data-budget'));
+                const cashout = parseInt(cell.getAttribute('data-cashout'));
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+                
+                const cashoutBar = document.createElement('div');
+                cashoutBar.className = 'bar';
+                cashoutBar.style.width = `${(cashout / budget) * 100}%`;
+                cashoutBar.style.backgroundColor = 'green';
+
+                barContainer.appendChild(cashoutBar);
+
+                cell.appendChild(barContainer);
+            });
+        });
+        //-----------------------------------------------------------
+         document.addEventListener('DOMContentLoaded', function () {
+            const barCells2 = document.querySelectorAll('.bar-cell2');
+
+            barCells2.forEach(cell => {
+                const budget = parseInt(cell.getAttribute('data-budget'));
+                const accrual = parseInt(cell.getAttribute('data-accrual'));
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+
+                const accrualBar = document.createElement('div');
+                accrualBar.className = 'bar';
+                accrualBar.style.width = `${( accrual / budget) * 100}%`;
+                accrualBar.style.backgroundColor = 'blue';
+
+                barContainer.appendChild(accrualBar);
+
+                cell.appendChild(barContainer);
+            });
+        });
+         //-------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', function () {
+            const barCells3 = document.querySelectorAll('.bar-cell3');
+
+            barCells3.forEach(cell => {
+                const budget = parseInt(cell.getAttribute('data-budget'));
+                const totalbudget = parseInt(cell.getAttribute('data-totaltbudget'));
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'bar-container';
+
+                const accrualBar = document.createElement('div');
+                accrualBar.className = 'bar';
+                accrualBar.style.width = `${( budget / totalbudget) * 100}%`;
+                accrualBar.style.backgroundColor = 'green';
+
+                barContainer.appendChild(accrualBar);
+
+                cell.appendChild(barContainer);
+            });
+        });
+    </script>
+    <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
+    <!-- End custom js for this page-->
+  </body>
+</html>
