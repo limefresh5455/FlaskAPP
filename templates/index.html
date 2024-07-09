@@ -23,11 +23,19 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
   <style>
+    .funnel-chart-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .funnel-chart {
       width: 100%;
+      max-width: 100%;
       height: auto;
-      max-width: 400px; /* Adjust this as needed */
-      margin: 0 auto; /* Center the chart */
+      object-fit: contain;
     }
   </style>
   <!-- endinject -->
@@ -137,6 +145,27 @@
                             </div>
                           </div>
                           <!-- Project Type Chart end -->
+
+                          <!-- Progress Chart -->
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <input type="radio" id="top5_progress" name="progress" value="Top5_Progress" checked="checked">
+                                    <label for="top5_progress">Top 5 Progress</label>
+
+                                    <input type="radio" id="bottom5_progress" name="progress" value="Bottom5_Progress">
+                                    <label for="bottom5_progress">Bottom 5 Progress</label>
+                                  </div>
+                                  <div id="performanceLine-legend-progress"></div>
+                                </div>
+                                <img src="{{ url_for('static', filename='progress_vs_milestones_top5_highest.jpg') }}" style="width:100%;height:auto;" id="top5_progress_img">
+                                <img src="{{ url_for('static', filename='progress_vs_milestones_top5_lowest.jpg') }}" style="width:100%;height:auto;display:none;" id="bottom5_progress_img">
+                              </div>
+                            </div>
+                          </div>
+                          <!-- Progress Chart end -->
                           
                         </div>
                       </div>
@@ -199,9 +228,9 @@
                           <!-- Communication and Cooperation Scores end -->
 
                           <!-- Funnel Chart -->
-                          <div class="col-md-6 col-lg-12 grid-margin stretch-card">
-                            <div class="card card-rounded">
-                              <div class="card-body">
+                          <div class="col-md-6 col-lg-12 grid-margin stretch-card" style="height: 100%;">
+                            <div class="card card-rounded funnel-chart-container" style="height: 100%;">
+                              <div class="card-body" style="height: 100%;">
                                 <img src="{{ url_for('static', filename='funnel.jpg') }}" class="funnel-chart">
                               </div>
                             </div>
@@ -284,6 +313,19 @@
           $("#top5_img").show();
           $("#bottom5_img").hide();
           localStorage.setItem("formstatus", "1");
+        }
+      });
+
+      $("input[name='progress']").click(function() {
+        var selectedValue = $(this).val();
+        if (selectedValue == 'Bottom5_Progress') {
+          $("#top5_progress_img").hide();
+          $("#bottom5_progress_img").show();
+          localStorage.setItem("formstatusProgress", "2");
+        } else {
+          $("#top5_progress_img").show();
+          $("#bottom5_progress_img").hide();
+          localStorage.setItem("formstatusProgress", "1");
         }
       });
     });

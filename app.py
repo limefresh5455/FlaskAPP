@@ -12,7 +12,7 @@ from matplotlib.gridspec import GridSpec
 import plotly.graph_objs as go
 import plotly.io as pio
 from flask_cors import CORS
-
+from datetime import date
 
 
 plt.switch_backend('Agg')
@@ -65,9 +65,6 @@ def projectType():
     plt.savefig("static/output.jpg")
     #plt.show()
 ##########################################################
-
-import pandas as pd
-import matplotlib.pyplot as plt
 
 def funnelChart():
     df_sheet_name_funnel = pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Funnel')
@@ -138,7 +135,7 @@ def financial_activity():
         ax.barh(i, max_budget, color='lightgray')
         ax.barh(i, cash, color='pink')
         ax.plot([acc, acc], [i - 0.4, i + 0.4], color='black', linewidth=3)
-        ax.text(acc + 1, i, f'${acc:,.2f}', va='center', ha='left', fontsize=10, color='black')
+        ax.text(cash + 3, i, f'${cash:,.2f}', va='center', ha='left', fontsize=10, color='black')
     ax.set_yticks(np.arange(len(top_5_highest)))
     ax.set_yticklabels([proj for proj, _, _, _ in top_5_highest])
     ax.set_xlabel('Amount ($)')
@@ -152,7 +149,7 @@ def financial_activity():
         ax.barh(i, max_budget, color='lightgray')
         ax.barh(i, cash, color='pink')
         ax.plot([acc, acc], [i - 0.4, i + 0.4], color='black', linewidth=3)
-        ax.text(acc + 1, i, f'${acc:,.2f}', va='center', ha='left', fontsize=10, color='black')
+        ax.text(cash + 3, i, f'${cash:,.2f}', va='center', ha='left', fontsize=10, color='black')
     ax.set_yticks(np.arange(len(top_5_lowest)))
     ax.set_yticklabels([proj for proj, _, _, _ in top_5_lowest])
     ax.set_xlabel('Amount ($)')
@@ -166,7 +163,7 @@ def financial_activity():
         ax.barh(i, max_budget, color='lightgray')
         ax.barh(i, cash, color='pink')
         ax.plot([acc, acc], [i - 0.4, i + 0.4], color='black', linewidth=3)
-        ax.text(acc + 1, i, f'${acc:,.2f}', va='center', ha='left', fontsize=10, color='black')
+        ax.text(cash + 3, i, f'${cash:,.2f}', va='center', ha='left', fontsize=10, color='black')
     ax.set_yticks(np.arange(len(data)))
     ax.set_yticklabels([proj for proj, _, _, _ in data])
     ax.set_xlabel('Amount ($)')
@@ -175,6 +172,83 @@ def financial_activity():
     plt.savefig("static/cashout_vs_accrual_all.jpg")
     # plt.show()
 
+#####################################################
+def progress_chart():
+    # Load data
+    df_sheet_name_project = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Project Data')
+    df_sheet_name_milestones = pd.read_excel('Mockup_dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
+
+    project_id = df_sheet_name_project['Project ID']
+    start_date = pd.to_datetime(df_sheet_name_project['Start Date'])
+    due_date = pd.to_datetime(df_sheet_name_project['Due Date'])
+    today = pd.Timestamp(date.today())
+    num_milestones_completed = df_sheet_name_milestones['% Completed']
+    max_milestones = 1  # 100%
+
+    # Calculate progress
+    active_duration = (today - start_date).apply(lambda x: x.days)
+    total_duration = (due_date - start_date).apply(lambda x:x.days)
+    progress = active_duration / total_duration
+
+    # Combine data into a list of tuples and filter out cases where progress is 0
+    data = list(zip(project_id, progress, num_milestones_completed))
+    data = [entry for entry in data if entry[1] > 0]
+    data = sorted(data, key=lambda x: abs(x[1] - x[2]), reverse=True)
+
+    # Select the top 5 highest deltas
+    top_5_highest = data[:5]
+
+    # Select the top 5 lowest deltas
+    top_5_lowest = sorted(data, key=lambda x: abs(x[1] - x[2]))[:5]
+
+    # Unpack all data for plotting all projects
+    project_id, progress_all, num_milestones_completed = zip(*data)
+
+    # Determine the maximum progress for setting the bar lengths
+    max_progress = max(progress_all)
+
+    # Plotting for top 5 highest deltas
+    fig, ax = plt.subplots(figsize=(12, 8))
+    for i, (proj, prog, milestones) in enumerate(top_5_highest):
+        ax.barh(i, max_progress, color='lightgray')
+        ax.barh(i, milestones, color='green')
+        ax.plot([prog, prog], [i - 0.4, i + 0.4], color='black', linewidth=3)
+        ax.text(milestones + 0.03, i, f'{milestones * 100:.2f}%', va='center', ha='left', fontsize=10, color='black')
+    ax.set_yticks(np.arange(len(top_5_highest)))
+    ax.set_yticklabels([proj for proj, _, _ in top_5_highest])
+    ax.set_xlabel('Progress (%)')
+    ax.set_title('Top 5 Highest Progress-Milestones Deltas')
+    ax.invert_yaxis()
+    plt.savefig("static/progress_vs_milestones_top5_highest.jpg")
+
+    # Plotting for top 5 lowest deltas
+    fig, ax = plt.subplots(figsize=(12, 8))
+    for i, (proj, prog, milestones) in enumerate(top_5_lowest):
+        ax.barh(i, max_progress, color='lightgray')
+        ax.barh(i, milestones, color='green')
+        ax.plot([prog, prog], [i - 0.4, i + 0.4], color='black', linewidth=3)
+        ax.text(milestones + 0.03, i, f'{milestones * 100:.2f}%', va='center', ha='left', fontsize=10, color='black')
+    ax.set_yticks(np.arange(len(top_5_lowest)))
+    ax.set_yticklabels([proj for proj, _, _ in top_5_lowest])
+    ax.set_xlabel('Progress (%)')
+    ax.set_title('Top 5 Lowest Progress-Milestones Deltas')
+    ax.invert_yaxis()
+    plt.savefig("static/progress_vs_milestones_top5_lowest.jpg")
+
+    # Plotting for all projects sorted by deltas
+    fig, ax = plt.subplots(figsize=(12, 16))
+    for i, (proj, prog, milestones) in enumerate(data):
+        ax.barh(i, max_progress, color='lightgray')
+        ax.barh(i, milestones, color='green')
+        ax.plot([prog, prog], [i - 0.4, i + 0.4], color='black', linewidth=3)
+        ax.text(milestones + 0.03, i, f'{milestones * 100:.2f}%', va='center', ha='left', fontsize=10, color='black')
+    ax.set_yticks(np.arange(len(data)))
+    ax.set_yticklabels([proj for proj, _, _ in data])
+    ax.set_xlabel('Progress (%)')
+    ax.set_title('All Projects Progress-Milestones Deltas')
+    ax.invert_yaxis()
+    plt.savefig("static/progress_vs_milestones_all.jpg")
+    # plt.show()
 
 
 #####################################################
@@ -278,7 +352,7 @@ def gauge_chart():
 
         # Annotate the min, max, and current value
         ax.text(-radius, -radius * 0.2, '$0', ha='center', va='center', fontsize=12)
-        if "Budget" in word:
+        if "budget" in word.lower():
             ax.text(radius, -radius * 0.2, f'${total_value:,}', ha='center', va='center', fontsize=12)
         else:
             ax.text(radius, -radius * 0.2, f'{total_value:,}%', ha='center', va='center', fontsize=12)
@@ -286,7 +360,6 @@ def gauge_chart():
 
         ax.xaxis.set_visible(False)
         ax.yaxis.set_visible(False)
-        #ax.set_title(word)
         plt.axis('off')
         #plt.savefig('static/guageCHART.png')
         plt.savefig('static/' + word + '.png')
@@ -332,6 +405,7 @@ def index():
     projectType()
     funnelChart()
     financial_activity()
+    progress_chart()
     gauge_chart()
 
     file_path="Mockup_Dashboard_cleandatav2.xlsx"
@@ -411,7 +485,7 @@ def main_all_data():
     df_sheet_name4 = pd.read_excel(file_path, sheet_name='Total Risk')
     df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')
     df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
-    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Status')
+    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Data')
     df_sheet_name5 = pd.read_excel(file_path, sheet_name='Issues')
 
     project_dict = {}
@@ -456,7 +530,7 @@ def main_all_data():
         if project_id not in project_dict:
             project_dict[project_id] = {}
         project_dict[project_id].update({
-        'Status': row['Project Status']
+        'Status': row['Status']
     })
     
 #Process Issues Data
