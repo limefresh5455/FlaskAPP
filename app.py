@@ -384,17 +384,20 @@ def project_activity():
     print(unique_list)
     return render_template('project.html',ids=unique_list)
 
+#priject activity page
 @app.route('/process')
 def process():
     mdata = request.args.get('data')
 
     project_dict = main_all_data()
+    milestonedata = milstone_gauntchart()
     if mdata in project_dict:
         value = project_dict[mdata]
+        value2 = milestonedata[mdata]
     else:
         print("Key not found")
 
-    return jsonify({'result': value})
+    return jsonify({'result': value,'result2':value2})
 ##################################################
 def determine_final_status(status_list):
     if 'Done' in status_list:
@@ -403,6 +406,37 @@ def determine_final_status(status_list):
         return 'Started'
     else:
         return 'Not Started'
+
+def milstone_gauntchart():
+    file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
+    # Read the data from the 'Financials Data' sheet
+    df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')   
+    # Initialize an empty dictionary to store milestones
+    milestones = {}   
+    # Iterate over each row in the dataframe
+    for index, row in df_sheet_name.iterrows():
+        project_id = row['Project ID']       
+        # Ensure the project_id exists in the dictionary
+        if project_id not in milestones:
+            milestones[project_id] = {}        
+        # Update the dictionary with milestone data, excluding NaN and NaT values
+        milestones[project_id].update({
+            'm1': row['Milestone1'] if pd.notna(row['Milestone1']) else None,
+            'm2': row['Milestone2'] if pd.notna(row['Milestone2']) else None,
+            'm3': row['Milestone3'] if pd.notna(row['Milestone3']) else None,
+            'm4': row['Milestone4'] if pd.notna(row['Milestone4']) else None,
+            'm5': row['Milestone5'] if pd.notna(row['Milestone5']) else None,
+            'm6': row['Milestone6'] if pd.notna(row['Milestone6']) else None,
+            'm7': row['Milestone7'] if pd.notna(row['Milestone7']) else None,
+            'm8': row['Milestone8'] if pd.notna(row['Milestone8']) else None,
+            'm9': row['Milestone9'] if pd.notna(row['Milestone9']) else None,
+            'm10': row['Milestone10'] if pd.notna(row['Milestone10']) else None
+        })        
+        # Remove keys with None values
+        milestones[project_id] = {k: v for k, v in milestones[project_id].items() if v is not None}
+    
+    return milestones
+
 ################################
 def main_all_data():
     file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
@@ -413,6 +447,7 @@ def main_all_data():
     df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
     df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Status')
     df_sheet_name5 = pd.read_excel(file_path, sheet_name='Issues')
+    df_sheet_name6 = pd.read_excel(file_path, sheet_name='Project Data')
 
     project_dict = {}
 # Process data from 'Total Risk' sheet
@@ -433,6 +468,9 @@ def main_all_data():
             'LT_Budget_Cashout': row['LT_Budget - Cashout'],
             'LT_Budget_Accrual': row['Cashout - Accrual'],
             'DateDiff': row['Accrual #'],
+            'milestonecompletion_per':row['% Completed'],
+            'actualprogess':row['Total Completed'],
+            'Totalmilestone':row['Total Possible'],
             'Q1':row['Q1'],'Q2':(row['Q2']-row['Q1']),
             'Q3':(row['Q3']-row['Q2']),'Q4':(row['Q4']-row['Q3'])
         })
@@ -448,7 +486,7 @@ def main_all_data():
             'Schedule': row['Schedule'],
             'Budget': row['Budget']
         })
-    print(f"After PM Defined Status: {project_id} -> {project_dict[project_id]}")
+    #print(f"After PM Defined Status: {project_id} -> {project_dict[project_id]}")
 
 # Process final status data
     for index, row in df_sheet_name2.iterrows():
@@ -465,8 +503,19 @@ def main_all_data():
         if project_id not in project_dict:
             project_dict[project_id] = {}
         project_dict[project_id].update({
-            'Issues Count': row['Sum of Count'],
+            'IssuesCount': row['Count'],
             'Issues': row['Lookup']
+        })
+
+#Project Data
+    for index, row in df_sheet_name6.iterrows():
+        project_id=row['Project ID']
+        if project_id not in project_dict:
+            project_dict[project_id] = {}
+        project_dict[project_id].update({
+            'startdate': row['Start Date'],
+            'enddate': row['Due Date'],
+            'type': row['Type']
         })
     
     return project_dict
@@ -474,7 +523,13 @@ def main_all_data():
 @app.route('/portfolio')
 def portfolio():
     project_dict = main_all_data()
-    return render_template('portfolio.html',data=project_dict)
+    def is_nan(value):
+        return value != value
+# Remove entries with nan keys
+    cleaned_data = {k: v for k, v in project_dict.items() if not (is_nan(k) or any(is_nan(vv) for vv in v.values()))}
+
+    #print(project_dict)
+    return render_template('portfolio.html',data=cleaned_data)
 
 
 #####################################################

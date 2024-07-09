@@ -35,19 +35,19 @@
         }
 
         .circle.quarter {
-            background: conic-gradient(gray 0% 25%, white 25% 100%);
+            background: conic-gradient(black 0% 25%, white 25% 100%);
         }
 
         .circle.half {
-            background: conic-gradient(gray 0% 50%, white 50% 100%);
+            background: conic-gradient(black 0% 50%, white 50% 100%);
         }
 
         .circle.three-quarters {
-            background: conic-gradient(gray 0% 75%, white 25% 100%);
+            background: conic-gradient(black 0% 75%, white 25% 100%);
         }
 
         .circle.full {
-            background: gray;
+            background: black;
         }
 ----------------------------------------
          .icon-cell {
@@ -291,15 +291,7 @@
     {% else %}<td><span class="icon graycircle">&#x25CF;</span></td>
     {% endif %}
 
-    <!--Issues # WIP-->
-    
-    <!--Issues-->
-    {% if data['Issues'] == 'L' %}<td style="color: green;">L &#x2198;</td>
-    {% elif data['Issues'] == 'M' %}<td style="color: orange;">M &#x2192;</td>
-    {% elif data['Issues'] == 'H' %}<td style="color: red;">H &#x2197;</td>
-    {% elif data['Issues'] == 'Critical' %}<td style="color: black;">Critical &#x2191;</td>
-    {% else %}<td>{{ data['Issues'] }}</td>
-    {% endif %}
+
 
     
         <!--End -->
@@ -430,7 +422,17 @@
             <div class="box red"></div>
         </div></td>
         {% endif %}
- 
+    <!--Issues # WIP-->
+    
+    <!--Issues-->
+    {% if data['Issues'] == 'L' %}<td style="color: green;font-weight: bold;">L &#x2198;</td>
+    {% elif data['Issues'] == 'M' %}<td style="color: orange;font-weight: bold;">M &#x2192;</td>
+    {% elif data['Issues'] == 'H' %}<td style="color: red;font-weight: bold;">H &#x2197;</td>
+    {% elif data['Issues'] == 'Critical' %}<td style="color: black;font-weight: bold;">Critical &#x2191;</td>
+    {% else %}<td>{{ data['Issues'] }}</td>
+    {% endif %}
+
+    <td>{{ data['IssuesCount'] }}</td>
       </tr>
       {% endfor %}
        
