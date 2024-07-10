@@ -217,7 +217,6 @@
                             <div>
                               <label for="cars">Choose a Project:</label>
                                   <select name="project" id="mySelect"  onchange="sendData2()">
-                                    <option value="">Select Project</option>
                                         {% for x in ids %}
                                        <option value="{{ x }}">{{ x }}</option>
                                         {% endfor %}
@@ -257,6 +256,8 @@
                                               <tr>
                                                 <td>Milestone overview</td>
                                                 <td>
+                                                <div id="milestonebar" style="margin-bottom:20px;"></div>
+                                                <hr>
                                                 <span id="milestone1"></span>
 
                                                 <span id="milestone2"></span>
@@ -311,6 +312,7 @@
                                               </tr>
 
                                             </table>
+                                              <div id="chart_div"></div>
                                        </div> 
                                           <div class="icon-container">
                                             <!-- overall -->
@@ -381,6 +383,7 @@
     <script src="{{ url_for('static', filename='assets/js/todolist.js') }}"></script>
      endinject -->
     <!-- Custom js for this page-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{{ url_for('static', filename='assets/js/jquery.cookie.js') }}" type="text/javascript"></script> 
     <script src="{{ url_for('static', filename='assets/js/dashboard.js') }}"></script>
     <!-- <script src="assets/js/Chart.roundedBarCharts.js"></script> -->
@@ -394,6 +397,21 @@
     'Completed': 'aqua',
     'Overdue': 'red',
     'Cancelled': 'yellow'
+}
+function calculateMonthsBetweenDates(startDate, endDate) {
+    // Get year and month of start and end dates
+    let startYear = startDate.getFullYear();
+    let startMonth = startDate.getMonth();
+    let endYear = endDate.getFullYear();
+    let endMonth = endDate.getMonth();
+
+    // Calculate the difference in years and months
+    let yearDifference = endYear - startYear;
+    let monthDifference = endMonth - startMonth;
+
+    // Total months difference
+    let totalMonths = yearDifference * 12 + monthDifference;
+    return totalMonths;
 }
 /////////////////////////////
 function milestone(q1,q2,q3,q4){
@@ -685,6 +703,24 @@ function issuefun(issue,issuecount)
       $("#issue1").html(temp);
     }
 }
+
+function milestone_barchart(milestone,receivemile,totalmile){
+
+var temp = "<h5>"+milestone+"%</h5><div class='bar-cell4' , milestone='"+milestone+"'  total='100'></div><br><span>Total :"+totalmile+"Receive : "+receivemile+"</span>";
+$("#milestonebar").html(temp);
+var barCells4 = document.querySelectorAll('.bar-cell4');
+barCells4.forEach(cell4 => {
+var  milestone1 = parseInt(cell4.getAttribute('milestone'));
+var totalper = parseInt(cell4.getAttribute('total'));
+var barContainer = document.createElement('div');
+barContainer.className = 'bar-container';
+var accrualBar = document.createElement('div');
+accrualBar.className = 'bar';
+accrualBar.style.width = `${( milestone1 / totalper) * 100}%`;
+accrualBar.style.backgroundColor = 'green';
+barContainer.appendChild(accrualBar);
+cell4.appendChild(barContainer); });
+}
 ////////////////////////
 //MAIN DROPDOWN  FUNCTION
 function sendData2() {
@@ -724,7 +760,32 @@ function sendData2() {
 
                   var issue = response.result.Issues;                
                   var issuecount = response.result.IssuesCount;  
-                  issuefun(issue,issuecount)              
+                  issuefun(issue,issuecount)   
+
+            let per_milestonecomplte = (response.result.milestonecompletion_per*100).toFixed(2);
+            let receivemile = response.result.actualprogess;
+            let totalmile = response.result.Totalmilestone;
+             milestone_barchart(per_milestonecomplte,receivemile,totalmile);      
+
+                  // console.log()
+                  // console.log()
+                  // console.log(response.result2)
+          var milestonejson = response.result2;
+
+                  var milestonejson = milestonejson;
+                  ganttChart(milestonejson);
+         
+            // loadganttchart(milestonejson)
+                // var startdate= response.result.startdate;
+                // var enddate= response.result.enddate;
+                // var type= response.result.type;
+                // console.log(startdate)
+                // console.log(enddate)
+                // let today = new Date(); 
+                // let projectStartDate = new Date(startdate);
+                // let monthsBetween = calculateMonthsBetweenDates(today, projectStartDate);
+                // console.log(monthsBetween); 
+                
 
                 },
                 error: function(error) {
@@ -732,7 +793,71 @@ function sendData2() {
                 }
             });
         }
-    
+    ////////////////////////////////////////////
+   function ganttChart(milestonejson) {
+    //alert('test')
+        google.charts.load('current', {'packages':['gantt']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+          console.log(milestonejson);  // Display the JSON data for debugging
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task ID');
+          data.addColumn('string', 'Task Name');
+          data.addColumn('string', 'Resource');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          var milestoneDates = {};
+          for (var key in milestonejson) {
+            milestoneDates[key] = new Date(milestonejson[key]);
+          }
+
+          // Create an array of milestone keys
+          var milestoneKeys = Object.keys(milestoneDates);
+          
+    for (var i = 0; i < milestoneKeys.length; i++) {
+            var startKey = milestoneKeys[i];
+            var endKey = milestoneKeys[i + 1] || startKey;  // Use the same key if it's the last milestone
+            var endDate = milestoneDates[endKey];
+
+            // Ensure end date is later than start date
+            if (milestoneDates[startKey].getTime() === endDate.getTime()) {
+              endDate = new Date(endDate.getTime() + 24 * 60 * 60 * 1000); // Add 1 day
+            }
+
+            data.addRow([
+              startKey,
+              'Milestone ' + (i + 1),
+              'milestone',
+              milestoneDates[startKey],
+              endDate,
+              null,
+              0,
+              null
+            ]);
+          }
+
+          var options = {
+            height: 400,
+            gantt: {
+              trackHeight: 30
+            }
+          };
+
+          var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
+      }
+
+      // Example usage
+
+
+ 
     </script>
   </body>
 </html>

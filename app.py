@@ -22,12 +22,14 @@ CORS(app)
 import random
 import string
 
+file = 'Mockup_Dashboard_cleandatav2.xlsx'
+
 def generate_random_string(length):
     letters_and_digits = string.ascii_letters + string.digits
     return ''.join(random.choices(letters_and_digits, k=length))
 
 def projectType():
-    df_sheet_name_projectType = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Project Types')
+    df_sheet_name_projectType = pd.read_excel(file, sheet_name='Project Types')
     barchartType = df_sheet_name_projectType['Bar chart type']
     ProjectTypeCount = df_sheet_name_projectType['Count']
 
@@ -65,6 +67,9 @@ def projectType():
     plt.savefig("static/output.jpg")
     #plt.show()
 ##########################################################
+
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def funnelChart():
     df_sheet_name_funnel = pd.read_excel("Mockup_Dashboard_cleandatav2.xlsx", sheet_name='Funnel')
@@ -106,7 +111,7 @@ def funnelChart():
 
 ##################################################################
 def financial_activity():
-    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
+    df_sheet_name5 = pd.read_excel(file, sheet_name='Financials Data')
     acc_projectid = df_sheet_name5['Project ID']
     lt_budget = df_sheet_name5['LT_Budget']
     acc_cashout = df_sheet_name5['Cash Out']
@@ -141,6 +146,8 @@ def financial_activity():
     ax.set_xlabel('Amount ($)')
     ax.set_title('Top 5 Highest Cashout-Accrual Deltas')
     ax.invert_yaxis()
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     plt.savefig("static/cashout_vs_accrual_top5_highest.jpg")
     
     # Plotting for top 5 lowest deltas
@@ -155,6 +162,8 @@ def financial_activity():
     ax.set_xlabel('Amount ($)')
     ax.set_title('Top 5 Lowest Cashout-Accrual Deltas')
     ax.invert_yaxis()
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     plt.savefig("static/cashout_vs_accrual_top5_lowest.jpg")
     
     # Plotting for all projects sorted by deltas
@@ -169,14 +178,16 @@ def financial_activity():
     ax.set_xlabel('Amount ($)')
     ax.set_title('All Projects Cashout-Accrual Deltas')
     ax.invert_yaxis()
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     plt.savefig("static/cashout_vs_accrual_all.jpg")
     # plt.show()
 
 #####################################################
 def progress_chart():
     # Load data
-    df_sheet_name_project = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Project Data')
-    df_sheet_name_milestones = pd.read_excel('Mockup_dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
+    df_sheet_name_project = pd.read_excel(file, sheet_name='Project Data')
+    df_sheet_name_milestones = pd.read_excel(file, sheet_name='Financials Data')
 
     project_id = df_sheet_name_project['Project ID']
     start_date = pd.to_datetime(df_sheet_name_project['Start Date'])
@@ -219,6 +230,8 @@ def progress_chart():
     ax.set_xlabel('Progress (%)')
     ax.set_title('Top 5 Highest Progress-Milestones Deltas')
     ax.invert_yaxis()
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     plt.savefig("static/progress_vs_milestones_top5_highest.jpg")
 
     # Plotting for top 5 lowest deltas
@@ -233,6 +246,8 @@ def progress_chart():
     ax.set_xlabel('Progress (%)')
     ax.set_title('Top 5 Lowest Progress-Milestones Deltas')
     ax.invert_yaxis()
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     plt.savefig("static/progress_vs_milestones_top5_lowest.jpg")
 
     # Plotting for all projects sorted by deltas
@@ -247,9 +262,11 @@ def progress_chart():
     ax.set_xlabel('Progress (%)')
     ax.set_title('All Projects Progress-Milestones Deltas')
     ax.invert_yaxis()
+    for spine in ax.spines.values():
+        spine.set_visible(False)
     plt.savefig("static/progress_vs_milestones_all.jpg")
     # plt.show()
-
+        
 
 #####################################################
 def piechart_calc_num(num):
@@ -325,7 +342,7 @@ def budget_cashout_accrual_chart(projectid,totalbd,accrualbd,cashoutbd,lastdate)
 ####################################################
 def gauge_chart():
     # Data
-    df_budget_sheet = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Gauges')
+    df_budget_sheet = pd.read_excel(file, sheet_name='Gauges')
     budget_total_value = round(df_budget_sheet['Total Budget'].sum(), 2)
     budget_current_value = round(df_budget_sheet['Current Spend'].sum(), 2)
     status_current = round(df_budget_sheet['Current Status'].sum() / df_budget_sheet['Total Status'].sum() * 100, 2)
@@ -405,7 +422,6 @@ def index():
     projectType()
     funnelChart()
     financial_activity()
-    progress_chart()
     gauge_chart()
 
     file_path="Mockup_Dashboard_cleandatav2.xlsx"
@@ -458,17 +474,20 @@ def project_activity():
     print(unique_list)
     return render_template('project.html',ids=unique_list)
 
+#priject activity page
 @app.route('/process')
 def process():
     mdata = request.args.get('data')
 
     project_dict = main_all_data()
+    milestonedata = milstone_gauntchart()
     if mdata in project_dict:
         value = project_dict[mdata]
+        value2 = milestonedata[mdata]
     else:
         print("Key not found")
 
-    return jsonify({'result': value})
+    return jsonify({'result': value,'result2':value2})
 ##################################################
 def determine_final_status(status_list):
     if 'Done' in status_list:
@@ -477,16 +496,48 @@ def determine_final_status(status_list):
         return 'Started'
     else:
         return 'Not Started'
+
+def milstone_gauntchart():
+    file_path = file
+    # Read the data from the 'Financials Data' sheet
+    df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')   
+    # Initialize an empty dictionary to store milestones
+    milestones = {}   
+    # Iterate over each row in the dataframe
+    for index, row in df_sheet_name.iterrows():
+        project_id = row['Project ID']       
+        # Ensure the project_id exists in the dictionary
+        if project_id not in milestones:
+            milestones[project_id] = {}        
+        # Update the dictionary with milestone data, excluding NaN and NaT values
+        milestones[project_id].update({
+            'm1': row['Milestone1'] if pd.notna(row['Milestone1']) else None,
+            'm2': row['Milestone2'] if pd.notna(row['Milestone2']) else None,
+            'm3': row['Milestone3'] if pd.notna(row['Milestone3']) else None,
+            'm4': row['Milestone4'] if pd.notna(row['Milestone4']) else None,
+            'm5': row['Milestone5'] if pd.notna(row['Milestone5']) else None,
+            'm6': row['Milestone6'] if pd.notna(row['Milestone6']) else None,
+            'm7': row['Milestone7'] if pd.notna(row['Milestone7']) else None,
+            'm8': row['Milestone8'] if pd.notna(row['Milestone8']) else None,
+            'm9': row['Milestone9'] if pd.notna(row['Milestone9']) else None,
+            'm10': row['Milestone10'] if pd.notna(row['Milestone10']) else None
+        })        
+        # Remove keys with None values
+        milestones[project_id] = {k: v for k, v in milestones[project_id].items() if v is not None}
+    
+    return milestones
+
 ################################
 def main_all_data():
-    file_path = 'Mockup_Dashboard_cleandatav2.xlsx'
+    file_path = file
 
 # Read the data from each sheet
     df_sheet_name4 = pd.read_excel(file_path, sheet_name='Total Risk')
     df_sheet_name = pd.read_excel(file_path, sheet_name='Financials Data')
     df_sheet_name3 = pd.read_excel(file_path, sheet_name='PM Defined Status')
-    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Data')
+    df_sheet_name2 = pd.read_excel(file_path, sheet_name='Project Status')
     df_sheet_name5 = pd.read_excel(file_path, sheet_name='Issues')
+    df_sheet_name6 = pd.read_excel(file_path, sheet_name='Project Data')
 
     project_dict = {}
 # Process data from 'Total Risk' sheet
@@ -507,6 +558,9 @@ def main_all_data():
             'LT_Budget_Cashout': row['LT_Budget - Cashout'],
             'LT_Budget_Accrual': row['Cashout - Accrual'],
             'DateDiff': row['Accrual #'],
+            'milestonecompletion_per':row['% Completed'],
+            'actualprogess':row['Total Completed'],
+            'Totalmilestone':row['Total Possible'],
             'Q1':row['Q1'],'Q2':(row['Q2']-row['Q1']),
             'Q3':(row['Q3']-row['Q2']),'Q4':(row['Q4']-row['Q3'])
         })
@@ -522,7 +576,7 @@ def main_all_data():
             'Schedule': row['Schedule'],
             'Budget': row['Budget']
         })
-    print(f"After PM Defined Status: {project_id} -> {project_dict[project_id]}")
+    #print(f"After PM Defined Status: {project_id} -> {project_dict[project_id]}")
 
 # Process final status data
     for index, row in df_sheet_name2.iterrows():
@@ -530,7 +584,7 @@ def main_all_data():
         if project_id not in project_dict:
             project_dict[project_id] = {}
         project_dict[project_id].update({
-        'Status': row['Status']
+        'Status': row['Project Status']
     })
     
 #Process Issues Data
@@ -541,6 +595,17 @@ def main_all_data():
         project_dict[project_id].update({
             'IssuesCount': row['Count'],
             'Issues': row['Lookup']
+        })
+
+#Project Data
+    for index, row in df_sheet_name6.iterrows():
+        project_id=row['Project ID']
+        if project_id not in project_dict:
+            project_dict[project_id] = {}
+        project_dict[project_id].update({
+            'startdate': row['Start Date'],
+            'enddate': row['Due Date'],
+            'type': row['Type']
         })
     
     return project_dict
@@ -566,7 +631,7 @@ def data():
     #     'age': 30,
     #     'city': 'New York'
     # }
-    df_sheet_name5 = pd.read_excel('Mockup_Dashboard_cleandatav2.xlsx', sheet_name='Financials Data')
+    df_sheet_name5 = pd.read_excel(file, sheet_name='Financials Data')
     acc_projetid = df_sheet_name5['Project ID']
     acc_cashout = round(df_sheet_name5['Cash Out'],2)
     acc_accrual = round(df_sheet_name5['Accrual to Date'],2)

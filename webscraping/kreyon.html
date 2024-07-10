@@ -1,0 +1,2393 @@
+
+
+<!DOCTYPE html PUBLIC>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://ogp.me/ns/fb#">
+<head id="Head1"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script type="application/ld+json">
+{
+ "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.kreyonsystems.com",
+  "name": "Kreyon Systems Pvt. Ltd.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target":"https:\/\/www.Kreyonsystems.com\/?s={search_term_string}",
+    "query-input":"required name=search_term_string"
+  }
+}
+    </script>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src="jsScript/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="jsScript/bootstrap.min.js" type="text/javascript"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="css/chat.css" rel="stylesheet" type="text/css" /><link href="css/confirm.css" rel="stylesheet" type="text/css" /><link rel="Shortcut Icon fv_icons" href="Images/fevicon_ico.ico" /><link href="css/Validation.css" rel="stylesheet" type="text/css" /><link href="css/messagebox.css" rel="stylesheet" type="text/css" /><link href="css/MyNew.css" rel="stylesheet" type="text/css" /><link href="css/media.css" rel="stylesheet" type="text/css" /><link href="css/font-awesome.css" rel="stylesheet" type="text/css" /><link href="css/owl.theme.css" rel="stylesheet" /><link href="css/owl.carousel.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Jura:600|Patua+One|Raleway|Fjalla+One|Julius+Sans+One&amp;display=swap|" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=PT+Sans|Source+Sans+Pro&amp;display=swap" rel="stylesheet" />
+
+    <!-- google analytics -->
+    <script type="text/javascript">
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-77475813-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var hostname = window.location.hostname; // Returns hostname only -- localhost
+
+            if (hostname != "localhost") {
+
+                //if (location.protocol != 'https:') {
+                //    location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+                //}
+            }
+
+            $('.btnchat').click(function () {
+                $(this).next().css({ 'visibility': 'visible', 'bottom': '0px' });
+                $(this).hide();
+                var length = $('#divChat .chatting').length;
+                if (length > 0) {
+                    $('.res_visitorchatBox').hide();
+                    $('.res_talkbox').show();
+                }
+            });
+            var docwwidth = $(window).width();
+            if (docwwidth < 465) {
+                var totalhgt = $(window).height();
+                $('.res_visitorchatBox').css('height', totalhgt - 40);
+                $('.res_visitorchatBox').css('max-height', totalhgt - 40);
+                $('.res_talkbox').css('max-height', totalhgt - 82);
+                $('.res_talkbox').css('height', totalhgt - 82);
+                // $('.res_chatfillform').css('max-height', totalhgt - 175);
+            } else {
+                var totalhgt1 = 380;
+                $('.res_visitorchatBox').css('height', totalhgt1 - 40);
+                $('.res_visitorchatBox').css('max-height', totalhgt1 - 40);
+                $('.res_talkbox').css('max-height', totalhgt1 - 92);
+                $('.res_talkbox').css('height', totalhgt1 - 92);
+
+            }
+            $(window).resize(function () {
+                var wwidth = $(window).width();
+                if (wwidth < 465) {
+                    // var totalhgt = $('.res_visitorchatBox').height();
+                    // $('.res_chatfillform').css('max-height', totalhgt - 135);
+                    var totalhgt = $(window).height();
+                    $('.res_visitorchatBox').css('height', totalhgt - 40);
+                    $('.res_visitorchatBox').css('max-height', totalhgt - 40);
+                    $('.res_talkbox').css('max-height', totalhgt - 82);
+                    $('.res_talkbox').css('height', totalhgt - 82);
+                    //$('.res_chatfillform').css('max-height', totalhgt - 175);
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        var totalimg = 5;
+        function GetShowMainBoxex(vl) {
+            $('.mozila_box').hide();
+            $('.crome_box').hide();
+            $('.mainmore_box').show();
+            $('.upper_back').show();
+            if (vl == 0) {
+                totalimg = 5;
+                $('.crome_box').show();
+                slider();
+            }
+            else {
+                totalimg = 2;
+                $('.mozila_box').show();
+                slider();
+            }
+        }
+        function isNumber(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode != 43 && charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+        function IsValidNumber(event) {
+            var dis = event.currentTarget;
+            var input = $(dis).val();
+            if (input != '') {
+                if (isNaN(input))
+                { $(dis).val(''); }
+            }
+        }
+
+
+        $(document).ready(function () {
+
+            // setsharemeta();
+
+            (function ($) {
+                $.fn.extend({
+                    rotaterator: function (options) {
+                        var defaults = {
+                            fadeSpeed: 1300,
+                            pauseSpeed: 2000,
+                            child: null
+                        };
+                        var options = $.extend(defaults, options);
+                        return this.each(function () {
+                            var o = options;
+                            var obj = $(this);
+                            var items = $(obj.children(), obj);
+                            items.each(function () { $(this).hide(); })
+                            if (!o.child) {
+                                var next = $(obj).children(':first');
+                            } else {
+                                var next = o.child;
+                            }
+                            $(next).fadeIn(o.fadeSpeed, function () {
+                                $(next).delay(o.pauseSpeed).fadeOut(o.fadeSpeed, function () {
+                                    var next = $(this).next();
+                                    if (next.length == 0) {
+                                        next = $(obj).children(':first');
+                                    }
+                                    $(obj).rotaterator({ child: next, fadeSpeed: o.fadeSpeed, pauseSpeed: o.pauseSpeed });
+                                })
+                            });
+                        });
+                    }
+                });
+            })(jQuery);
+            $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+                //this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+            $('.visitormsg').hide();
+            $('input[name="ChatDisconnect"]').click(function () {// this function using for Close chat
+
+                var value = $(this).val();
+                var me = $(this);
+                if (value == 'Ok') {
+                    $("#callhead").show();
+                    $(".visitormsg").hide();
+                    $(".chatbox").hide();
+                    $(".btnchat").show();
+                    $(".btnchat").css('margin-left', '0px');
+                    $(".chatContainer").css('display', 'block');
+                    $(".chatContainer").css('margin-left', '-206px');
+                    $(".chattingbox").hide();
+                    $("#divdefault").hide();
+                    $(".txttypehere").hide();
+                    $(".chattingbox").find('.chatrow').remove();
+                    $.post('Handler/ChatDisconnect.ashx?visitorId=' + senderId, function (data) {
+                        RecieverId = 0;
+                        ChatSession = "";
+                        $('#callerName').val("Name");
+                        $('#callerEmailId').val("Email Id");
+                        var countrycodeval = $('#hidCountryCode').val();
+                        $('#callerCountryCode').val(countrycodeval);
+                        $('#callerNumber').val("Phone no.");
+                        $('#callerMessage').val("Message");
+                        clearTimeout(refreshChatTimeout);
+                    });
+
+                } else {
+                    iscloseChatf = false;
+                    if (RecieverId > 0) {
+                        $('.chatConfirmation').css('display', 'none');
+                        $('.chatrow').css('display', 'block');
+                        $('.txttypehere').css('display', 'block');  // This is for tab live chat 
+
+                    } else {
+                        if (Boolean(isoffline)) {
+                            $('.visitormsg').text('Currently all agents are offline, Our support team will contact you soon.');
+                        }
+                        else {
+                            $('.visitormsg').text('Please complete this form and click Start Chat.');
+                        }
+                        $('.chatloader').hide();
+                        $('.visitormsg').show();
+                        $(".chatContainer").hide();
+                        $(".btnchat").hide();
+                        $(".chatbox").animate({ bottom: 0 }, '200');
+                        $(".chatbox").show();
+                        $("#chatform1").show();
+                        $("#chatform2").hide();
+                        if (iscloseChatf == false) {
+                            loading = setTimeout(function () {
+                                LoadUsers();
+                            }, 10000);  // This is for chat form
+                            LoadUsers();
+                        }
+                    }
+                }
+
+            });
+            var ScrollTop = 70;
+            var chkdown = true;
+            $(window).scroll(function (event) {
+
+                var a = $(window).width();
+                var st = $(this).scrollTop();
+
+                if (st > ScrollTop) {
+
+                    if (chkdown == true) {
+                        chkdown = false;
+                        $('#nav').css('display', 'none');
+                        $('#nav').slideDown("fast");
+
+                    }
+
+                    if ((a >= 300) && (a <= 479)) {
+                        $('#nav').css('display', 'none');
+                    }
+                    if ((a >= 480) && (a <= 1006)) {
+
+                        $('#nav').css('display', 'none');
+                    }
+                    else {
+                        $("#nav").css({ 'z-index': '100', '-webkit-box-shadow': '0 3px 4px -5px black', 'box-shadow': ' 0 3px 4px -5px black', '-moz-box-shadow': ' 0 3px 4px -5px black', 'background-color': '#fff' });
+                        $('.navright  li  a').css('color', '#000');
+                        $('.navright  li  a').hover(function () {
+                            $(this).css('color', '#fff');
+                        });
+                        $('.navright  li  a').mouseleave(function () {
+                            $(this).css('color', '#000');
+                        });
+                        $('.gray_logo').css({ 'display': 'block', 'float': 'left' });
+                        $('.white_logo').css('display', 'none');
+                    }
+
+                }
+                else {
+
+                    $("#nav").css({ '-webkit-box-shadow': 'none', 'box-shadow': 'none', '-moz-box-shadow': 'none', 'background-color': 'transparent' });
+                    $('.navright  li  a').css('color', '#fff');
+                    $('.navright  li  a').hover(function () {
+                        $(this).css('color', '#fff');
+                    });
+                    $('.navright  li  a').mouseleave(function () {
+                        $(this).css('color', '#fff');
+                    });
+                    $('.gray_logo').css('display', 'none');
+                    $('.white_logo').css('display', 'block');
+                    chkdown = true;
+
+                }
+
+            });
+            //////////////////link//////////
+            $("#home_Methodology").click(function () {
+                window.location = "Services.aspx";
+            });
+            $("#homeMobileapp").click(function () {
+                window.location = "MobileDetails.aspx";
+            });
+            $("#homedigital").click(function () {
+                window.location = "frmSEODetails.aspx";
+            });
+        });
+    </script>
+    <script type="text/javascript">
+
+        // Compatibility shim
+        function getbrowserinfo() {
+            var nVer = navigator.appVersion;
+            var nAgt = navigator.userAgent;
+            var browserName = navigator.appName;
+            var fullVersion = '' + parseFloat(navigator.appVersion);
+            var majorVersion = parseInt(navigator.appVersion, 10);
+            var nameOffset, verOffset, ix;
+
+            // In Opera 15+, the true version is after "OPR/" 
+            if ((verOffset = nAgt.indexOf("OPR/")) != -1) {
+                browserName = "Opera";
+                fullVersion = nAgt.substring(verOffset + 4);
+            }
+                // In older Opera, the true version is after "Opera" or after "Version"
+            else if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+                browserName = "Opera";
+                fullVersion = nAgt.substring(verOffset + 6);
+                if ((verOffset = nAgt.indexOf("Version")) != -1)
+                    fullVersion = nAgt.substring(verOffset + 8);
+            }
+                // In MSIE, the true version is after "MSIE" in userAgent
+            else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+                browserName = "Microsoft Internet Explorer";
+                fullVersion = nAgt.substring(verOffset + 5);
+            }
+                // In Chrome, the true version is after "Chrome" 
+            else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+                browserName = "Chrome";
+                fullVersion = nAgt.substring(verOffset + 7);
+            }
+                // In Safari, the true version is after "Safari" or after "Version" 
+            else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+                browserName = "Safari";
+                fullVersion = nAgt.substring(verOffset + 7);
+                if ((verOffset = nAgt.indexOf("Version")) != -1)
+                    fullVersion = nAgt.substring(verOffset + 8);
+            }
+                // In Firefox, the true version is after "Firefox" 
+            else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+                browserName = "Firefox";
+                fullVersion = nAgt.substring(verOffset + 8);
+            }
+                // In most other browsers, "name/version" is at the end of userAgent 
+            else if ((nameOffset = nAgt.lastIndexOf(' ') + 1) <
+          (verOffset = nAgt.lastIndexOf('/'))) {
+                browserName = nAgt.substring(nameOffset, verOffset);
+                fullVersion = nAgt.substring(verOffset + 1);
+                if (browserName.toLowerCase() == browserName.toUpperCase()) {
+                    browserName = navigator.appName;
+                }
+            }
+            // trim the fullVersion string at semicolon/space if present
+            if ((ix = fullVersion.indexOf(";")) != -1)
+                fullVersion = fullVersion.substring(0, ix);
+            if ((ix = fullVersion.indexOf(" ")) != -1)
+                fullVersion = fullVersion.substring(0, ix);
+
+            majorVersion = parseInt('' + fullVersion, 10);
+            if (isNaN(majorVersion)) {
+                fullVersion = '' + parseFloat(navigator.appVersion);
+                majorVersion = parseInt(navigator.appVersion, 10);
+            }
+            //var details = 'Browser name  = ' + browserName + '<br>';
+
+            //             + 'Full version  = ' + fullVersion + '<br>'
+            //             + 'Major version = ' + majorVersion + '<br>'
+            //             + 'navigator.appName = ' + navigator.appName + '<br>'
+            //             + 'navigator.userAgent = ' + navigator.userAgent + '<br>'
+            return browserName;
+        }
+
+        // PeerJS object
+        var peer;
+        function CreateConnection(VideoEnable) {
+            var browsername = getbrowserinfo();
+            var ac = "";
+            switch (browsername) {
+                case "Chrome":
+                    // ac = "<a href='https://support.google.com/chrome/answer/2693767?hl=en' target='_blank' style='cursor:pointer;color:White;'>Click here</a>";
+                    ac = "<div onclick='GetShowMainBoxex(0);' class='clickbtn'>Click Here</div>";
+                    break;
+                case "Firefox":
+                    // ac = "<a href='https://support.mozilla.org/en-US/kb/firefox-hello-cant-access-my-camera-or-microphone' target='_blank' style='cursor:pointer;color:White;'>Click here</a>";
+                    ac = "<div onclick='GetShowMainBoxex(1);' class='clickbtn'>Click Here</div>";
+                    break;
+                default:
+                    alert('To Live chat please upgrade your browser to Google Chrome or Mozilla Firefox.');
+                    return;
+                    break;
+            }
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+            navigator.getUserMedia({ audio: true, video: Boolean(VideoEnable) }, function (stream) {
+                // Set your video displays
+                if (Boolean(VideoEnable)) {
+                    $('#my-video').css('display', 'block');
+                    $('#my-video').prop('src', URL.createObjectURL(stream));
+                }
+                $('#divMsg').text('Please wait while we connect you to the agent.');
+                window.localStream = stream;
+
+                peer = new Peer({
+                    key: 'lwjd5qra8257b9', debug: 3, config: {
+                        'iceServers': [
+                              { url: 'stun:stun.l.google.com:19302' } // Pass in optional STUN and TURN server for maximum network compatibility
+                        ]
+                    }
+                });
+
+                peer.on('open', function () {
+                    CreateRequest(peer.id, VideoEnable);
+                });
+                peer.on('call', function (call) {
+                    // Answer the call automatically (instead of prompting user) for demo purposes
+                    call.answer(window.localStream);
+                    step3(call);
+                });
+                peer.on('error', function (err) {
+                    var ermsg = err.message;
+                    var ercnt = ermsg.lastIndexOf("STATE_RECEIVEDINITIATE");
+
+                    if (ercnt.length > 1)
+                    { $('#divMsg').text('You are now connected to the agent.'); }
+                    //$('#divMsg').text(err.message);
+                    // Return to step 2 if error occurs
+                    step2();
+                });
+
+            }, function (e) {
+                if (Boolean(VideoEnable)) {
+                    if (e.name == "DevicesNotFoundError") {
+                        $('#divMsg').html("Webcam device not found on your system.");
+
+                    }
+                    else {
+                        $('#divMsg').html("Please unblock webcam and microphone on your browser settings.For more help  " + ac + ".");
+                    }
+                }
+                else {
+                    if (e.name == "PermissionDeniedError") {
+                        $('#divMsg').html("Please unblock microphone on your browser settings.For more help  " + ac + ".");
+                    }
+                    else {
+                        $('#divMsg').html("Microphone device not found on your system.");
+                    }
+                }
+            });
+            $('.notesbg').css('display', 'block');
+        }
+
+    </script>
+
+    
+    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml" />
+    <title>Software Company|Software Development Company|Kreyon Systems|South Africa|UK|Jabalpur</title>
+    <html itemscope itemtype="http://schema.org/Website" />
+    <meta name="Keywords" content="Kreyon Systems, Software Company, Software Development, Software Design, Software Company in Jabalpur, Web development company in Jabalpur, IT company in jabalpur, Business Process Automation, Best Software Company, Offshore software development, Advanced Analytics, Data Analytics, erp software company, CRM Software Company, Web Development, Software Development Services, Design Thinking, Software Solutions,  Application development, Software Development Company, Software Company in South Africa, Software Company in Botswana, Software Product Company, Software Development Services, Business Software, Software Developers, Software Company Jabalpur" />
+    <meta name="description" content="Kreyon Systems is a Design thinking Software Company providing Software Development for Business Process automation, Software Solutions like CRM, Supply Chain Management, Asset Management, Document Management, ERP etc. Our focus areas are Cloud Software, Web Development, Analytics, IoT, Mobility, & AI Software. We serve Real Estate, Media, Aviation, Healthcare, Finance, Education & other Industries with best Software Products & Services." />
+    <meta itemprop="name" content="Kreyon Systems" />
+    <meta itemprop="description" content="Kreyon Systems is a Design thinking Software Company providing Software Development for Business Process automation, Software Solutions like CRM, Supply Chain Management, Asset Management, Document Management, ERP etc. Our focus areas are Cloud Software, Web Development, Analytics, IoT, Mobility, & AI Software. We serve Real Estate, Media, Aviation, Healthcare, Finance, Education & other Industries with best Software Products & Services." />
+    <meta property="og:image" content="https://www.kreyonsystems.com/images/kreyon-systems.png" />
+    <meta itemprop="image" content="https://www.kreyonsystems.com/images/kreyon-systems.png" />
+    <meta property="og:description" content="Kreyon Systems is a Design thinking Software Company providing Software Development for Business Process automation, Software Solutions like CRM, Supply Chain Management, Asset Management, Document Management, ERP etc. Our focus areas are Cloud Software, Web Development, Analytics, IoT, Mobility, & AI Software. We serve Real Estate, Media, Aviation, Healthcare, Finance, Education & other Industries with best Software Products & Services." />
+    <meta property="og:url" content="https://kreyonsystems.com/" />
+    <link href="css/messagebox.css" rel="stylesheet" type="text/css" />
+    <link href="css/Validation.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        *
+        {
+            -webkit-box-sizing: initial;
+            -moz-box-sizing: initial;
+            box-sizing: initial;
+        }
+
+        .triggers .selected
+        {
+            background-color: #f53938;
+        }
+
+        .sectionsubs
+        {
+            display: inline-block;
+        }
+    </style>
+<title>
+
+</title></head>
+<body>
+    <input type="hidden" id="hidvisitortoken" />
+    <input type="hidden" id="hidCountryCode" value="+91" />
+
+    <form method="post" action="./" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTQ0OTUzMzQzMmRkpi3H2UTSm50PGXaOu151qjeRGeSo/0zgfBMi/I3bg2E=" />
+
+
+<script src="/ScriptResource.axd?d=-7pjpXQq80R9R9Kl2qZWIDohs6SLjMuSPcuYnYNo4rCI4sVaIQTyFtJWuSJRkWZSb_T4XTRw2jTf3umxktU7o5MLy1-BZbM9VL7QewhChJwjlFgdBZ6ka5Eh8hyyjvvApUp0GJ1rhE67VZGSLsLar9WREB1o2MIjBBWK60cYvZRzDo0hMvhlsCQgIuUECoJf0&amp;t=74258c30" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var PageMethods = function() {
+PageMethods.initializeBase(this);
+this._timeout = 0;
+this._userContext = null;
+this._succeeded = null;
+this._failed = null;
+}
+PageMethods.prototype = {
+_get_path:function() {
+ var p = this.get_path();
+ if (p) return p;
+ else return PageMethods._staticInstance.get_path();},
+SubscribeUs:function(EmailId,succeededCallback, failedCallback, userContext) {
+/// <param name="EmailId" type="String">System.String</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+return this._invoke(this._get_path(), 'SubscribeUs',false,{EmailId:EmailId},succeededCallback,failedCallback,userContext); }}
+PageMethods.registerClass('PageMethods',Sys.Net.WebServiceProxy);
+PageMethods._staticInstance = new PageMethods();
+PageMethods.set_path = function(value) {
+PageMethods._staticInstance.set_path(value); }
+PageMethods.get_path = function() { 
+/// <value type="String" mayBeNull="true">The service url.</value>
+return PageMethods._staticInstance.get_path();}
+PageMethods.set_timeout = function(value) {
+PageMethods._staticInstance.set_timeout(value); }
+PageMethods.get_timeout = function() { 
+/// <value type="Number">The service timeout.</value>
+return PageMethods._staticInstance.get_timeout(); }
+PageMethods.set_defaultUserContext = function(value) { 
+PageMethods._staticInstance.set_defaultUserContext(value); }
+PageMethods.get_defaultUserContext = function() { 
+/// <value mayBeNull="true">The service default user context.</value>
+return PageMethods._staticInstance.get_defaultUserContext(); }
+PageMethods.set_defaultSucceededCallback = function(value) { 
+ PageMethods._staticInstance.set_defaultSucceededCallback(value); }
+PageMethods.get_defaultSucceededCallback = function() { 
+/// <value type="Function" mayBeNull="true">The service default succeeded callback.</value>
+return PageMethods._staticInstance.get_defaultSucceededCallback(); }
+PageMethods.set_defaultFailedCallback = function(value) { 
+PageMethods._staticInstance.set_defaultFailedCallback(value); }
+PageMethods.get_defaultFailedCallback = function() { 
+/// <value type="Function" mayBeNull="true">The service default failed callback.</value>
+return PageMethods._staticInstance.get_defaultFailedCallback(); }
+PageMethods.set_enableJsonp = function(value) { PageMethods._staticInstance.set_enableJsonp(value); }
+PageMethods.get_enableJsonp = function() { 
+/// <value type="Boolean">Specifies whether the service supports JSONP for cross domain calling.</value>
+return PageMethods._staticInstance.get_enableJsonp(); }
+PageMethods.set_jsonpCallbackParameter = function(value) { PageMethods._staticInstance.set_jsonpCallbackParameter(value); }
+PageMethods.get_jsonpCallbackParameter = function() { 
+/// <value type="String">Specifies the parameter name that contains the callback function name for a JSONP request.</value>
+return PageMethods._staticInstance.get_jsonpCallbackParameter(); }
+PageMethods.set_path("Default.aspx");
+PageMethods.SubscribeUs= function(EmailId,onSuccess,onFailed,userContext) {
+/// <param name="EmailId" type="String">System.String</param>
+/// <param name="succeededCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="failedCallback" type="Function" optional="true" mayBeNull="true"></param>
+/// <param name="userContext" optional="true" mayBeNull="true"></param>
+PageMethods._staticInstance.SubscribeUs(EmailId,onSuccess,onFailed,userContext); }
+//]]>
+</script>
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+        
+        <div id="camera" class="cmr_hide"></div>
+        <div class="msg_light"></div>
+        <div class="mobNav">
+            <img src='images/Kreyon_Systems.png' alt="Software Company in Jabalpur, UK, South Africa" title="kreyon" width='70' height='23' />
+            <div class='navlist'>
+            </div>
+            <ul class='mobNavlist'>
+                <li><span class="mob_home_icon mob_icon"></span><a href='Default.aspx'>Home</a></li>
+                <li><span class="mob_company_icon mob_icon"></span><a href='AboutCompany.aspx'>Company</a></li>
+                <li><span class="mob_product_icon mob_icon"></span><a href='ProductPage.aspx'>Products</a></li>
+                <li><span class="mob_career_icon mob_icon"></span><a href="frmCarrer.aspx">Careers</a></li>
+                <li><span class="mob_service_icon mob_icon"></span><a href='Services.aspx'>Services</a></li>
+                <li><span class="mob_contact_icon mob_icon"></span><a href='ContactUs.aspx'>Contact
+                Us</a></li>
+                <li><span class="mob_blog_icon mob_icon"></span><a href="https://www.kreyonsystems.com/Blog/">Blog</a> </li>
+            </ul>
+        </div>
+        <nav id="nav">
+            <div class="navdiv">
+                <div class="navleft">
+                    <img src="images/Software_Company_Kreyon_Logo.png" class="white_logo" alt="Software Development & Solutions" title="kreyon systems" />&nbsp<img src="images/Kreyon_Systems.png" class="gray_logo" alt="Software Solutions" title="kreyon systems" />
+                </div>
+                <ul class="navright">
+                    <li><a href="Default.aspx">Home</a> </li>
+                    <li><a href="AboutCompany.aspx">Company</a> </li>
+                    
+                    <li><a id="popup_product" href="#">Products </a></li>
+                    <li><a id="A1" href="frmcarrer.aspx">Careers </a></li>
+                    <li><a href="Services.aspx">Services </a></li>
+                    
+                    <li><a href="ContactUs.aspx">Contact Us</a> </li>
+                    <li><a href="https://www.kreyonsystems.com/Blog/">Blog</a> </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="mainboxMob">
+            
+    
+    <input type="hidden" id="glo_share_title" value="Kreyon Systems" />
+    <input type="hidden" id="glo_share_detail" value="Kreyon Systems is a Design thinking Software Company providing Software Development for Business Process automation, enterprise software applications like CRM, Supply Chain Management, Asset Management, Document Management, ERP etc. Our focus areas are Cloud Software, Web Development, Analytics, Mobility, & IoT Software. We serve Real Estate, Media, Aviation, Healthcare, finance, Education & other Industries with best Software Products & Services." />
+    <input type="hidden" id="glo_share_image" value="https://www.kreyonsystems.com/images/kreyon-systems.png" />
+    <input type="hidden" id="glo_share_url" value="https://www.kreyonsystems.com/Default.aspx" />
+    <div class="homebanner">
+        <div class="homebanner_pattern">
+        </div>
+        <div class="bannertxt_area">
+            <div class="homevideotext">
+                <span>We are</span> <span class="txtkreyon">Kreyon</span> <span>Systems</span>
+            </div>
+            <div class="bannet_txtbox" id="rotate">
+                <div class="banner_txtblock ">
+                    Software Developers, Architects & Technologists adept at channelizing solutions for maximizing efficiency & growth.
+                </div>
+                <div class="banner_txtblock ">
+                    Software Company Powering businesses to leverage technology for Growth, Expansion & Transformation.
+                </div>
+                <div class="banner_txtblock ">
+                    Software Development Driving Compelling Business Results in highly technical and complex markets.
+                </div>
+                <div class="banner_txtblock ">
+                    Stay ahead of the competition with Cloud software, SaaS solutions, Data Analytics & Insights for your business growth.
+                </div>
+                <div class="banner_txtblock ">
+                    Analyse, Digitize & Implement end to end IT Solutions with us.
+                </div>
+            </div>
+        </div>
+        <video class="homevideo" id="homebanner_video" alt="Software Company Jabalpur, India & UK" title="Software Company" loop autoplay="autoplay" muted>
+            <source src="video/Software_Company_Video.mp4" type="video/mp4"/>
+        </video>
+        <div class="home_bannerimg">
+            <img src='images/Software_Company_Jabalpur_MP_India.jpg' alt="Software Company Jabalpur, MP, India, UK, USA, Europe" title="Software Company" />
+        </div>
+    </div>
+    <div class="homesection1">
+        <div class="innerhomesection1">
+            <div class="homesection1_block homesection1_bdr" id="tab1">
+                <span class="homeicon soft"></span>Software Development
+            </div>
+            <div class="homesection1_block " id="tab2">
+                <span class="homeicon ui"></span>Design Thinking
+            </div>
+            <div class="homesection1_block" id="tab3">
+                <span class="homeicon mob"></span>Mobile Applications
+            </div>
+            <div class="homesection1_block" id="tab4">
+                <span class="homeicon inter"></span>Business Process Automation
+            </div>
+            <div class="homesection1_block" id="tab5">
+                <span class="homeicon video"></span>Software Products
+            </div>
+        </div>
+    </div>
+    <div class="homesection2">
+        <div class="innerhomesection1_scroll">
+            <div class="homesection2_inner">
+                <div class="homesection2img">
+                    <img src="images/Software_Development_Solutions.jpg" alt="Software Development & Solutions" title="Software Development Company" />
+                </div>
+                <div class="homesection2_txt softdevelpment_homesect2 glo_res_headblk">
+                    <h1>Software Development</h1>
+                    Kreyon Systems provides end to end IT solutions & state of the art software development. We offer vast range of software products, custom software development services and systems integration solutions. We are a leading organisation providing niche software development and allied services to clients in many industries. We offer software services like Digital Transformation for businesses, Web Application Development, Custom Software Applications development and maintenance, UI, UX Software Designs, E-commerce development, ERP software, CMS and CRM development etc..
+                    <br />
+                    <a href="SoftwareSolution.aspx" class="more">
+                        <div>
+                            Software solutions
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="homesection2_inner">
+                <div class="homesection2img">
+                    <img src="images/design-thinking-software.jpg" alt="Design Thinking Software" title="Design Thinking Software" />
+                </div>
+                <div class="homesection2_txt glo_res_headblk">
+                    <h2>Design Thinking</h2>
+                    Kreyon uses Design thinking for Software Development. Design Thinking is an iterative process in which we seek to understand the user, challenge assumptions, and redefine problems in an attempt to identify alternative strategies and solutions for clients. Design thinking for software development improves communication, focuses on user centric approach and builds solutions that solve client’s challenges. The solution is built around the needs of the end users, where clients can visualise things and provide feedback during software development to helps us develop high quality software.
+                    <a href="DesignThinking.aspx" class="more">
+                        <div>
+                            Design Thinking for Software
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="homesection2_inner">
+                <div class="homesection2img">
+                    <img src="images/mobile-application-and-software-development.jpg" alt="Software Company Jabalpur" title="Mobile Applications and Software Development" />
+                </div>
+                <div class="homesection2_txt glo_res_headblk">
+                    <h2>Mobile Applications</h2>
+                    Kreyon helps you increase productivity and collaboration among employees by encouraging them to use devices of their choice. Our mobile software solutions are developed to provide consistent user experience and build intuitive applications that solve client challenges. Our mobile software applications are geared to provide extraordinary impact for businesses. We are working with clients in various industries to build niche progressive web apps and software as a service platforms. These apps transform customer interactions, daily operations & business continuity any time anywhere with a mobile workforce.
+                    <a href="MobileDetails.aspx" class="more">
+                        <div>
+                            Mobile Application Software
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="homesection2_inner">
+                <div class="homesection2img">
+                    <img src="images/businessprocess_automation-software.jpg" alt="Business Management Software" title="Business Process Automation Software" />
+                </div>
+                <div class="homesection2_txt glo_res_headblk">
+                    <h2>Business Process Automation</h2>
+                    Leading companies around the world use our customized business process automation software. We provide end to end BPA solutions to clients in various industries like Real Estate, Aviation, Media, Healthcare, Finance, Power & Energy etc. Our business process automation software helps clients to enhance productivity, drive innovation & transform their organisation. We help you save costs immediately by strategic utilisation of resources, providing tools for efficiency and growth. 
+                    <a href="BusinessProcess.aspx" class="more">
+                        <div>
+                            Business Process Automation Software
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="homesection2_inner">
+                <div class="homesection2img">
+                    <img src="images/softwarecompany_product.jpg" alt="Enterprise Software Company" title="Software Products" />
+                </div>
+                <div class="homesection2_txt glo_res_headblk">
+                    <h2>Software Products</h2>
+                    Kreyon Systems provides leading software products for Asset Management, Customer Relationship Management, Business Process Automation, Lender Management, Wealth Management, & Supply Chain Management etc. We have vast experience of building software products that serve clients in more than 10 countries and thousands of users. We are a Software Company that serves B2B and B2C enterprises with our cutting edge software products. We also provide full cycle Software Product Development Services to clients looking to build global & scalable platforms.
+                     <a href="SoftwareProductDevelopment.aspx" class="more">
+                         <div>
+                             Software Product Development
+                         </div>
+                     </a>
+                </div>
+            </div>
+        </div>
+            <div class="clearboth"></div>
+    </div>
+    <div class="teamtask_headingabout">
+        <ul>
+            <li>ABOUT US</li>
+            <li class="liLine1"></li>
+            <li class="liLine2"></li>
+        </ul>
+    </div>
+    <div class="sectionabout">
+        <div class="sectionabout_left">
+            <img src='images/Software-Product-services.png' class="default_leftimg" alt="Software Company New Jersey, USA" title="Kreyon Software Solutions" />
+        </div>
+        <div class="sectionabout_right">
+            <div class="sectionabout_right_text about_kreyon glo_res_headblk">
+                <h1>Software Company</h1>
+                <div class="about_kreyon_more">
+                    <div class="wrapper wrapper_about">
+                        <ul class="owl-carousel" id="AboutSlider">
+                            <li>
+                                <p>
+                                    Kreyon Systems Pvt. Ltd. is a Software Company with rich experience of working with clients in USA, UK, UAE, Japan, Australia, Europe, & Africa. Kreyon offers software development services for business process automation for various sectors like Healthcare, Real Estate, Aviation, Manufacturing, Retail, Education, Gas, Power, banking & Finance etc. Kreyon leverages high end expertise in software as a service model for building cloud based software products. Our software solutions are powered with Advanced Data Analytics & Artificial Intelligence.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Kreyon Systems has innovative software products and solutions for CRM, Business Process Automation, Supply Chain Management, Asset Management, Document Management, cloud ERP etc. Our core expertise lies in building state of the art software products and applications using design thinking, creativity and innovation. Kreyon provides end to end software development services & IT consultancy to various organisations round the world for optimisation of business processes & growth.
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Kreyon is a trusted software company with reputed clientele. Kreyon has completed projects like JICA Finance software for MPPTCL with funding of more than US$200Mln & managed assets of more than US$1Bln. Kreyon's core services include custom software development, software product development, SaaS, digitisation, enterprise software solutions, design thinking software & complete solutions for clients. Kreyon Systems is a highly soughted IT company with development center at Jabalpur, Madhya  Pradesh in central India. Kreyon also has offices in Gaborone, Botswana, Johanesburg, South Africa & New Jersey, USA. 
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
+                <div class="btnContact" id="btnAbout">
+                    Know More
+                </div>
+            </div>
+        </div>
+        <div class="clearboth"></div>
+    </div>
+    <div class="sectionhome3">
+        <div class="teamtask_heading ts_heading">
+            <ul>
+                <li>How We Work</li>
+                <li class="liLine1"></li>
+                <li class="liLine2"></li>
+            </ul>
+        </div>
+        <div class="sectionhome3_inner">
+        </div>
+    </div>
+    <div class="sectionhome5">
+        <div class="sectionhome5_h">
+            Empower Your Business With
+        </div>
+        <div class="sectionhome5_tab">
+            <div class="sectionhome5_tab1Cover">
+                Big Data
+            </div>
+            <div class="sectionhome5_tab1" id="section_tab1">
+                Big Data
+            </div>
+            <div class="sectionhome5_tab1" id="section_tab2">
+                Cloud Software
+            </div>
+            <div class="sectionhome5_tab1" id="section_tab3">
+                Social Media
+            </div>
+            <div class="sectionhome5_tab1" id="section_tab4">
+                Mobility Solutions
+            </div>
+            <div class="sectionhome5_tab1" id="section_tab5">
+                Advanced Analytics
+            </div>
+            <div class="sectionhome5_tab1" id="section_tab6">
+                Internet Of Things
+            </div>
+        </div>
+        <div class="sectionhome5area">
+            <div class="empower_scroll">
+                <div class="sectionhome5_inner glo_res_headblk">
+                    <div class="sectionhome5_inner_left">
+                        <img src="images/Software-company-for-bigdata-solution.png" alt="Software Solutions Big data" title="Big data Solution" />
+                    </div>
+                    <div class="sectionhome5_inner_right">
+                        <h2>Big Data</h2>
+                        <p>
+                            The speed at which companies and individuals are generating data is phenomenal. Billions of gigabytes of data is generated every year. Data is invaluable when it is analysed and used in time for making crucial business decisions. It is an unbeatable competitive advantage. Kreyon Systems is helping enterprises to formulate strategic business decisions using big data. Our business software is helping enterprises to seize the big data advantage to capture growth opportunities. Big data is helping in predictions for buying decisions, fraudulent alerts in banks, government policy making etc.
+                            <a href="bigdatasolution.aspx" class="more2">
+                                <div>
+                                    Big Data Software Solutions
+                                </div>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="sectionhome5_inner">
+                    <div class="sectionhome5_inner_left">
+                        <img src="images/Software-company-for-cloud-computing-solutions.png" alt="Software Company for cloud software solutions" title="Cloud Computing" />
+                    </div>
+                    <div class="sectionhome5_inner_right">
+                        <h2>Cloud Software</h2>
+                        <p>
+                            Kreyon is a SaaS company providing scalable cloud solutions. Cloud Software has given rise to innovations and developments that are changing the way industries operate. Organisations around the world are looking at Cloud computing solutions for productivity and day to day operations. With the rise of software as a service model for businesses, cloud applications are changing the way people work, travel and spend their time. We provide consulting, design, development, integration, security audit and maintenance of cloud softwares and applications. We build secured, functional and scalable cloud based software products and solutions.
+                            <a href="cloudcomputing.aspx" class="more2">
+                                <div>
+                                    Cloud Software 
+                                </div>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="sectionhome5_inner">
+                    <div class="sectionhome5_inner_left">
+                        <img src="images/Software-Company-for-Social-Media-Services.png" alt="Software Company Jabalpur, Madhya Pradesh" class="section_home_img" title="Social Media" />
+                    </div>
+                    <div class="sectionhome5_inner_right">
+                        <h2>Social Media</h2>
+                        <p>
+                            A social media strategy has become a must for all companies today. Banks, retailers, ecommerce websites, Governments and even political parties are using social data for making decisions. With billions of social media users and data footprint they generate is enormous. Organisations are looking for digital data analysis and mining software to make informed choices. For e.g. what products to buy, where to buy and where they should go for vacation are all driven by social media. Businesses are tapping into this digital data and using it for their sales and marketing efforts to improve conversions.
+                             <a href="DigitalMarketing.aspx" class="more2">
+                                 <div>
+                                     Social Media Software
+                                 </div>
+                             </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="sectionhome5_inner">
+                    <div class="sectionhome5_inner_left">
+                        <img src="images/Software-company-for-Mobility-solutions.png" alt="Software Company Services for Mobility Solutions" title="Mobility Solutions" />
+                    </div>
+                    <div class="sectionhome5_inner_right">
+                        <h2>Mobility Solutions</h2>
+                        <p>
+                            Mobile Internet has changed the way people live and work today. Most of the digital content is now accessed using mobile devices. Smart phones and tablets have brought information to the tips of users. Kreyon Systems provides high end enterprise and consumer software development services to clients for building mobile capabilities. Enterprises are empowering their staff and customers with mobile software solutions. We offer full-cycle development services for web, mobile, tablets, desktops and laptops that bring value to multi-nationals, government clients, retailers and consumer applications.
+                            <a href="MobileDetails.aspx" class="more2">
+                                <div>
+                                    Mobile & Progressive Web Applications
+                                </div>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="sectionhome5_inner">
+                    <div class="sectionhome5_inner_left">
+                        <img src="images/Software-company-for-data-analytics.png" alt="Software company for data analytics" title="Advanced Data Analytics" />
+                    </div>
+                    <div class="sectionhome5_inner_right">
+                        <h2>Advanced Analytics</h2>
+                        <p>
+                            Kreyon Systems is an IT company building software solutions using advanced analytics and data science. This is to increase clarity, focus and leverage information to help businesses succeed in their objectives. We use design thinking for improving data visualisation to uncover useful information from lots of data. Our software solutions are enabled with business intelligence and use self learning patterns. The advanced analytics helps clients to measure things in real time that matter the most. Kreyon’s software products and services enable organisations to meet dynamic and ever changing business demands through Business Intelligence and Analytics.
+                            <a href="AdvanceAnalytics.aspx" class="more2">
+                                <div>
+                                    Advanced Analytics
+                                </div>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <div class="sectionhome5_inner">
+                    <div class="sectionhome5_inner_left">
+                        <img src="images/Software-Company-for-IoT-and-Asset-Management-System.png" class="lastimg" alt="Software Company Asset Management System" title="Internet Of Things" />
+                    </div>
+                    <div class="sectionhome5_inner_right">
+                        <h2>Internet Of Things</h2>
+                        <p>
+                            Kreyon Systems is a software development company that delivers a unique, integrated approach for enterprises to capitalize on the Internet of Things by gathering, storing and processing data from devices. Kreyon provides softwares to automate collection of device data, analyse and regulate business decisions using this data. We provide end to end asset management system, ERP solutions and supply chain management for various industries using IoT software. We are helping enterprises to build smart software solutions with IoT technology.
+                            <a href="InternetOfThings/" class="more2">
+                                <div>
+                                    IoT Software Applications
+                                </div>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="teamtask_heading">
+        <ul>
+            <li>Our Sofware Products</li>
+            <li class="liLine1"></li>
+            <li class="liLine2"></li>
+        </ul>
+    </div>
+    <div class="sectionhome4">
+        <div class="sectionhome4_inner">
+            <div class="sectionhome4_block" id="assets">
+                <div class="sectionhome4_block1 passets">
+                </div>
+                <div class="sectionhome4_block2">
+                    Asset Management System
+                </div>
+            </div>
+            <div class="sectionhome4_block bg2" id="crm">
+                <div class="sectionhome4_block1 pcrm">
+                </div>
+                <div class="sectionhome4_block2">
+                    CRM
+                </div>
+            </div>
+            <div class="sectionhome4_block" id="proj">
+                <div class="sectionhome4_block1 pproj">
+                </div>
+                <div class="sectionhome4_block2">
+                    Project Management
+                </div>
+            </div>
+            <div class="sectionhome4_block bg2" id="lender">
+                <div class="sectionhome4_block1 plender">
+                </div>
+                <div class="sectionhome4_block2">
+                    Lender Matching
+                </div>
+            </div>
+            <div class="sectionhome4_block bg2" id="illu">
+                <div class="sectionhome4_block1 pillu">
+                </div>
+                <div class="sectionhome4_block2">
+                    Illuminous
+                </div>
+            </div>
+            <div class="sectionhome4_block" id="jica">
+                <div class="sectionhome4_block1 pjica">
+                </div>
+                <div class="sectionhome4_block2">
+                    Japan International Co-operation Agency Software
+                </div>
+            </div>
+            <div class="sectionhome4_block bg2" id="chat">
+                <div class="sectionhome4_block1 plive">
+                </div>
+                <div class="sectionhome4_block2">
+                    Live Chat
+                </div>
+            </div>
+            <div class="sectionhome4_block" id="supply">
+                <div class="sectionhome4_block1 pro_supply">
+                </div>
+                <div class="sectionhome4_block2">
+                    Supply Chain Management
+                </div>
+            </div>
+            <div class="sectionhome4_block" id="cms">
+                <div class="sectionhome4_block1 pro_cms">
+                </div>
+                <div class="sectionhome4_block2">
+                    Content Management System
+                </div>
+            </div>
+            <div class="sectionhome4_block bg2" id="mvp">
+                <div class="sectionhome4_block1 pro_mvp">
+                </div>
+                <div class="sectionhome4_block2">
+                    Minimum Viable Product
+                </div>
+            </div>
+            <div class="sectionhome4_block" id="ecm">
+                <div class="sectionhome4_block1 pro_ecm">
+                </div>
+                <div class="sectionhome4_block2">
+                    Business Process Automation
+                </div>
+            </div>
+            <div class="sectionhome4_block bg2" id="more">
+                <div class="sectionhome4_block1 pmore">
+                </div>
+                <div class="sectionhome4_block2">
+                    And More
+                </div>
+            </div>
+            <div class="clearboth">
+            </div>
+        </div>
+        <div class="clearboth">
+        </div>
+    </div>
+    <div class="teamtask_heading">
+        <ul>
+            <li>Client Testimonials</li>
+            <li class="liLine1"></li>
+            <li class="liLine2"></li>
+        </ul>
+    </div>
+    <div class="sectionhome6">
+        <div class="sectionhome6_trans">
+            <div class="sectionhome6_inner">
+                <ul class="images">
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>The quality and proactive research of their team was highly appreciated by us. They have come up with a very sophisticated product, which exceeds our expectations. Kreyon certainly has a stellar team of experts whose professionalism, effectiveness & execution helped us immensely. Looking forward to more software solutions from them in the future.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            Zia Shaikh (Director)
+                        </div>
+                        <div class="clientname">
+                            Progressive Equity Partners LLC, New Jersey, United States
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>Kreyon's Software Solutions have helped us improved the time to market and predictability & reduced the cost of implementation. They have been efficient in delivering solutions with specialised focus on usability of the software, which has helped our team learn & deliver results quickly. It is a welcome relief having tried almost every other solution before them. Their expertise, solutions and approach have definitely had a positive impact on our business outcomes.<span
+                                class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            Tom Poland (Director)
+                        </div>
+                        <div class="clientname">
+                            80-20 Center, Queensland, Australia
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>In the past, we tried softwares from leading MNCs, but they didn't worked for us. Kreyon Systems helped us conceptualize & implement the JICA Software ahead of the schedule. The complexity of the electrical  onstruction projects for building substations & setting up transmission lines is very hard to monitor. The payment conditions laid by Japan International Co-operation Agency have to be correlated with the progress of projects in remote places. The experts from Kreyon have deciphered the complexity of operations, payment rules, trained engineers across the state & delivered the project with effortless ease. My congratulations to them on this excellent achievement.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            U Rautji (CMD)
+                        </div>
+                        <div class="clientname">
+                            Madhya Pradesh Power Transmission Company Limited, India
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>Kreyon's digital marketing strategy & implementation has delivered tangible progress for us. It has resulted in increasing traffic by more than 500%, improved our brand presence on Facebook, LinkedIn, & Twitter. The thematic engagement & leads have definitely been a positive impact for our business & made people aware of our brand.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            Ankit Agarwal (Director)
+                        </div>
+                        <div class="clientname">
+                            Fx Group of Companies, Faridabad, India
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>Our educational group has more than 7000 students, 550 faculty members, 120 administrative staff & 11 different institutions. The Kreyon Systems ERP has connected everything. Their ERP implementation is highly specialized with emphasis on user centered innovation. My job of managing this group has never been easier. The complexity of operations has reduced significantly after the ERP implementation by Kreyon. It also helped us secure an NBA accreditation. The interconnected campus has helped teachers, students & administrative staff to run things more efficiently. Assurity of Compliance, regulatory standards & standardisation of best practices has helped us achieve significant results.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            R Karsoliya (Chairman)
+                        </div>
+                        <div class="clientname">
+                            Shriram Group of Institutes, India
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>Kreyon systems methodology was structured, comprehensive & fast. They have covered all essential aspects of our business for the Gas Agency Automation with ease. The approach was flexible, detailed enough to handle critical aspects of our business. The integrated platform for maintaining all offshore and onshore requirements with capabilities for dynamic dashboards & mobile accessibility has made our work easier. The finance module automation has helped us regularize our accounts & maintain compliance with international regulatory standards. The software company has made it easier to manage business with an integrated platform for tracking everything. Kreyon is a valuable partner for our business.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            B Lathiya (Chairman)
+                        </div>
+                        <div class="clientname">
+                            Lathiya Trading Company, India
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>They have a fresh approach, which is refreshing & energetic. Kreyon Systems helped us drive organic traffic to our site. They picked up competitive keywords & improved our search rankings drastically. They are results oriented and definitely provide ROI for your business within a short span of time.<span
+                                class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            Jared O' Toole (Founder)
+                        </div>
+                        <div class="clientname">
+                            Under30CEO, US
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>They have delivered what they promised within time, budget & quality. Its the best software company for our needs.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            Thaddeus Lawrence (Vice President)
+                        </div>
+                        <div class="clientname">
+                            Asia professional Speakers, Singapore
+                        </div>
+                    </li>
+                    <li>
+                        <p class="clientmessage">
+                            <span class="startComma"></span>The staff at Kreyon Systems was absolutely dedicated to our project. They were timely and professional. Since the inception of the project, they were proactive, came up with ideas, conceptualized the product & helped turn our vision into a tangible product for us. It makes our day to day tasks, team collaboration & execution of work easy. I really appreciate the creative talent & execution capabilities offered by Kreyon Systems.<span class="EndComma"></span>
+                        </p>
+                        <div class="clientDesig">
+                            Suzanne Bowen (Co-Founder)
+                        </div>
+                        <div class="clientname">
+                            VP Elegant Group, Pensacola, Florida, US
+                        </div>
+                    </li>
+                </ul>
+            <div class="clearboth"></div>
+            </div>
+            <div class="triggers_area">
+                <ul class="triggers">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    <div class="clearboth"></div>
+    </div>
+    <div class="teamtask_heading mob-disp-none">
+        <ul>
+            <li>Our Clients And Partners</li>
+            <li class="liLine1"></li>
+            <li class="liLine2"></li>
+        </ul>
+    </div>
+    <div class="sectionlogos">
+        <div class="logosarea">
+            <div class="slider-container">
+                <ul id="slider">
+                    <li>
+                        <img src="images/jica.jpg" alt="Software development Company USA" title="Jica" /></li>
+                    <li>
+                        <img src="images/Healthcare_software.png" alt="Healthcare software development services" title="mpptcl" /></li>
+                    <li>
+                        <img src="images/Software_government.png" alt="Software Development Services for Government" title="india railway" /></li>
+                    <li>
+                        <img src="images/finance.jpg" alt="Software solutions for finance industry" title="LIC" /></li>
+                    <li>
+                        <img src="images/Aviation.jpg" alt="Software development for Government" title="Microsoft" /></li>
+                    <li>
+                        <img src="images/Education_Industry.jpg" alt="Software Company for Education Software" title="8020 Center" /></li>
+                    <li>
+                        <img src="images/coco_cola.jpg" alt="Software Solutions Analytics" title="Coco Cola" /></li>
+                    <li>
+                        <img src="images/Media_Industry.jpg" alt="Software Development Sevices for Media Industry" title="Alley Watch" /></li>
+                    <li>
+                        <img src="images/Software_Real_Estate.jpg" alt="Software solutions for Real Estate jabalpur, Uk, South Africa" title="Godrej" /></li>
+                    <li>
+                        <img src="images/Web_Development.jpg" alt="Web development Company" title="Mac" /></li>
+                    <li>
+                        <img src="Images/Real_Estate_Software_Development.png" alt="IT Company Jabalpur, MP, India " title="east west llc group" /></li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+    <div class="teamtask_heading">
+        <ul>
+            <li>Kreyon Systems in Numbers</li>
+            <li class="liLine1"></li>
+            <li class="liLine2"></li>
+        </ul>
+    </div>
+    <div class="sectionhome7">
+        <div class="sectionhome7_inner">
+            <div class="section_withblock">
+                <div class="sectionhome7_block">
+                    <div class="sectionhome7_word">
+                        100,000
+                    </div>
+                    <div class="sectionhome7_h">
+                        users
+                    </div>
+                    <div class="sectionhome7_txt">
+                        More than 100,000 users have used our Solutions
+                    </div>
+                </div>
+                <div class="bottom_shadow">
+                </div>
+            </div>
+            <div class="section_withblock">
+                <div class="sectionhome7_block">
+                    <div class="sectionhome7_word">
+                        $1
+                    </div>
+                    <div class="sectionhome7_h">
+                        Billion
+                    </div>
+                    <div class="sectionhome7_txt">
+                        Managed Assets of worth more than US $1 Billion for power sector project.
+                    </div>
+                </div>
+                <div class="bottom_shadow">
+                </div>
+            </div>
+            <div class="section_withblock">
+                <div class="sectionhome7_block">
+                    <div class="sectionhome7_word">
+                        $200
+                    </div>
+                    <div class="sectionhome7_h">
+                        Million
+                    </div>
+                    <div class="sectionhome7_txt">
+                        Handled a funding of US $200 Million from JICA.
+                    </div>
+                </div>
+                <div class="bottom_shadow">
+                </div>
+            </div>
+            <div class="section_withblock">
+                <div class="sectionhome7_block margin_last">
+                    <div class="sectionhome7_word">
+                        10
+                    </div>
+                    <div class="sectionhome7_h">
+                        Countries
+                    </div>
+                    <div class="sectionhome7_txt">
+                        Our clients are spread among 10 different countries & growing fast.
+                    </div>
+                </div>
+                <div class="bottom_shadow">
+                </div>
+            </div>
+      <div class="clearboth"></div>
+        </div>
+    </div>
+    <div class="sectionsubs">
+        <div class="subs_overlay "></div>
+        <div class="sectionsubs_inner">
+            <div class="subscribe_content">
+                <div class="col6 col-subs">
+                    <span class="subscribe_txt txt-subs">Subscribe to
+                        our newsletter</span>
+                </div>
+                <div class="col6 subs-input">
+                    <div class="subscribe_grp">
+                        <input type="text" class="input-control m-input vRequiredText vEmailAddress" data-validate="btnSubs" placeholder="Your Email" />
+                        <button type="button" id="btnSubs" class="btnContact btnSubscribe">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="jsScript/my.js?1" type="text/javascript"></script>
+    <script src="jsScript/jquery.bxSlider.js?jjfjdfhj" type="text/javascript"></script>
+
+    <script src="css/Messages.js" type="text/javascript"></script>
+    <script src="css/Validation.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $(".bx-window").css({ 'width': '1200px' });
+
+        });
+
+    </script>
+
+
+        </div>
+        <footer class="footer">
+            <div class="topslider"></div>
+            <div class="footerDiv">
+                <div class="footerdiv1">
+                    <h3 class="f_h1">About Kreyon </h3>
+                    <ul class="footer_ul3">
+                       
+                        <li><a href="AboutCompany.aspx" class="f_options">Company</a></li>
+                        <li><a class="f_options" href="https://www.kreyonsystems.com/Blog/" id="blog_link">Kreyon Blog</a></li>
+                        </ul>
+                    <h3 class="f_h1">Services </h3>
+                    <ul class="footer_ul3">
+                       
+                        <li><a class="f_options" href="MobileDetails.aspx">Mobile Applications</a></li>
+                        <li><a class="f_options" href="DigitalMarketing/">Digital Marketing</a></li>
+                        <li><a class="f_options" href="Services.aspx">End To End IT Solutions</a></li>
+                        <li><a class="f_options" href="OffshoreSoftwareDevelopment.aspx">Software Development</a></li>
+                        <li><a class="f_options" href="VideoAnimation">Video Animations</a></li>
+                        <li><a class="f_options" href="BusinessProcess.aspx">Business Process Automation</a></li>
+                       <li><a class="f_options" href="BusinessIntelligence.aspx">Business Intelligence</a></li>
+                         <li><a class="f_options" href="DesignInnovation.aspx">Design Innovation</a></li>
+                        <li><a class="f_options" href="SoftwareSolution.aspx">Software Solutions</a></li>
+                        <li><a class="f_options" href="kreyonportal.aspx">Dynamic Websites</a></li>
+                        <li><a class="f_options" href="ECommerce.aspx">E-Commerce Development</a></li>
+                        <li><a class="f_options" href="digitisation.aspx">Digitisation</a></li>
+                        <li><a class="f_options" href="DesignThinking.aspx">Design Thinking</a></li>
+                        <li><a class="f_options" href="DataScience.aspx">Data Science</a></li>
+                        <li><a class="f_options" href="SoftwareProductDevelopment.aspx">Software Product Development</a></li>
+                        <li><a class="f_options" href="UI-UX-Design.aspx">UI & UX Designs</a></li>
+                        <li><a class="f_options" href="WeFindAnyService.aspx">Trade & Services Portal</a></li>
+                        <li><a class="f_options" href="OnlineMarketplace.aspx">Online Marketplace</a></li>
+                        <li><a class="f_options" href="CustomCRM-Development.aspx">Custom CRM Development</a></li>
+                    </ul>
+
+                </div>
+                <div class="footerdiv2">
+                    <h3 class="f_h1">Industries </h3>
+                    <ul class="footer_ul3">
+
+                        <li><a href="BankingandFinance.aspx" class="f_options">Banking & Finance </a></li>
+                        <li><a href="Healthcare.aspx" class="f_options">Healthcare</a></li>
+                        <li><a href="oilandgas.aspx" class="f_options">Oil & Gas </a></li>
+                        <li><a href="Education.aspx" class="f_options">Education </a></li>
+                        <li><a href="RetailStore.aspx" class="f_options">Retail</a></li>
+                        <li><a href="Manufacturing.aspx" class="f_options">Manufacturing</a></li>
+                        <li><a href="PowerEnergy.aspx" class="f_options">Power & Energy </a></li>
+                        <li><a href="Government.aspx" class="f_options">Government </a></li>
+                        <li><a href="Technology.aspx" class="f_options">Technology </a></li>
+                        <li><a href="ToursAndTravels.aspx" class="f_options">Tours & Travels </a></li>
+                        <li><a href="RealEstate.aspx" class="f_options">Real Estate </a></li>
+                        <li><a href="MediaAndEntertainment.aspx" class="f_options">Media & Entertainment </a></li>
+                    </ul>
+
+                </div>
+                <div class="footerdiv3">
+                    <h3 class="f_h1">Products </h3>
+                    <ul class="footer_ul3">
+                        <li><a class="f_options" href="AssetManagementSystem.aspx">Asset Management System</a></li>
+                        <li><a class="f_options" href="TeamTaskCRM.aspx">Team Task CRM</a></li>
+                        <li><a class="f_options" href="ProjectManagement.aspx">Project Management System</a></li>
+                        <li><a class="f_options" href="LenderDetails.aspx">Lender Management System</a></li>
+                        <li><a class="f_options" href="illuminous/about.html">Illuminous Edutech</a></li>
+                        <li><a class="f_options" href="JICA.aspx">Finance </a></li>
+                        <li><a class="f_options" href="HelpDeskChat.aspx">Help Desk & Chat Tool</a></li>
+                        <li><a class="f_options" href="SupplyChainManagement.aspx">Supply Chain Management</a></li>
+                        <li><a class="f_options" href="HrDetails.aspx">Payroll And HRMS</a></li>
+                        <li><a class="f_options" href="FacilityManagment.aspx">Facility Management Solution</a></li>
+                        <li><a class="f_options" href="ContentManagementSystem.aspx">Content Management System</a></li>
+                        <li><a class="f_options" href="MinimumViableProduct.aspx">Minimum Viable Product</a></li>
+                         <li><a class="f_options" href="ERP.aspx">Enterprise Resource Planning</a></li>
+                        <li><a class="f_options" href="EnterpriseContentManagement.aspx">Enterprise Content Management</a></li>
+                        <li><a class="f_options" href="DigitalWealthManagementProduct.aspx">Digital Wealth Management Product</a></li>
+                        <li><a class="f_options" href="TenderManagementSoftware.aspx">Tender Management Software</a></li>
+                    </ul>
+
+                </div>
+                <div class="footerdiv4">
+                    <h3 class="f_h1">Key Topics </h3>
+                    <ul class="footer_ul3">
+                        <li><a class="f_options" href="CloudComputing.aspx">Cloud Computing</a></li>
+                        <li><a class="f_options" href="bigdatasolution.aspx">Big Data</a></li>
+                        <li><a class="f_options" href="InternetOfThings/">Internet Of Things</a></li>
+                        <li><a class="f_options" href="AdvancedAnalytics.aspx">Advanced Analytics</a></li>
+                        <li><a class="f_options" href="AIandMachineLearning.aspx">AI & ML</a></li>
+                        <li><a class="f_options" href="progressive-web-app.aspx">Progressive Web
+                            <br>
+                            Apps<br />
+                        </a></li>
+                    </ul>
+                    <h3 class="f_h1">OPTIONS </h3>
+                    <ul class="footer_ul3">
+                        <li><a class="f_options" href="Default.aspx" id="master_homebtn">Home</a></li>
+                        
+                        <li><a class="f_options" href="ProductPage.aspx">Products</a></li>
+                        <li><a class="f_options" href="Services.aspx">Services</a></li>
+                        
+                        <li><a class="f_options" href="frmcarrer.aspx">Careers</a></li>
+                        <li><a class="f_options" href="ContactUs.aspx">Contact Us</a></li>
+                        <li><a class="f_options" href="WhyKreyon.aspx">Why Kreyon</a></li>
+                        <li><a class="f_options" href="Resources.aspx">Resources</a></li>
+                        <li><a class="f_options" href="VacanciesList.aspx">Vacancies</a></li>
+                        <li><a class="f_options" href="sitemap.aspx">Sitemap</a></li>
+                        <li><a class="f_options" href="TrainingandDevelopment.aspx">Internship</a></li>
+
+
+                    </ul>
+                </div>
+                <div class="footerdiv5">
+
+                    <h3 class="f_h1">Contact Us </h3>
+                    <ul class="footer_ul1">
+                        <li>
+                            <div class="footertxt">
+                                <div class='com_head'>India Office</div>
+                                <div class='add_txt'>1298, jasati Compound, besides Reliance Fresh, Near Parijat building, Jabalpur,482002, M.P. India </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="footertxt">
+                                <div class='com_head'>Botswana Office </div>
+                                <div class='add_txt'>111 Kgale Mews 1st Floor; Unit 4, Gaborone  </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="footertxt">
+                                <div class='com_head'>South Africa Office</div>
+                                <div class='add_txt'>
+                                    2 Sandton Drive, Sandton 2196, Johannesburg
+                                    <br />
+                                   
+                                </div>
+                            </div>
+                        </li>
+                        <li><span class="contacticon mail"></span><a class="mail_inline" href="/cdn-cgi/l/email-protection#f79e999198b79c85928e9899848e8483929a84d994989a"><span class="__cf_email__" data-cfemail="4821262e2708233a2d3127263b313b3c2d253b662b2725">[email&#160;protected]</span> </a></li>
+                        <li><span class="contacticon call"></span>+91-761-244 0066</li>
+                         <li><span class="contacticon call"></span>+91-761-244 0077</li>
+                        <li class="whatsappli1"><a href="javascript:;"><span class="contacticon whatsapp1"></span>+91-88394 76451</a></li>
+                        <li>
+                            <a href='https://kreyonsystems.com/Images/kreyonBrochure.pdf' class='btncomp_brochure' target="_blank">Company Brochure</a>
+                        </li>
+                        <li>
+                            <a href='Carrer.aspx' class='btncomp_brochure aplyjob' target="_blank">Apply for Job</a>
+                            <a href='ContactUs.aspx' class='btncomp_brochure qk_cntct' target="_blank">Quick Contact</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="bottom">
+                © 2024 All Rights Reserved. Powered by 
+      <a href="https://www.kreyonsystems.com" target="_blank">
+          <img src="images/Software_Company_Kreyon_Logo.png" alt="kreyon systems Software Company" class="logo_img_01" title="kreyon systems" /></a>
+            </div>
+            <div class="clear_both"></div>
+        </footer>
+        <!--  -->
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>About Kreyon
+        </div>
+        <div class='mobfooter_area'>
+            
+            <div class='mobfooter_li'>
+                <a href='AboutCompany.aspx'>Company</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='https://www.kreyonsystems.com/Blog/'>Kreyon Blog</a>
+            </div>
+        </div>
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Services
+        </div>
+        <div class='mobfooter_area'>
+            
+            <div class='mobfooter_li'>
+                <a href='MobileDetails.aspx'>Mobile Applications</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='DigitalMarketing/'>Digital Marketing</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='Services.aspx'>End to End Solutions</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="OffshoreSoftwareDevelopment.aspx">Software Development</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='VideoAnimation'>Video Animations</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='BusinessProcess.aspx'>Business Process Automation</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="BusinessIntelligence.aspx">Business Intelligence</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='DesignInnovation.aspx'>Design Innovation</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='SoftwareSolution.aspx'>Software Solution</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='kreyonportal.aspx'>Dynamic Websites</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='ECommerce.aspx'>E-Commerce Development</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='digitisation.aspx'>Digitisation</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='DesignThinking.aspx'>Design Thinking</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='DataScience.aspx'>Data Science</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="SoftwareProductDevelopment.aspx">Software Product Development</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="UI-UX-Design.aspx">UI & UX Designs</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="WeFindAnyService.aspx">Trade & Services Portal</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="OnlineMarketplace.aspx">Online Marketplace</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="CustomCRM-Development.aspx">Custom CRM Devlopment</a>
+            </div>
+        </div>
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Industries
+        </div>
+        <div class='mobfooter_area'>
+            <div class='mobfooter_li'>
+                <a href='BankingandFinance.aspx'>Banking & Finance</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="Healthcare.aspx">Healthcare</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='oilandgas.aspx'>Oil & Gas</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='Education.aspx'>Education</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='RetailStore.aspx'>Retail</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='Manufacturing.aspx'>Manufacturing</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='PowerEnergy.aspx'>Power & Energy</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="Government.aspx">Government</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="Technology.aspx">Technology</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="ToursAndTravels.aspx">Tours & Travels</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="RealEstate.aspx" class="f_options">Real Estate </a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="MediaAndEntertainment.aspx" class="f_options">Media & Entertainment </a>
+            </div>
+        </div>
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Products
+        </div>
+        <div class='mobfooter_area'>
+            <div class='mobfooter_li'>
+                <a href="AssetManagementSystem.aspx">Asset Management System</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="TeamTaskCRM.aspx">Team Task CRM</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="ProjectManagement.aspx">Project Management System</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="LenderDetails.aspx">Lender Management System</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href='illuminous/about.html'>Illuminous Edutech</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="JICA.aspx">Finance</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="HelpDeskChat.aspx">Help Desk & Chat Tool</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="SupplyChainManagement.aspx">Supply Chain Management</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="HrDetails.aspx">Payroll And HRMS</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="FacilityManagment.aspx">Facility Management Solution</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="ContentManagementSystem.aspx">Content Management System</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="MinimumViableProduct.aspx">Minimum Viable Product</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="ERP.aspx">Enterprise Resource Planning</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="EnterpriseContentManagement.aspx">Enterprise Content Management</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="DigitalWealthManagementProduct.aspx">Digital Wealth Management Product</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="TenderManagementSoftware.aspx">Tender Management Software</a>
+            </div>
+
+        </div>
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Key Topics
+        </div>
+        <div class='mobfooter_area'>
+            <div class='mobfooter_li'>
+                <a href="CloudComputing.aspx">Cloud Computing</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="BigDataSolution.aspx">Big Data</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="InternetOfThings.aspx">Internet Of Things</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="AdvancedAnalytics.aspx">Advanced Analytics</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="AIandMachineLearning.aspx">AI & ML</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="progressive-web-app.aspx">Progressive Web Apps</a>
+            </div>
+        </div>
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Options
+        </div>
+        <div class='mobfooter_area'>
+            <div class='mobfooter_li'>
+                <a href="Default.aspx">Home</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="AboutCompany.aspx">Company</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="ProductPage.aspx">Products</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="Services.aspx">Services</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="frmCarrer.aspx">Careers</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="ContactUs.aspx">Contact Us</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="WhyKreyon.aspx">Why Kreyon</a>
+            </div>
+
+            <div class='mobfooter_li'>
+                <a href="https://kreyonsystems.com/Blog/" id="A2">Kreyon Blog</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="Resources.aspx">Resources</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="VacanciesList.aspx">Vacancies</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="sitemap.aspx">Sitemap</a>
+            </div>
+            <div class='mobfooter_li'>
+                <a href="TrainingandDevelopment.aspx">Internship</a>
+            </div>
+        </div>
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Company Brochure
+        </div>
+        <div class='mobfooter_area'>
+            <div class='mobfooter_li'>
+                <a href="Images/kreyonBrochure.pdf" class="btncomp_brochure brouchure-mobile" target="_blank">Company Brochure</a>
+            </div>
+        </div>
+
+        <div class='mobfooter_h'>
+            <span class='mob_footerIco mob_footerIco_close'></span>Apply for Job
+        </div>
+        <div class='mobfooter_area'>
+            <div class='mobfooter_li'>
+                <a href='Carrer.aspx' class='btncomp_brochure aplyjob' target="_blank">Apply for Job</a>
+                 <a href='ContactUs.aspx' class='btncomp_brochure qk_cntct' target="_blank">Quick Contact</a>
+            </div>
+   
+        </div>
+
+
+        <!-- end -->
+        
+        
+        <div class="msgbox" id="errormsg">
+            <div class="msgheading msg_inline">
+                <span class="msgicon"></span>Kreyon Systems
+            <div class="msgclose close_inline">
+                X
+            </div>
+            </div>
+            <div class="msgbody">
+                Contact details sending failed.please try again later.
+            </div>
+            <div class="msgbtnfail" id="failok">
+                OK
+            </div>
+        </div>
+        <div class="msgbox" id="opmsg">
+            <div class="msgheading">
+                <span class="msgicon"></span>Kreyon Systems
+            <div class="msgclose">
+                X
+            </div>
+            </div>
+            <div class="msgbody">
+                Contact details sent successfully.We will contact you soon..
+            </div>
+            <div class="msgbtn" id="doneok">
+                OK
+            </div>
+        </div>
+        <!-- chat -->
+        <div class="backloader">
+            <div class="loader"></div>
+        </div>
+        <div class="btnchat">
+            <span class='lineheight60'></span>
+        </div>
+        <div class="mainChatArea">
+            <div class="chatHeader">
+                Live Chat
+            <input type="hidden" id="hiddenChatId" value="" /><span></span> <span id="spanCloseChat" class="minimizeChat fa fa-close"></span>
+                
+                
+            </div>
+            <div class="res_visitorchatBox styled-scroll">
+                <div class="res_visitorchatBox_inner">
+                    <div class="chaticon_res">
+                        <span class='fa fa-comment linheight70p'></span>
+                    </div>
+                    <div class="helptxt">
+                        Please enter your name and email address to begin chatting with us.
+                    </div>
+                </div>
+                <div class="res_chatfillform">
+                    <input type="text" class="res_txtchat vRequiredText" data-validate="btnChatSubmit"
+                        id="txtName" value="" placeholder="Enter your name" />
+                    <input type="text" class="res_txtchat vRequiredText vEmailAddress" data-validate="btnChatSubmit"
+                        id="txtEmail" value="" placeholder="Enter Email Id" />
+                    <textarea class="res_txtareaChat vRequiredText" data-validate="btnChatSubmit" id="txtMsg"
+                        placeholder="Leave your message here"></textarea>
+                    <input type="button" class="res_btnchatSubmit" value="SUBMIT" id="btnChatSubmit" />
+                </div>
+            </div>
+            <div class='res_talkbox cmr_hide'>
+                <div id="divChat" class="inner_conversation styled-scroll">
+                </div>
+                <input type="text" class="res_chatInput watermark" id="txtChatSend" data-chat="0"
+                    placeholder="Please wait for agent response." />
+            </div>
+        </div>
+        <div id="fb-root">
+        </div>
+        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
+            var fbAppId = '835695176450869';
+            // This check is just here to make sure you set your app ID. You don't
+            // need to use it in production. 
+            if (fbAppId === 'replace me') {
+
+            }
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: fbAppId, // App ID
+                    status: true,    // check login status
+                    cookie: true,    // enable cookies to allow the
+                    // server to access the session
+                    xfbml: true,     // parse page for xfbml or html5
+                    // social plugins like login button below
+                    version: 'v2.0',  // Specify an API version
+                });
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <!-- banner area -->
+        <div class="notesbg">
+            
+            
+        </div>
+        <div class="upper_back">
+        </div>
+        
+        <!-- social icons -->
+        <div class="socialicon_Container">
+            <div class="socialicon_Inner">
+                <div class="bouncearrow">
+                </div>
+                <ul class="socialicons_box">
+                    <li class="socialiconsbox">
+                        <a id="social_fb" class="fb_inline">
+                            <div class="socialicons fb">
+                            </div>
+                            <div class="iconstxt fb_bgmaster">
+                                Facebook
+                            </div>
+                        </a></li>
+                    <li class="socialiconsbox cmr_hide">
+                        <a href="https://www.youtube.com/" class="youtube_inline" target="_blank">
+                            <div class="socialicons youtube">
+                            </div>
+                            <div class="iconstxt yt_bg">
+                                Youtube
+                            </div>
+                        </a></li>
+                    <li class="socialiconsbox">
+                        <a id="social_lkd" class="lnd_color" href="#">
+                            <div class="socialicons lkd">
+                            </div>
+                            <div class="iconstxt lnk_bgcolor">
+                                Linkedin
+                            </div>
+                        </a></li>
+                    
+                    <li class="socialiconsbox"><a id="social_tw" class="lnd_color" onclick="shareOntwitter()">
+                        <div class="socialicons twitter">
+                        </div>
+                        <div class="iconstxt tw_bg">
+                            Twitter
+                        </div>
+                    </a></li>
+                    <li class="socialiconsbox"><a id="social_wht" onclick="shareOntwitter()" class="lnd_color">
+                        <div class="socialicons gplus">
+                        </div>
+                        <div class="iconstxt gp_inline">
+                            Whatsapp
+                        </div>
+                    </a></li>
+                </ul>
+                <div class="rightbouncearrow">
+                </div>
+            </div>
+        </div>
+        <div class="buy_back">
+            <div class="buy_box">
+                <div class="portal_quot_h">
+                    <span>Get a Quote</span><div class="buy_close">
+                        x
+                    </div>
+                </div>
+                <div class="bay_innerbox">
+                    <div class="quot_row">
+                        <div class="quot_col">
+                            <span>Product Name : </span>
+                            <input type="text" id="txtpname" class="txtquote" value="kreyon systems" readonly="readonly" />
+                        </div>
+                        <div class="quot_col">
+                            <span>Name : </span>
+                            <input type="text" id="txtname" class="txtquote" maxlength="50" />
+                            <div class="validation">
+                                Required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quot_row">
+                        <div class="quot_col">
+                            <span>Designation : </span>
+                            <input type="text" id="txtdesig" class="txtquote" maxlength="75" />
+                        </div>
+                        <div class="quot_col">
+                            <span>Company Name : </span>
+                            <input type="text" id="txtcompany" class="txtquote" maxlength="75" />
+                        </div>
+                    </div>
+                    <div class="quot_row">
+                        <div class="quot_col">
+                            <span>Contact No. </span>
+                            <input type="text" id="txtno" class="txtquote" maxlength="15" />
+                            <div class="validation">
+                                Required
+                            </div>
+                        </div>
+                        <div class="quot_col">
+                            <span>Email Id : </span>
+                            <input type="text" id="txtemail" class="txtquote" maxlength="75" />
+                            <div class="validation">
+                                Required
+                            </div>
+                            <div class="validationEmail">
+                                Invalid Email
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quot_row">
+                        <div class="quot_col">
+                            <span>Expected Timeline : </span>
+                            <select class="txtquote" id="ddl_status">
+                                <option value="0">When do you want to proceed</option>
+                                <option value="1">Immediately</option>
+                                <option value="2">In a Week</option>
+                                <option value="3">In a Fortnight</option>
+                                <option value="4">In a Month</option>
+                                <option value="5">In a Year</option>
+                                <option value="6">I'm not sure</option>
+                            </select>
+                        </div>
+                        <div class="quot_col">
+                            <span>Budget : </span>
+                            <input type="text" id="txtbudget" class="txtquote allownumericwithdecimal" maxlength="25" />
+                        </div>
+                    </div>
+                    <div class="quot_row">
+                        <div class="quot_col cot_width">
+                            <span>Message : </span>
+                            <textarea class="txtquote qtxt_inline" id="bay_msg" maxlength="350"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="portal_footer">
+                    <input type="button" class="btn_sendquote" value="Submit" id="bay_button" />
+                    <input type="button" class="btn_sendquote cmr_hide" value="Submit" id="btndummy" />
+                    <img src="images/Software_Development_IT_Solutions.GIF" id="Img1" class="loadimg" alt="Software development and IT Solutions" title="loader" />
+                </div>
+            </div>
+        </div>
+        <div class='mobilebg'>
+        </div>
+    </form>
+</body>
+
+<script src="jsScript/hedaer.js" type="text/javascript"></script>
+<script src="jsScript/owl.carousel.min.js" type="text/javascript"></script>
+
+
+
+<script type="text/javascript">
+    function requiredField(me) {
+        var data = $(me).val();
+        if (data.trim() == 'Name' || data.trim() == 'Contact Number' || data.trim() == 'Email Address' || data.trim() == '' || data.trim() == 'Subject') {
+            $(me).css("border", "solid 1px #e84a52");
+            $(me).next().fadeIn();
+            $(me).css('color', '#dd0000');
+            return false;
+        } else {
+            $(me).css("border", "solid 1px #ccc");
+            $(me).css('color', '#666');
+            $(me).next().fadeOut();
+            return true;
+        }
+    }
+    function emailValidation(vat) {
+        var isValue = requiredField(vat);
+        if (!Boolean(isValue)) {
+            $(vat).next().next().hide();
+            return false;
+        }
+        var pattern = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+        var emailText = $(vat).val();
+        if (pattern.test(emailText)) {
+            $(vat).css("border", "solid 1px #ccc");
+            $(vat).next().slideUp();
+            $(vat).next().next().hide();
+            return true;
+        } else {
+            $(vat).next().hide();
+            $(vat).next().next().slideDown();
+            $(vat).css("border", "solid 1px #e20d0d");
+            return false;
+        }
+    }
+    function Master_requiredField(me) {
+        var data = $.trim($(me).val());
+        if (data == '') {
+            $(me).css("border", "solid 1px #e84a52");
+            $(me).next().fadeIn();
+            return false;
+        } else {
+            $(me).css("border", "solid 1px #ccc");
+            $(me).next().fadeOut();
+            return true;
+        }
+    }
+    function Master_emailValidation(vat) {
+        var isValue = Master_requiredField(vat);
+        if (!Boolean(isValue)) {
+            $(vat).next().next().hide();
+            return false;
+        }
+        var pattern = /^[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+)*@[a-z0-9]+(\-[a-z0-9]+)*(\.[a-z0-9]+(\-[a-z0-9]+)*)*\.[a-z]{2,4}$/;
+        var emailText = $(vat).val();
+        if (pattern.test(emailText)) {
+            $(vat).css("border", "solid 1px #ccc");
+            $(vat).next().slideUp();
+            $(vat).next().next().hide();
+            return true;
+        } else {
+            $(vat).next().hide();
+            $(vat).next().next().slideDown();
+            $(vat).css("border", "solid 1px #e20d0d");
+            return false;
+        }
+    }
+    var IsVideoVoicechat;
+    var VisitorsID = 0;
+    var totalimg = 5;
+    var iscall = false;
+    var issubmit = false;
+    var senderId = 0;
+    var RecieverId = 0;
+    var AgentStatus = false;
+    var isLeftAlone = true;
+    var ChatSession = "";
+    var loading;
+    var code = 0;
+    var CountryName = "";
+    var refreshChatTimeout;
+    var iscloseChatf = false;
+    var isoffline = false;
+    var isvoicecall = false;
+    var isconfirm = false;
+    $(document).ready(function () {
+
+        ///////////mobile device footer navigation////////////
+        var option_show = false;
+        $(".mobfooter_h").click(function () {
+            $(".mobfooter_area").slideUp();
+            if (option_show == false) {
+                $('.mob_footerIco').removeClass('mob_footerIco_open');
+                $('.mob_footerIco').addClass('mob_footerIco_close');
+                $(this).removeClass('mob_footerIco_open');
+                $(this).find('.mob_footerIco').addClass('mob_footerIco_open');
+                $(this).next().slideDown();
+                option_show = true;
+            } else {
+                $('.mob_footerIco').removeClass('mob_footerIco_open');
+                $(this).find('.mob_footerIco').addClass('mob_footerIco_close');
+                $(this).next().slideUp();
+                option_show = false;
+            }
+        });
+
+        //////////////////////end/////////////////
+
+
+        //////////mobile device navigation/////////
+        var chkhide = true;
+        $(".navlist").click(function () {
+
+            if (chkhide == true) {
+                $('.mobNavlist').css({ "left": "0", "visibility": "visible" });
+                $('.mobilebg').css('display', 'block');
+                chkhide = false;
+            }
+            else {
+                $('.mobNavlist').css({ "left": "-100%", "visibility": "hidden" });
+                $('.mobilebg').css('display', 'none');
+                chkhide = true;
+            }
+        });
+
+        $(".mobilebg").click(function () {
+            $('.mobNavlist').css({ 'left': '-100%', 'visibility': 'hidden' });
+            $('.mobilebg').css('display', 'none');
+            chkhide = true;
+        });
+
+        //$('#mainboxMob').click(function () {
+        //  if (chkhide == true) {
+        //     $('.navlist').next().slideUp();
+        //     chkhide = false;
+        // }
+        //  });
+        ///////////////////////////
+
+        $('#txtemail').focusout(function () {
+            Master_requiredField(this);
+            Master_emailValidation(this);
+        });
+        $('#txtname').focusout(function () {
+            Master_requiredField(this);
+        });
+        $('#txtno').focusout(function () {
+            Master_requiredField(this);
+        });
+        $('#txtno').on('keypress', function (evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode;
+            return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+        });
+        $('#bay_button').click(function () {
+            debugger;
+            var ret = true;
+
+            if (!Boolean(Master_requiredField($('#txtemail')))) {
+                ret = false;
+            }
+            if (!Boolean(Master_requiredField($('#txtname')))) {
+                ret = false;
+            }
+            if (!Boolean(Master_requiredField($('#txtno')))) {
+                ret = false;
+            }
+            if (!Boolean(Master_emailValidation($('#txtemail')))) {
+                ret = false;
+            }
+            if (ret == false) {
+                return false;
+            } else {
+                $('#bay_button').css('display', 'none');
+                $('#btndummy').css('display', 'block');
+                var pname = $('#txtpname').val();
+                var name = $('#txtname').val();
+                var desig = $('#txtdesig').val();
+                var company = $('#txtcompany').val();
+                if (company != '') {
+                    company = Encrypter(company);
+                }
+                if (desig != '') {
+                    desig = Encrypter(desig);
+                }
+                if (name != '') {
+                    name = Encrypter(name);
+                }
+                var contact = $('#txtno').val();
+                var email = $('#txtemail').val();
+                var ddlexpect = $('#ddl_status option:selected').text();
+                if (ddlexpect == 'When do you want to proceed') {
+                    ddlexpect = "";
+                }
+                var msg = $('#bay_msg').val();
+                if (msg != '') {
+                    msg = Encrypter(msg);
+                }
+                $('#Img1').show();
+                $.post('Handler/BuyDetailsAdd.ashx?pname=' + pname + '&name=' + name + '&desig=' + desig + '&company=' + company + '&contact=' + contact + '&email=' + email + '&expecttimeline=' + ddlexpect + '&msg=' + msg, function (data) {
+                    $('.buy_box').fadeOut();
+                    $('.buy_back').fadeOut();
+                    if (data == 'success') {
+                        $('#Img1').hide();
+                        $('.msg_light').fadeIn();
+                        $('.msgbody').text("Buyer details sent successfully.We will contact you soon.");
+                        $('#opmsg').fadeIn();
+                        $('#bay_button').css('display', 'block');
+                        $('#btndummy').css('display', 'none');
+                    }
+                    else {
+                        $('#Img1').hide();
+                        $('.msgbody').text("Buyer details sending failed,Please try again later.");
+                        $('#errormsg').fadeIn();
+                        $('.msg_light').fadeIn();
+                        $('#bay_button').css('display', 'block');
+                        $('#btndummy').css('display', 'none');
+                    }
+                    $('input[type="text"]').each(function () {
+                        $(this).val('');
+                    });
+                    $('#bay_msg').val('');
+                    $('#ddl_status').val('0');
+                });
+            }
+        });
+
+        $(".btntryit").click(function () {
+            window.location.href = "frmSignUp.aspx";
+        });
+
+
+        $('.closeDocBox').click(function () {
+            $('.light').fadeOut();
+            $('.Cn_lb').fadeOut();
+        });
+
+        ////////////////////service option//////////
+
+        $("#popup_product").hover(function (event) {
+            event.stopPropagation();
+            $(this).next().slideToggle("fast");
+        });
+        $("#popup_product").click(function () {
+            window.location = "ProductPage.aspx";
+        });
+        /////////////////Social Script /////////////////////
+        $('.socialicons').hover(function () {
+            $('.socialicons').next().hide();
+            $('.socialicons').show();
+            $('.socialicons').parent().css('margin-top', '0px');
+            $(this).next().show();
+            $(this).hide();
+            $(this).parent().css('margin-top', '5px');
+            $(this).parent().animate({ marginLeft: -103 }, 300);
+            $(this).next().animate({ marginLeft: -60 }, 300);
+        });
+        $('.socialicons_box').mouseleave(function () {
+            $('.socialicons').next().hide();
+            $('.socialicons').show();
+            $(this).parent().css('margin-top', '0px');
+            $(this).parent().animate({ marginLeft: 0 }, 500);
+            $(this).next().animate({ marginLeft: 0 }, 500);
+        });
+        $('.bouncearrow').click(function () {
+            $('.socialicons_box').animate({ marginLeft: 0 }, 200);
+            $(this).css('opacity', '0');
+            $('.rightbouncearrow').css('opacity', '1');
+        });
+        $('.rightbouncearrow').click(function () {
+            $('.socialicons_box').animate({ marginLeft: 40 }, 200);
+            $(this).css('opacity', '0');
+            $('.bouncearrow').css('opacity', '1');
+        });
+        $('.topslider').click(function () {
+            $("html, body").animate({ scrollTop: 0 }, 2000);
+        });
+        ////////////////////////////Social End///////////////////
+        ////////////////////////////////Buy Lightbox open close////////////////////
+        $('.buy_close').click(function () {
+            $('.buy_box').fadeOut();
+            $('.buy_back').fadeOut();
+        });
+        $('.btnbuy').click(function () {
+            var product = $('#hidProduct').val();
+            $('#txtpname').val(product);
+            $('.buy_box').fadeIn();
+            $('.buy_back').fadeIn();
+        });
+        $('.glo_btnquote').click(function () {
+            var product = $('#hidProduct').val();
+            $('#txtpname').val(product);
+            $('.buy_box').fadeIn();
+            $('.buy_back').fadeIn();
+        });
+        ////////////////////////////////////////////////////////////////////////////
+        $('#math').click(function () {
+            window.location = "Services.aspx";
+        });
+        $('#mob').click(function () {
+            window.location = "MobileDetails.aspx";
+        });
+        $('#seo').click(function () {
+            window.location = "frmSEODetails.aspx";
+        });
+        $('.msgclose').click(function () {
+            $('.msgbox').fadeOut();
+            $('.msg_light').fadeOut();
+        });
+        $('.msgbtn').click(function () {
+            $('.msgbox').fadeOut();
+            $('.msg_light').fadeOut();
+        });
+        $('.msgbtnfail').click(function () {
+            $('.msgbox').fadeOut();
+            $('.msg_light').fadeOut();
+        });
+    });
+
+    ////////////////Encryper function///////////////
+    function Encrypter(message) {
+        var regex = new RegExp('@', 'g');
+        message = message.replace(regex, '[{atr}]');
+        regex = new RegExp('&', 'g');
+        message = message.replace(regex, '[{amp}]');
+        regex = new RegExp('#', 'g');
+        message = message.replace(regex, '[{hash}]');
+        regex = new RegExp('%', 'g');
+        message = message.replace(regex, '[{perc}]');
+        regex = new RegExp('<', 'g');
+        message = message.replace(regex, '[{ano}]');
+        regex = new RegExp('>', 'g');
+        message = message.replace(regex, '[{anc}]');
+        regex = new RegExp('\\|', 'g');
+        message = message.replace(regex, '[{pipe}]');
+        return message;
+    }
+</script>
+<script type="text/javascript">
+    function slider() {
+        // (function ($) {
+        var firstImage = $('#slider-content .slider-img:first').index();
+        // var lastImage = $('#slider-content .slider-img:last').index();
+        lastImage = totalimg - 1;
+        var currentImage = firstImage
+        var nextImage = firstImage + 1
+        var prevImage = lastImage
+        var sliderImages = $('#slider-content .slider-img');
+        var sliderContent = $('#slider-content');
+        var sliderImageWidth = 800; // parseFloat(sliderImages.eq(0).css('width'));                
+        $('#next').click(function (e) {
+            nextImage = currentImage == lastImage ? firstImage : currentImage + 1;
+            sliderContent.animate({ "left": -nextImage * sliderImageWidth });
+            currentImage = nextImage;
+            e.preventDefault();
+        });
+        $('#prev').click(function (e) {
+            prevImage = currentImage == firstImage ? lastImage : currentImage - 1;
+            sliderContent.animate({ "left": -prevImage * sliderImageWidth });
+            currentImage = prevImage;
+            e.preventDefault();
+        });
+        //})(jQuery);
+        $('.morehelp_close').click(function () {
+            $('.mainmore_box').fadeOut();
+            $('.upper_back').fadeOut();
+        });
+        //})(jQuery);          
+    }
+    $(document).ready(function () {
+        slider();
+        $('.video_minimize').click(function () {
+            $(this).css('display', 'none');
+            $('.video_maximize').css('display', 'block');
+            $('.mainvideo_box').css('width', '100%');
+            $('.mainvideo_box').css('height', '100%');
+            $('.mainvideo_box').css('top', '0%');
+            $('.mainvideo_box').css('margin-left', '0%');
+        });
+        $('.video_maximize').click(function () {
+            $(this).css('display', 'none');
+            $('.video_minimize').css('display', 'block');
+            $('.mainvideo_box').css('width', '60%');
+            $('.mainvideo_box').css('height', '80%');
+            $('.mainvideo_box').css('top', '10%');
+            $('.mainvideo_box').css('margin-left', '20%');
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var chatid = $.trim('');
+        if (chatid != '') {
+            (function (id) {
+                PopulateChat(Number(id));
+            })(chatid);
+        }
+    });
+</script>
+
+<script type="text/javascript">
+
+    var head = document.getElementsByTagName('head')[0];
+    var Ln = 0;
+    $(document).scroll(function () {
+
+        if (Ln < 1) {
+            var scripts = [];
+
+            scripts.push("jsScript/peer.js");
+            scripts.push("css/Validation.js");
+            scripts.push("css/Messages.js");
+            scripts.push("jsScript/GlobalShare.js");
+            scripts.push("jsScript/Chat.js");
+
+            for (var i = 0 ; i < scripts.length; i++) {
+                var s = document.createElement('script');
+                s.setAttribute('type', 'text/javascript');
+                s.src = scripts[i];
+                head.appendChild(s);
+            }
+        }
+        Ln++;
+
+    });
+
+</script>
+
+<!-- Twitter Sharing Script -->
+<script type="text/javascript">
+    var text = document.querySelector("meta[name='description']").getAttribute("content");
+    // var text = text_length.substr(0, 200) + '....';
+    function shareOntwitter() {
+        var url = window.location.href
+        window.open('http://twitter.com/share?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text));
+        return false;
+    }
+</script>
+</html>

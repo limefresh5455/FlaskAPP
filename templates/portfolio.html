@@ -425,7 +425,6 @@
     <!--Issues # WIP-->
     
     <!--Issues-->
-    <td>{{ data['IssuesCount']|int }}</td>
     {% if data['Issues'] == 'L' %}<td style="color: green;font-weight: bold;">L &#x2198;</td>
     {% elif data['Issues'] == 'M' %}<td style="color: orange;font-weight: bold;">M &#x2192;</td>
     {% elif data['Issues'] == 'H' %}<td style="color: red;font-weight: bold;">H &#x2197;</td>
@@ -433,7 +432,7 @@
     {% else %}<td>{{ data['Issues'] }}</td>
     {% endif %}
 
-    
+    <td>{{ data['IssuesCount'] }}</td>
       </tr>
       {% endfor %}
        
