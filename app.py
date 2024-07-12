@@ -65,7 +65,6 @@ def main_all_data():
             'Schedule': row['Schedule'],
             'Budget': row['Budget']
         })
-    #print(f"After PM Defined Status: {project_id} -> {project_dict[project_id]}")
 
 # Process final status data
     for index, row in df_sheet_name2.iterrows():
@@ -178,28 +177,29 @@ def get_data1():
     project_dict1 = data_1()
     sorted_accruals = sorted(project_dict1.items(), key=lambda x: x[1]['accrual'])
     top_5_accruals = sorted_accruals[-5:]
-    top_5_output = [(proj_id,details['ltbudget'] ,details['accrual'], details['cashout']) for proj_id, details in top_5_accruals]
+    top_5_output = [(proj_id, details['ltbudget'], details['accrual'], details['cashout']) for proj_id, details in top_5_accruals]
+    print('Top 5:', top_5_output)  # Debugging line
     return jsonify(top_5_output)
 
 @app.route('/bottom5')
 def get_data2():
-
     project_dict1 = data_1()
     sorted_accruals = sorted(project_dict1.items(), key=lambda x: x[1]['accrual'])
     bottom_5_accruals = sorted_accruals[:5]
-    bottom_5_output = [(proj_id, details['ltbudget'] , details['accrual'], details['cashout']) for proj_id, details in bottom_5_accruals]
-
+    bottom_5_output = [(proj_id, details['ltbudget'], details['accrual'], details['cashout']) for proj_id, details in bottom_5_accruals]
+    print('Bottom 5:', bottom_5_output)  # Debugging line
     return jsonify(bottom_5_output)
+
 ##########################################################
 @app.route('/')
 def index():
-	#data=main_all_data()
+    data=main_all_data()
     totalbudge,currentspend,currentstatus = indexpage_top()
     data1={'a':totalbudge,'b':currentspend,'c':currentstatus}
     projectdata=indexpage_projectdata()
     financedate = financedata_indexpage()
    
-    return render_template('index.html',data1=data1,data2=projectdata,data3=financedate)
+    return render_template('index.html',data=data,data1=data1,data2=projectdata,data3=financedate)
 
 if __name__ == '__main__':
 
